@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Hub 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+
+    <header class="bg-blue-900 text-white p-6 shadow-lg">
+        <h1 class="text-3xl font-bold">Science Hub 2026</h1>
+        <p class="opacity-80">9th & 11th Grade Master Portal</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-6 space-y-8">
+        
+        <section class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+            <div class="bg-blue-600 text-white px-6 py-3 font-semibold">
+                Science Fair Grading Matrix (Total: 25 pts)
+            </div>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 border-b">
+                        <th class="p-4">Category</th>
+                        <th class="p-4">Item</th>
+                        <th class="p-4 text-center">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b">
+                        <td class="p-4 font-medium text-blue-700">CW #2</td>
+                        <td class="p-4">Bitácora / Science Log</td>
+                        <td class="p-4 text-center font-bold">5</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-medium text-blue-700">CW #4</td>
+                        <td class="p-4">Trifolio / Poster Board</td>
+                        <td class="p-4 text-center font-bold">8</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="p-4 font-medium text-blue-700">HW #2</td>
+                        <td class="p-4">Setup & Puntualidad</td>
+                        <td class="p-4 text-center font-bold">2</td>
+                    </tr>
+                    <tr class="bg-blue-50">
+                        <td class="p-4 font-medium text-blue-700">Activity</td>
+                        <td class="p-4 font-semibold italic text-blue-900">Defensa Oral (Final Presentation)</td>
+                        <td class="p-4 text-center font-bold">10</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <section class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-xl font-bold mb-4 border-b pb-2">9th Grade: Matter & Energy</h3>
+                <ul class="space-y-2">
+                    <li class="flex items-center">✅ Atomic Structure</li>
+                    <li class="flex items-center">✅ States of Matter</li>
+                    <li class="flex items-center text-slate-400 italic">⏳ Energy Transformations (Coming Soon)</li>
+                </ul>
+            </section>
+            <section class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h3 class="text-xl font-bold mb-4 border-b pb-2">11th Grade: Chemistry</h3>
+                <ul class="space-y-2">
+                    <li class="flex items-center">✅ The Mole Concept</li>
+                    <li class="flex items-center">✅ Stoichiometry Intro</li>
+                    <li class="flex items-center text-slate-400 italic">⏳ Advanced Atomic Theory</li>
+                </ul>
+            </section>
+        </div>
+
+        <section class="bg-slate-800 text-white p-8 rounded-xl text-center">
+            <h3 class="text-2xl font-bold mb-2">Check-in Timer</h3>
+            <p class="mb-4 opacity-70">Use this for progress updates during non-science fair days.</p>
+            <div id="timer" class="text-5xl font-mono mb-6">05:00</div>
+            <button onclick="startTimer()" class="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-full font-bold transition">Start Check-in</button>
+        </section>
+
+    </main>
+
+    <script>
+        function startTimer() {
+            let time = 300;
+            const display = document.getElementById('timer');
+            const interval = setInterval(() => {
+                let mins = Math.floor(time / 60);
+                let secs = time % 60;
+                display.innerHTML = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if (time <= 0) clearInterval(interval);
+                time--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
