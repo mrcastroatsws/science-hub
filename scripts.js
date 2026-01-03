@@ -1,20 +1,20 @@
 // --- ADMIN GATEKEEPER LOGIC ---
-const TEACHER_CODE = "SWS2026"; // Change this to your secret code
-
-
+const TEACHER_CODE = "SWS2026"; 
 
 function checkAuth() {
     const isAuthorized = localStorage.getItem("sws_admin_auth");
     const adminSections = document.querySelectorAll('.admin-only');
     const publicSections = document.querySelectorAll('.public-only');
 
-    if (isAuthorized === "true") {
-        adminSections.forEach(el => el.classList.remove('hidden'));
-        publicSections.forEach(el => el.classList.add('hidden'));
-    } else {
-        adminSections.forEach(el => el.classList.add('hidden'));
-        publicSections.forEach(el => el.classList.remove('hidden'));
-    }
+    adminSections.forEach(el => {
+        if (isAuthorized === "true") el.classList.remove('hidden');
+        else el.classList.add('hidden');
+    });
+
+    publicSections.forEach(el => {
+        if (isAuthorized === "true") el.classList.add('hidden');
+        else el.classList.remove('hidden');
+    });
 }
 
 function login() {
@@ -30,34 +30,47 @@ function login() {
 
 function logout() {
     localStorage.removeItem("sws_admin_auth");
-    location.reload(); // Refresh to lock everything
+    location.reload();
 }
 
-// Ensure script tab is only readable by Admin
-function switchView(viewName) {
+// --- NAVIGATION & VIEW LOGIC ---
+// This version works for both the Hub tabs and general navigation
+function switchView(viewName, btn) {
+    // 1. Security Check for Teacher Script
     if (viewName === 'script' && localStorage.getItem("sws_admin_auth") !== "true") {
         alert("Teacher Login Required for Annotated Scripts.");
         return;
     }
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+    // 2. Switch the Content Views
+    const views = document.querySelectorAll('.view');
+    if (views.length > 0) {
+        views.forEach(v => v.classList.remove('active'));
+        const targetView = document.getElementById('view-' + viewName);
+        if (targetView) targetView.classList.add('active');
+    }
     
-    document.getElementById('view-' + viewName).classList.add('active');
-    // We update the active state of the button
+    // 3. Update the Button/Tab styling
+    const tabs = document.querySelectorAll('.tab-btn');
+    if (tabs.length > 0 && btn) {
+        tabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
 }
 
 // --- TIMER LOGIC ---
 let timerInterval;
 
 function startTimer(duration, displayId) {
-    clearInterval(timerInterval); // Stop any existing timer
-    let timer = duration, minutes, seconds;
     const display = document.getElementById(displayId);
+    if (!display) return;
+
+    clearInterval(timerInterval);
+    let timer = duration, minutes, seconds;
 
     timerInterval = setInterval(() => {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
-
         display.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 
         if (--timer < 0) {
@@ -70,9 +83,12 @@ function startTimer(duration, displayId) {
 
 function resetTimer(displayId) {
     clearInterval(timerInterval);
-    document.getElementById(displayId).textContent = "05:00";
-    document.getElementById(displayId).classList.remove("text-red-500", "animate-pulse");
+    const display = document.getElementById(displayId);
+    if (display) {
+        display.textContent = "05:00";
+        display.classList.remove("text-red-500", "animate-pulse");
+    }
 }
 
-// Run auth check on every page load
-window.onload = checkAuth;
+// Run auth check as soon as the DOM is ready (Better than window.onload)
+document.addEventListener('DOMContentLoaded', checkAuth);

@@ -1,0 +1,73 @@
+/* --- SWS BRANDING VARIABLES --- */
+:root {
+    --sws-maroon: #ac2e55;
+    --sws-maroon-dark: #8a2444;
+    --sws-gold: #f9db66;
+    --sws-teal: #29c4a9;
+    --sws-bg: #f8fafc;
+}
+
+/* --- BASE STYLES --- */
+body {
+    background-color: var(--sws-bg);
+    color: #1e293b;
+    scroll-behavior: smooth;
+}
+
+.sketch {
+    font-family: 'Cabin Sketch', cursive;
+}
+
+/* --- NAV & HEADER --- */
+.bg-maroon { background-color: var(--sws-maroon) !important; }
+.text-maroon { color: var(--sws-maroon) !important; }
+.text-gold { color: var(--sws-gold) !important; }
+
+.hero-gradient {
+    background: linear-gradient(90deg, var(--sws-gold) 40%, rgba(249,219,102,0.55) 100%), 
+                url('https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* --- ADMIN UI LOGIC --- */
+.admin-only.hidden {
+    display: none !important;
+}
+
+/* Smooth fade-in for when you log in as Admin */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- BUTTONS & LINKS --- */
+.nav-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    color: var(--sws-gold);
+    border-bottom: 2px solid var(--sws-gold);
+}
+
+.sws-button {
+    background-color: var(--sws-maroon);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.sws-button:hover {
+    background-color: var(--sws-maroon-dark);
+    transform: scale(1.05);
+}
