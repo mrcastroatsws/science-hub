@@ -7,12 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* SWS Brand Colors */
             --sws-maroon: #ac2e55;
             --sws-gold: #f9db66;
             --sws-teal: #29c4a9;
-            /* Slide Theme Colors */
-            --bg-color: #0f172a; /* Dark Space Blue */
+            --bg-color: #0f172a; 
             --text-color: #f1f5f9;
             --secondary-bg: rgba(255,255,255,0.05);
         }
@@ -25,42 +23,37 @@
             display: flex; flex-direction: column;
         }
 
-        /* --- Typography --- */
         .sketch { font-family: 'Cabin Sketch', cursive; }
-        h1 { font-size: 3.5rem; margin-bottom: 10px; color: var(--sws-gold); text-transform: uppercase; letter-spacing: 1px; }
-        h2 { font-size: 2.2rem; color: var(--sws-teal); margin-bottom: 20px; font-weight: 400; }
-        h3 { font-size: 1.5rem; color: var(--sws-maroon); text-transform: uppercase; margin-bottom: 10px; }
-        p, li { font-size: 1.6rem; line-height: 1.5; margin-bottom: 15px; }
+        h1 { font-size: 3.2rem; margin-bottom: 10px; color: var(--sws-gold); text-transform: uppercase; letter-spacing: 1px; }
+        h2 { font-size: 2rem; color: var(--sws-teal); margin-bottom: 20px; font-weight: 400; }
+        h3 { font-size: 1.3rem; color: var(--sws-maroon); text-transform: uppercase; margin-bottom: 5px; }
+        p, li { font-size: 1.5rem; line-height: 1.4; margin-bottom: 15px; }
         .accent { color: var(--sws-gold); font-weight: bold; }
-        .maroon-accent { color: var(--sws-maroon); font-weight: bold; }
-        .teal-accent { color: var(--sws-teal); font-weight: bold; }
 
-        /* --- Layout & Structure --- */
         .slide-container { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; padding: 40px; }
-        .slide { display: none; width: 100%; max-width: 1100px; height: 100%; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: fadeIn 0.4s ease-in-out; }
+        .slide { display: none; width: 100%; max-width: 1200px; height: 100%; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: fadeIn 0.4s ease-in-out; }
         .slide.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- UI Elements --- */
-        .day-badge { position: absolute; top: 30px; left: 40px; background: var(--sws-maroon); color: white; padding: 5px 15px; border-radius: 4px; font-weight: bold; font-size: 0.9rem; letter-spacing: 1px; }
-        .objective-box { background: var(--secondary-bg); border-left: 6px solid var(--sws-teal); padding: 30px; text-align: left; border-radius: 0 12px 12px 0; max-width: 800px; margin: 20px 0; }
-        .activity-box { background: var(--secondary-bg); border: 2px solid var(--sws-maroon); padding: 30px; border-radius: 12px; max-width: 800px; margin: 20px 0; }
+        .day-badge { position: absolute; top: 30px; left: 40px; background: var(--sws-maroon); color: white; padding: 5px 15px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; letter-spacing: 1px; z-index: 10; }
+        .objective-box { background: var(--secondary-bg); border-left: 6px solid var(--sws-teal); padding: 25px; text-align: left; border-radius: 0 12px 12px 0; max-width: 850px; margin: 15px 0; }
+        .activity-box { background: var(--secondary-bg); border: 2px solid var(--sws-maroon); padding: 25px; border-radius: 12px; max-width: 850px; margin: 15px 0; }
         
-        /* Menu Cards */
-        .menu-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-        .menu-card { background: var(--secondary-bg); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; width: 220px; cursor: pointer; transition: 0.2s; text-align: left; }
+        /* Menu Cards Row */
+        .menu-grid { display: flex; gap: 15px; justify-content: center; width: 100%; margin-top: 25px; flex-wrap: nowrap; }
+        .menu-card { background: var(--secondary-bg); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; width: 19%; cursor: pointer; transition: 0.2s; text-align: left; position: relative; }
         .menu-card:hover { border-color: var(--sws-gold); transform: translateY(-5px); background: rgba(249, 219, 102, 0.05); }
+        .card-date { font-size: 0.7rem; font-weight: bold; opacity: 0.6; color: var(--sws-teal); }
+        .card-topic { font-size: 0.9rem; font-weight: bold; margin-top: 5px; line-height: 1.2; }
 
-        /* Interactive Elements */
-        button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 12px 24px; font-size: 1.1rem; cursor: pointer; border-radius: 6px; margin: 5px; font-family: 'Rubik', sans-serif; transition: 0.2s; }
+        button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; font-size: 1rem; cursor: pointer; border-radius: 6px; margin: 5px; font-family: 'Rubik', sans-serif; transition: 0.2s; }
         button:hover { background: var(--sws-maroon); border-color: var(--sws-maroon); }
         .reveal-btn { background: var(--sws-teal); border: none; color: var(--bg-color); font-weight: bold; }
         .hidden-content { visibility: hidden; opacity: 0; transition: opacity 0.3s; }
         .visible { visibility: visible; opacity: 1; }
-        .timer-display { font-size: 6rem; font-weight: bold; color: var(--sws-gold); font-family: monospace; margin: 20px 0; }
+        .timer-display { font-size: 5rem; font-weight: bold; color: var(--sws-gold); font-family: monospace; margin: 15px 0; }
 
-        /* Navigation Footer */
-        .nav-buttons { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 10px; }
+        .nav-buttons { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.1); width: 100%; position: absolute; bottom: 0; }
         .progress-fill { height: 100%; background: var(--sws-gold); width: 0%; transition: width 0.3s; }
     </style>
@@ -70,25 +63,40 @@
     <div class="slide-container">
 
         <div class="slide active">
-            <h1 class="sketch" style="font-size: 5rem; color: var(--sws-maroon);">Planetary Science</h1>
-            <h2 style="color: var(--sws-gold);">Week 3.1: Frame of Reference</h2>
+            <h1 class="sketch" style="font-size: 4.5rem; color: var(--sws-maroon);">Planetary Science</h1>
+            <h2 style="color: var(--sws-gold);">Week 3.1 Master Deck</h2>
             <div class="objective-box">
-                <h3 style="margin: 0; font-size: 1rem; opacity: 0.7;">Weekly Objective:</h3>
-                <p style="font-size: 1.2rem; margin: 10px 0 0 0;">Establish baseline for sky observation by defining "Frame of Reference" and manipulating 2D representations of 3D space (maps).</p>
+                <h3 style="margin: 0; font-size: 0.9rem; opacity: 0.7;">Weekly Objective:</h3>
+                <p style="font-size: 1.1rem; margin: 10px 0 0 0;">Introduce "Frame of Reference" and 2D/3D representations (maps). Establish the baseline for Investigation 1: Sky Observation.</p>
             </div>
-            <p style="margin-top: 30px; font-style: italic; opacity: 0.8;">Jump to today's lesson:</p>
+            
+            <p style="margin-top: 20px; font-style: italic; opacity: 0.8; font-size: 1.2rem;">Select Lesson Segment:</p>
+            
             <div class="menu-grid">
                 <div class="menu-card" onclick="goToSlide(1)">
-                    <span class="accent">MON (3.1.1)</span><br>Where Am I? Intro
+                    <div class="card-date">JAN 12 (3.1.1)</div>
+                    <div class="card-topic accent">MONDAY</div>
+                    <div class="card-topic">Where Am I? Intro</div>
+                </div>
+                <div class="menu-card" style="opacity: 0.5; cursor: default;">
+                    <div class="card-date">JAN 13 (3.1.2)</div>
+                    <div class="card-topic" style="color: var(--sws-maroon)">TUESDAY</div>
+                    <div class="card-topic">NO CLASS</div>
                 </div>
                 <div class="menu-card" onclick="goToSlide(7)">
-                    <span class="accent">WED (3.1.2)</span><br>Maps & Elevation
+                    <div class="card-date">JAN 14 (3.1.3)</div>
+                    <div class="card-topic accent">WEDNESDAY</div>
+                    <div class="card-topic">Maps & Elevation</div>
                 </div>
                 <div class="menu-card" onclick="goToSlide(11)">
-                    <span class="accent">THU (3.1.3)</span><br>Application (CW#1)
+                    <div class="card-date">JAN 15 (3.1.4)</div>
+                    <div class="card-topic accent">THURSDAY</div>
+                    <div class="card-topic">Application (CW#1)</div>
                 </div>
                 <div class="menu-card" onclick="goToSlide(14)">
-                    <span class="accent">FRI (3.1.4)</span><br>Investigation 1
+                    <div class="card-date">JAN 16 (3.1.5)</div>
+                    <div class="card-topic accent">FRIDAY</div>
+                    <div class="card-topic">Investigation 1</div>
                 </div>
             </div>
         </div>
@@ -96,45 +104,44 @@
         <div class="slide">
             <div class="day-badge">MON 3.1.1</div>
             <h1 class="sketch">The Hook</h1>
-            <div style="font-size: 6rem; margin: 20px;">🏪 🤔</div>
-            <p style="font-size: 2.5rem; font-weight: bold;">"If I tell you to meet me at <span class="accent">the store</span>, how do you know which one?"</p>
+            <div style="font-size: 5rem; margin: 15px;">🏪 🤔</div>
+            <p style="font-size: 2rem; font-weight: bold;">"If I tell you to meet me at <span class="accent">the store</span>, how do you know which one?"</p>
         </div>
 
         <div class="slide">
             <div class="day-badge">MON 3.1.1</div>
-            <h1>Today's Objective</h1>
+            <h1>Daily Objective</h1>
             <div class="objective-box">
-                <p style="margin: 0;">Define <span class="teal-accent">Frame of Reference</span> and explain why it is necessary for locating objects in the sky and on land.</p>
+                <p style="margin: 0;">Define <span class="teal-accent">Frame of Reference</span> and explain why it is necessary for locating objects.</p>
             </div>
         </div>
 
         <div class="slide">
             <div class="day-badge">MON 3.1.1</div>
             <h1>Key Concept</h1>
-            <h2 class="sketch" style="font-size: 3rem; color: var(--sws-gold);">Frame of Reference</h2>
+            <h2 class="sketch" style="font-size: 2.8rem; color: var(--sws-gold);">Frame of Reference</h2>
             <p>A set of criteria or values in relation to which <span class="teal-accent">measurements</span> can be made.</p>
-            <p style="font-style: italic; opacity: 0.8;">(It's the starting point that everyone agrees on.)</p>
         </div>
 
         <div class="slide">
             <div class="day-badge">MON 3.1.1</div>
             <h1>Activity: Zoom Out</h1>
-            <p>In your notebooks, write your location starting from <strong>right here</strong>.</p>
-            <div style="display: flex; gap: 15px; align-items: center; margin-top: 30px; flex-wrap: wrap; justify-content: center;">
-                <span class="activity-box" style="padding: 15px; margin: 0;">Room</span> →
-                <span class="activity-box" style="padding: 15px; margin: 0;">School</span> →
-                <span class="activity-box" style="padding: 15px; margin: 0;">City</span> →
-                <span class="activity-box" style="padding: 15px; margin: 0;">Country</span> →
-                <span class="activity-box" style="padding: 15px; margin: 0; border-color: var(--sws-gold);">Earth</span>
+            <p>Write your address starting from <strong>right here</strong>.</p>
+            <div style="display: flex; gap: 10px; align-items: center; margin-top: 25px; flex-wrap: wrap; justify-content: center; font-size: 1.2rem;">
+                <span class="activity-box" style="padding: 10px; margin: 0;">Room</span> →
+                <span class="activity-box" style="padding: 10px; margin: 0;">School</span> →
+                <span class="activity-box" style="padding: 10px; margin: 0;">City</span> →
+                <span class="activity-box" style="padding: 10px; margin: 0;">Country</span> →
+                <span class="activity-box" style="padding: 10px; margin: 0; border-color: var(--sws-gold);">Earth</span>
             </div>
         </div>
 
         <div class="slide" style="background: var(--sws-maroon);">
             <h1 style="color: var(--sws-gold);">🧠 Brain Break!</h1>
-            <div style="font-size: 5rem;">🧘</div>
+            <div style="font-size: 4rem;">🧘</div>
             <h2>Stand up & Stretch</h2>
             <p>Reach for the "Zenith" (highest point above you)!</p>
-            <div class="timer-display" id="timer-break" style="color: white; font-size: 4rem;">00:30</div>
+            <div class="timer-display" id="timer-break" style="color: white; font-size: 3.5rem;">00:30</div>
             <button style="background: var(--sws-gold); color: var(--sws-maroon); border: none; font-weight: bold;" onclick="startTimer('timer-break', 30)">Start 30s Timer</button>
         </div>
 
@@ -143,155 +150,128 @@
             <h1>Exit Ticket 🎟️</h1>
             <div class="activity-box" style="border-color: var(--sws-teal);">
                 <h3>The Cosmic Address</h3>
-                <p>Write your full "Cosmic Address" on the slip provided. Be specific!</p>
-                <p style="font-size: 1rem; opacity: 0.7;">Evaluation: Participation</p>
+                <p>Complete your full "Cosmic Address" on your exit slip.</p>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Evaluation: Participation</p>
             </div>
         </div>
 
-
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.2</div>
-            <h1>Today's Objective</h1>
+            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
+            <h1>Daily Objective</h1>
             <div class="objective-box">
-                <p style="margin: 0;">Interpret <span class="teal-accent">contour maps</span> and elevation data. Understand how a 3D surface is represented on a 2D map.</p>
+                <p style="margin: 0;">Interpret <span class="teal-accent">contour maps</span> and elevation data (3D to 2D representations).</p>
             </div>
         </div>
 
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.2</div>
-            <h1>The Problem with Paper</h1>
-            <div style="display: flex; justify-content: center; gap: 50px; align-items: center; margin: 40px 0;">
-                <div>
-                    <div style="font-size: 6rem;">🌍</div>
-                    <p class="accent">3D Reality</p>
-                </div>
-                <div style="font-size: 4rem; opacity: 0.5;">vs.</div>
-                <div>
-                    <div style="font-size: 6rem;">🗺️</div>
-                    <p class="accent">2D Map</p>
-                </div>
+            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
+            <h1>The Map Problem</h1>
+            <div style="display: flex; justify-content: center; gap: 40px; align-items: center; margin: 30px 0;">
+                <div><div style="font-size: 5rem;">🌍</div><p class="accent">3D Reality</p></div>
+                <div style="font-size: 3rem; opacity: 0.4;">vs.</div>
+                <div><div style="font-size: 5rem;">🗺️</div><p class="accent">2D Map</p></div>
             </div>
-            <p>Why do we use flat maps if the Earth is round?</p>
         </div>
 
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.2</div>
-            <h1>Showing Height on Flat Paper</h1>
-            <h2 class="sketch" style="color: var(--sws-gold); font-size: 3.5rem;">Contour Lines</h2>
+            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
+            <h1>Showing Elevation</h1>
+            <h2 class="sketch" style="color: var(--sws-gold); font-size: 3rem;">Contour Lines</h2>
             <p>Lines that connect points of equal <span class="teal-accent">elevation</span>.</p>
-            <div style="position: relative; width: 300px; height: 200px; margin: 20px auto;">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 30px; border: 3px solid var(--sws-gold); border-radius: 50%;"></div>
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 100px; border: 3px solid var(--sws-maroon); border-radius: 50%;"></div>
-                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 180px; border: 3px solid var(--sws-teal); border-radius: 50%;"></div>
-                 <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; font-weight: bold; font-size: 1rem;">Peak</p>
+            <div style="position: relative; width: 250px; height: 150px; margin: 20px auto;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 20px; border: 2px solid var(--sws-gold); border-radius: 50%;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 80px; border: 2px solid var(--sws-maroon); border-radius: 50%;"></div>
+                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 220px; height: 140px; border: 2px solid var(--sws-teal); border-radius: 50%;"></div>
             </div>
-            <p style="font-size: 1.2rem;">Bird's Eye View</p>
+            <p style="font-size: 1rem;">Bird's Eye View</p>
         </div>
 
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.2</div>
+            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
             <h1>Activity: Profile Sketch</h1>
             <div class="activity-box">
-                <p>Look at the contour map on the board.</p>
-                <p><strong>Task:</strong> Draw the "Side Profile" (what it looks like from the ground) in your notebook.</p>
+                <p><strong>Task:</strong> Convert the contour lines on the board into a "Side Profile" sketch in your notebook.</p>
                 <p class="teal-accent">Evaluation: Map Sketch</p>
             </div>
         </div>
 
-
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.3</div>
+            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
             <h1 style="color: var(--sws-maroon);">Application Day</h1>
-            <h2>Demonstrate understanding through application.</h2>
             <div class="activity-box" style="border-color: var(--sws-gold); background: rgba(249, 219, 102, 0.1);">
-                <h3 style="font-size: 2.5rem; margin-bottom: 10px;">Classwork #1</h3>
+                <h3 style="font-size: 2rem; margin-bottom: 5px;">Classwork #1</h3>
                 <p>Worksheet R: Mapping & Elevation Puzzles</p>
-                <p style="font-weight: bold; font-size: 1.5rem; color: var(--sws-maroon);">Value: 5 Points</p>
+                <p style="font-weight: bold; font-size: 1.2rem; color: var(--sws-maroon);">Value: 5 Points</p>
             </div>
         </div>
 
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.3</div>
-            <h1>Work Time</h1>
-            <p>Work individually. Raise your hand for assistance.</p>
+            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
+            <h1>Work Timer</h1>
             <div class="timer-display" id="timer-cw1">20:00</div>
             <button class="reveal-btn" style="background: var(--sws-gold); color: var(--sws-maroon);" onclick="startTimer('timer-cw1', 1200)">Start 20 Min Timer</button>
         </div>
 
         <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.3</div>
-            <h1>Peer Review</h1>
-            <p>Switch papers with a neighbor.</p>
-            <p>Let's review the answers together.</p>
-            <p style="font-style: italic; opacity: 0.8; font-size: 1.2rem;">(Use a different color pen for grading)</p>
+            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
+            <h1>Review Session</h1>
+            <p>Exchange papers with a neighbor.</p>
+            <p>Let's verify our elevation profiles together.</p>
         </div>
 
-
         <div class="slide">
-            <div class="day-badge">FRI 3.1.4</div>
-            <h1>Today's Objective</h1>
+            <div class="day-badge">FRI 3.1.5</div>
+            <h1>Daily Objective</h1>
             <div class="objective-box">
-                <p style="margin: 0;">Initiate <span class="teal-accent">Investigation 1</span>. Create a system for observing and recording the position of celestial bodies (Moon).</p>
+                <p style="margin: 0;">Initiate <span class="teal-accent">Investigation 1</span>. Establish the system for recording celestial positions.</p>
             </div>
         </div>
 
         <div class="slide">
-            <div class="day-badge">FRI 3.1.4</div>
-            <h1>Question:</h1>
-            <div style="font-size: 6rem; margin: 20px;">🌘 ☀️</div>
-            <p style="font-size: 2.5rem;">Have you ever seen the Moon during the <span class="accent">day</span>?</p>
-        </div>
-
-        <div class="slide">
-            <div class="day-badge">FRI 3.1.4</div>
+            <div class="day-badge">FRI 3.1.5</div>
             <h1 class="sketch" style="color: var(--sws-teal);">Investigation 1</h1>
             <h2>"What's in the Neighborhood?"</h2>
-            <p>We need a system to track things in the sky.</p>
+            <div style="font-size: 4rem; margin: 15px;">🌘</div>
+            <p>We are starting our <strong>Moon Log</strong> tonight.</p>
         </div>
 
         <div class="slide">
-            <div class="day-badge">FRI 3.1.4</div>
-            <h1>Essential Vocabulary</h1>
-            <div style="text-align: left; display: inline-block; margin-top: 20px;">
-                <div style="margin-bottom: 25px;">
-                    <strong style="font-size: 2rem; color: var(--sws-gold);">1. Horizon</strong>
-                    <br>
-                    <button class="reveal-btn" style="padding: 5px 15px; font-size: 0.9rem; margin-top: 10px;" onclick="reveal(this)">Reveal Definition</button>
-                    <p class="hidden-content" style="font-size: 1.4rem; border-left: 4px solid var(--sws-teal); padding-left: 15px; margin-top: 5px;">Where the sky appears to meet the Earth.</p>
+            <div class="day-badge">FRI 3.1.5</div>
+            <h1>Vocabulary Check</h1>
+            <div style="text-align: left; display: inline-block;">
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 1.8rem; color: var(--sws-gold);">1. Horizon:</strong>
+                    <button class="reveal-btn" style="padding: 2px 10px; font-size: 0.8rem; vertical-align: middle;" onclick="reveal(this)">Reveal</button>
+                    <p class="hidden-content" style="font-size: 1.2rem; margin: 0; padding-left: 20px;">Where the sky appears to meet the Earth.</p>
                 </div>
-                <div style="margin-bottom: 25px;">
-                    <strong style="font-size: 2rem; color: var(--sws-gold);">2. Zenith</strong>
-                    <br>
-                    <button class="reveal-btn" style="padding: 5px 15px; font-size: 0.9rem; margin-top: 10px;" onclick="reveal(this)">Reveal Definition</button>
-                    <p class="hidden-content" style="font-size: 1.4rem; border-left: 4px solid var(--sws-teal); padding-left: 15px; margin-top: 5px;">The point directly above your head.</p>
-                </div>
-                 <div>
-                    <strong style="font-size: 2rem; color: var(--sws-gold);">3. Altitude</strong>
-                    <br>
-                    <button class="reveal-btn" style="padding: 5px 15px; font-size: 0.9rem; margin-top: 10px;" onclick="reveal(this)">Reveal Definition</button>
-                    <p class="hidden-content" style="font-size: 1.4rem; border-left: 4px solid var(--sws-teal); padding-left: 15px; margin-top: 5px;">Height above the horizon.</p>
+                <div style="margin-bottom: 20px;">
+                    <strong style="font-size: 1.8rem; color: var(--sws-gold);">2. Zenith:</strong>
+                    <button class="reveal-btn" style="padding: 2px 10px; font-size: 0.8rem; vertical-align: middle;" onclick="reveal(this)">Reveal</button>
+                    <p class="hidden-content" style="font-size: 1.2rem; margin: 0; padding-left: 20px;">The point directly above your head.</p>
                 </div>
             </div>
         </div>
 
         <div class="slide">
-            <div class="day-badge">FRI 3.1.4</div>
-            <h1>Setup & Homework</h1>
+            <div class="day-badge">FRI 3.1.5</div>
+            <h1>Lab Setup & HW</h1>
             <div class="activity-box" style="border-color: var(--sws-maroon);">
-                <h3>📓 Lab Notebook Setup</h3>
-                <p>Create your <strong>Moon Log</strong> table.</p>
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
-                <h3>🏠 Homework (5 pts)</h3>
-                <p class="accent">Begin Moon Log (Observation 1)</p>
-                <p style="font-size: 1rem;">Look for the moon this weekend. Record date, time, and a sketch.</p>
+                <h3>📓 Moon Log Setup</h3>
+                <p>Label your first log entry: <strong>Observation 1</strong>.</p>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
+                <p class="accent">Homework: Record the Moon's position this weekend.</p>
             </div>
         </div>
 
-    </div> <div class="nav-buttons">
-        <button onclick="goToSlide(0)">🏠 Menu</button>
+    </div> 
+
+    <div class="nav-buttons">
+        <button onclick="window.location.href='index.html'" style="background: var(--sws-teal); color: var(--bg-color); border: none; font-weight: bold;">🏠 Hub</button>
+        <button onclick="goToSlide(0)">☰ Menu</button>
         <button onclick="changeSlide(-1)">❮ Prev</button>
         <button onclick="changeSlide(1)">Next ❯</button>
     </div>
+    
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
     <script>
@@ -299,32 +279,27 @@
         const slides = document.querySelectorAll('.slide');
         const progress = document.getElementById('progress');
 
-        // Basic Navigation
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (n + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
             updateProgress();
-            // Stop any active timers when switching slides
             stopAllTimers();
         }
         function changeSlide(n) { showSlide(currentSlide + n); }
         function goToSlide(n) { showSlide(n); }
 
-        // Progress Bar update
         function updateProgress() {
             const percent = ((currentSlide) / (slides.length - 1)) * 100;
             progress.style.width = percent + "%";
         }
 
-        // Reveal Button Logic
         function reveal(btn) {
             const content = btn.nextElementSibling;
             content.classList.toggle('visible');
-            btn.textContent = content.classList.contains('visible') ? "Hide Def" : "Reveal Def";
+            btn.textContent = content.classList.contains('visible') ? "Hide" : "Reveal";
         }
 
-        // Timer Logic (Independent from scripts.js for slide portability)
         let activeTimerInterval;
         function startTimer(displayId, duration) {
             stopAllTimers();
@@ -343,18 +318,14 @@
                 }
             }, 1000);
         }
-        function stopAllTimers() {
-            if (activeTimerInterval) clearInterval(activeTimerInterval);
-        }
+        function stopAllTimers() { if (activeTimerInterval) clearInterval(activeTimerInterval); }
 
-        // Keyboard Shortcuts
         document.addEventListener('keydown', (e) => {
             if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
             if(e.key === 'ArrowLeft') changeSlide(-1);
             if(e.key === 'Escape') goToSlide(0);
         });
 
-        // Initialize
         updateProgress();
     </script>
 </body>
