@@ -275,6 +275,15 @@
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
 
     <script>
+        // --- SECURITY GUARD ---
+(function() {
+    const isAuthorized = localStorage.getItem("sws_admin_auth");
+    if (isAuthorized !== "true") {
+        alert("Unauthorized Access. Redirecting to Dashboard...");
+        window.location.href = "index.html";
+    }
+})();
+// --- END SECURITY GUARD ---
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const progress = document.getElementById('progress');
