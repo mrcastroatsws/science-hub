@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Science at Southwest | Seventh Grade</title>
-
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
-
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
@@ -16,12 +14,11 @@
         .view { display: none; }
         .view.active { display: block; }
         
-        /* --- Formal Jornalización Styling --- */
-        .j-container { background: white; color: black; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: Arial, sans-serif; }
+        /* Jornalización Styling */
+        .j-container { background: white; color: black; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: Arial, sans-serif; min-width: 800px; }
         .j-header { text-align: center; font-weight: bold; text-transform: uppercase; font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid black; padding-bottom: 10px; }
         .j-info-bar { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; font-weight: bold; }
         .j-line { border-bottom: 1px solid black; flex-grow: 1; margin-left: 5px; height: 14px; }
-        
         table.j-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; font-size: 11px; }
         table.j-table th, table.j-table td { border: 1px solid black; padding: 4px 6px; vertical-align: middle; }
         table.j-table th { background: #f2f2f2; text-transform: uppercase; text-align: center; }
@@ -30,55 +27,32 @@
         .no-class { color: #999; font-style: italic; background: #fdfdfd; }
         .points { color: var(--sws-maroon); font-weight: bold; font-size: 9px; }
 
-        @media print {
-            nav, .tab-btn, .btn-print-hide { display: none !important; }
-            .j-container { box-shadow: none; padding: 0; width: 100%; }
-            body { background: white; }
-        }
-        /* Add/Update these specific rules in your <style> tag */
-.j-container { 
-    background: white; 
-    color: black; 
-    padding: 20px; /* Reduced for mobile */
-    min-width: 800px; /* Forces the table to keep its professional shape */
-}
+        /* Mobile Swipe */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
 
-/* This is the magic "Flexy" wrapper */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto; /* Allows swiping left/right on phone */
-    -webkit-overflow-scrolling: touch;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+        /* Live Edit Highlighting for Admin */
+        .admin-active [contenteditable="true"]:hover { background: rgba(41, 196, 169, 0.1); cursor: text; outline: 2px dashed var(--sws-teal); }
 
-.j-header { 
-    font-size: 18px; /* Slightly smaller for better fit */
-}
-
-/* Adjust the info bar for small screens */
-@media (max-width: 640px) {
-    .j-info-bar { 
-        flex-direction: column; 
-        gap: 10px;
-    }
-    .j-info-bar div { width: 100% !important; }
-}
+        @media print { nav, .tab-btn, .btn-print-hide, .admin-save-bar { display: none !important; } .j-container { box-shadow: none; padding: 0; width: 100%; } body { background: white; } }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-900">
 
-    <nav class="bg-[#ac2e55] text-white shadow-xl sticky top-0 z-50">
+    <div id="admin-save-bar" class="admin-only hidden bg-slate-900 text-white p-3 sticky top-0 z-[60] flex justify-between items-center border-b border-teal-500">
+        <span class="text-xs font-bold text-teal-400 animate-pulse">● LIVE EDIT MODE ACTIVE</span>
+        <button onclick="saveLiveChanges()" class="bg-teal-500 hover:bg-teal-600 text-slate-900 px-4 py-1 rounded font-bold text-xs transition">Save Weekly Updates</button>
+    </div>
+
+    <nav class="bg-[#ac2e55] text-white shadow-xl sticky top-0 sm:top-[49px] z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <a href="index.html" class="sketch text-2xl text-[#f9db66]">7TH GRADE HUB</a>
-                <span class="opacity-50 text-xs uppercase font-bold border-l pl-4 border-white/20">Planetary Science</span>
             </div>
             <div class="flex space-x-6 text-xs font-bold uppercase">
                 <button onclick="switchView('quarter', this)" class="tab-btn active pb-1">Quarter Plan</button>
                 <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly Plans</button>
                 <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Files</button>
-                <a href="7th-slides.html" class="bg-[#f9db66] text-[#ac2e55] px-3 py-1 rounded font-bold hover:scale-105 transition">Slides</a>
+                <a href="7th-slides.html" class="bg-[#f9db66] text-[#ac2e55] px-3 py-1 rounded font-bold transition">Slides</a>
             </div>
         </div>
     </nav>
@@ -86,180 +60,89 @@
     <main class="max-w-7xl mx-auto p-4 md:p-8">
 
         <section id="view-quarter" class="view active animate-fade-in">
-    <div class="sm:hidden text-center text-[10px] text-slate-400 mb-2 font-bold uppercase tracking-widest">
-        ↔ Swipe table to view all weeks
-    </div>
-
-    <div class="flex justify-end mb-4 btn-print-hide">
-        <button onclick="window.print()" class="text-xs bg-slate-800 text-white px-4 py-2 rounded font-bold hover:bg-black transition">Print / Save PDF</button>
-    </div>
-
-    <div class="table-responsive">
-        <div class="j-container">
-            <div class="j-header">Jornalización Parcial 7mo Grado</div>
-            
-            <div class="j-info-bar">
-                <div class="flex" style="width: 45%">DOCENTE: <span class="j-line">CÉSAR CASTRO</span></div>
-                <div class="flex" style="width: 35%">CLASE: <span class="j-line">PLANETARY SCIENCE</span></div>
-                <div class="flex" style="width: 15%">PARCIAL: <span class="j-line">III</span></div>
+            <div class="flex justify-end mb-4 btn-print-hide">
+                <button onclick="window.print()" class="text-xs bg-slate-800 text-white px-4 py-2 rounded font-bold">Print / Save PDF</button>
             </div>
-
-            <table class="j-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Fecha</th><th class="col-content">Semana 3.1</th>
-                        <th class="col-date">Fecha</th><th class="col-content">Semana 3.2</th>
-                        <th class="col-date">Fecha</th><th class="col-content">Semana 3.3</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="j-row"><td class="col-date">01/12</td><td>Where Am I? (Intro)</td><td class="col-date">01/19</td><td>Round / Flat Earth (Intro)</td><td class="col-date">01/26</td><td>Compare & Contrast</td></tr>
-                    <tr class="j-row"><td class="col-date">01/13</td><td class="no-class">No Class</td><td class="col-date">01/20</td><td class="no-class">No Class</td><td class="col-date">01/27</td><td class="no-class">No Class</td></tr>
-                    <tr class="j-row"><td class="col-date">01/14</td><td>Maps, Elevation, Frame Ref.</td><td class="col-date">01/21</td><td>Sailing Ships & Shadows</td><td class="col-date">01/28</td><td>Day and Night (Inv 3 Intro)</td></tr>
-                    <tr class="j-row"><td class="col-date">01/15</td><td>Worksheet R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/22</td><td>Shadow Inv R <span class="points">(H.W. 5 pts)</span></td><td class="col-date">01/29</td><td>Time Zones R <span class="points">(C.W. 5 pts)</span></td></tr>
-                    <tr class="j-row"><td class="col-date">01/16</td><td>Activity: Investigation 1</td><td class="col-date">01/23</td><td>Class Discussion R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/30</td><td>Making a Model</td></tr>
-                </tbody>
-            </table>
-
-            <table class="j-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Fecha</th><th>Semana 3.4</th>
-                        <th class="col-date">Fecha</th><th>Semana 3.5</th>
-                        <th class="col-date">Fecha</th><th>Semana 3.6</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="j-row"><td class="col-date">02/02</td><td>Reinforce Concepts (3.1-3.3)</td><td class="col-date">02/09</td><td>Midterms</td><td class="col-date">02/16</td><td>Discover the Moon (Intro)</td></tr>
-                    <tr class="j-row"><td class="col-date">02/03</td><td class="no-class">No Class</td><td class="col-date">02/10</td><td class="no-class">No Class</td><td class="col-date">02/17</td><td class="no-class">No Class</td></tr>
-                    <tr class="j-row"><td class="col-date">02/04</td><td>Study Guide R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">02/11</td><td>Midterms</td><td class="col-date">02/18</td><td>The Phases of the Moon</td></tr>
-                    <tr class="j-row"><td class="col-date">02/05</td><td>Oral Presentations</td><td class="col-date">02/12</td><td>Midterms</td><td class="col-date">02/19</td><td>Observe Moon R <span class="points">(H.W. 5 pts)</span></td></tr>
-                    <tr class="j-row"><td class="j-row col-date">02/06</td><td>Activity: Inv 3 (Group)</td><td class="col-date">02/13</td><td>Discussion: Midterms</td><td class="col-date">02/20</td><td>Read and Discuss Moon Myths</td></tr>
-                </tbody>
-            </table>
-
-            <table class="j-table">
-                <thead>
-                    <tr>
-                        <th class="col-date">Fecha</th><th>Semana 3.7</th>
-                        <th class="col-date">Fecha</th><th>Semana 3.8</th>
-                        <th class="col-date">Fecha</th><th>Semana 3.9</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="j-row"><td class="col-date">02/23</td><td>Moon Craters (Intro)</td><td class="col-date">03/02</td><td>Origin of the Moon <span class="points">(C.W. 5 pts)</span></td><td class="col-date">03/09</td><td>The Crater that Ended it All</td></tr>
-                    <tr class="j-row"><td class="col-date">02/24</td><td class="no-class">No Class</td><td class="col-date">03/03</td><td class="no-class">No Class</td><td class="col-date">03/10</td><td class="no-class">No Class</td></tr>
-                    <tr class="j-row"><td class="col-date">02/25</td><td>Model Craters <span class="points">(Activity 10 pts)</span></td><td class="col-date">03/04</td><td>Reading: Space Probes</td><td class="col-date">03/11</td><td>Engineering: Design</td></tr>
-                    <tr class="j-row"><td class="col-date">02/26</td><td>First Man on Moon / HW Disc.</td><td class="col-date">03/05</td><td>Review: Moon Olympics</td><td class="col-date">03/12</td><td>Planetary Science Jeopardy</td></tr>
-                    <tr class="j-row"><td class="col-date">02/27</td><td>Part 6: Impacts on Earth</td><td class="col-date">03/06</td><td>Apollo and Artemis Discussion</td><td class="col-date">03/13</td><td>High Tide vs. Low Tide</td></tr>
-                </tbody>
-            </table>
-
-            <table class="j-table" style="width: 33.3%;">
-                <thead><tr><th class="col-date">Fecha</th><th>Semana 3.10</th></tr></thead>
-                <tbody>
-                    <tr class="j-row"><td class="col-date">03/16</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
-                    <tr class="j-row"><td class="col-date">03/17</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
-                    <tr class="j-row"><td class="col-date">03/18</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
-                    <tr class="j-row"><td class="col-date">03/19</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
-                    <tr class="j-row"><td class="col-date">03/20</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+            <div class="table-responsive">
+                <div class="j-container">
+                    <div class="j-header">Jornalización Parcial 7mo Grado</div>
+                    <div class="j-info-bar">
+                        <div class="flex" style="width: 45%">DOCENTE: <span class="j-line">CÉSAR CASTRO</span></div>
+                        <div class="flex" style="width: 35%">CLASE: <span class="j-line">PLANETARY SCIENCE</span></div>
+                        <div class="flex" style="width: 15%">PARCIAL: <span class="j-line">III</span></div>
+                    </div>
+                    <table class="j-table">
+                        <thead><tr><th class="col-date">Fecha</th><th>Semana 3.1</th><th class="col-date">Fecha</th><th>Semana 3.2</th><th class="col-date">Fecha</th><th>Semana 3.3</th></tr></thead>
+                        <tbody>
+                            <tr class="j-row"><td class="col-date">01/12</td><td contenteditable="true" id="q-31-1">Where Am I? (Intro)</td><td class="col-date">01/19</td><td contenteditable="true" id="q-32-1">Round / Flat Earth (Intro)</td><td class="col-date">01/26</td><td contenteditable="true" id="q-33-1">Compare & Contrast</td></tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
         <section id="view-weekly" class="view">
             <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
-                <div class="bg-maroon p-8 text-white">
-                    <h2 class="sketch text-5xl text-[#f9db66] mb-2">Week 3.1</h2>
-                    <p class="text-xs font-bold uppercase tracking-[0.2em]">12th Jan - 16th Jan | Intro to Frame of Reference</p>
+                <div class="bg-maroon p-8 text-white" style="background: var(--sws-maroon);">
+                    <h2 class="sketch text-5xl text-[#f9db66] mb-2" contenteditable="true" id="edit-week-title">Week 3.1</h2>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em]" contenteditable="true" id="edit-week-dates">12th Jan - 16th Jan | Intro to Frame of Reference</p>
                 </div>
                 <div class="p-8 grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div class="border p-4 rounded bg-slate-50"><strong>MON (01/12)</strong><br><span class="text-xs text-maroon font-bold uppercase">Where Am I?</span><p class="text-[10px] mt-2 italic">Activity: Zoom Out</p></div>
-                    <div class="border p-4 rounded bg-slate-100 opacity-50 flex items-center justify-center font-bold text-xs uppercase">No Class</div>
-                    <div class="border p-4 rounded bg-slate-50"><strong>WED (01/14)</strong><br><span class="text-xs text-maroon font-bold uppercase">Maps & Elevation</span><p class="text-[10px] mt-2 italic">Activity: Profile Sketch</p></div>
-                    <div class="border p-4 rounded bg-yellow-50"><strong>THU (01/15)</strong><br><span class="text-xs text-maroon font-bold uppercase">Review & CW#1</span><p class="text-[10px] mt-2 font-bold text-teal-600">Worksheet R (5 pts)</p></div>
-                    <div class="border p-4 rounded bg-slate-50"><strong>FRI (01/16)</strong><br><span class="text-xs text-maroon font-bold uppercase">Investigation 1</span><p class="text-[10px] mt-2 italic">HW: Begin Moon Log</p></div>
+                    <div class="border p-4 rounded bg-slate-50">
+                        <strong contenteditable="true" id="day1-head">MON (01/12)</strong><br>
+                        <span class="text-xs text-maroon font-bold uppercase" contenteditable="true" id="day1-topic">Where Am I?</span>
+                        <p class="text-[10px] mt-2 italic" contenteditable="true" id="day1-act">Activity: Zoom Out</p>
+                    </div>
+                    <div class="border p-4 rounded bg-slate-100 opacity-50 flex items-center justify-center font-bold text-xs uppercase" contenteditable="true" id="day2-topic">No Class</div>
+                    <div class="border p-4 rounded bg-slate-50">
+                        <strong contenteditable="true" id="day3-head">WED (01/14)</strong><br>
+                        <span class="text-xs text-maroon font-bold uppercase" contenteditable="true" id="day3-topic">Maps & Elevation</span>
+                        <p class="text-[10px] mt-2 italic" contenteditable="true" id="day3-act">Activity: Profile Sketch</p>
+                    </div>
+                    <div class="border p-4 rounded bg-yellow-50">
+                        <strong contenteditable="true" id="day4-head">THU (01/15)</strong><br>
+                        <span class="text-xs text-maroon font-bold uppercase" contenteditable="true" id="day4-topic">Review & CW#1</span>
+                        <p class="text-[10px] mt-2 font-bold text-teal-600" contenteditable="true" id="day4-act">Worksheet R (5 pts)</p>
+                    </div>
+                    <div class="border p-4 rounded bg-slate-50">
+                        <strong contenteditable="true" id="day5-head">FRI (01/16)</strong><br>
+                        <span class="text-xs text-maroon font-bold uppercase" contenteditable="true" id="day5-topic">Investigation 1</span>
+                        <p class="text-[10px] mt-2 italic" contenteditable="true" id="day5-act">HW: Begin Moon Log</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="view-script" class="view">
-  <div class="admin-only hidden">
-    <div class="bg-white rounded-xl shadow-2xl overflow-hidden border-l-8 border-slate-900">
-      <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
-        <div>
-          <h2 class="sketch text-3xl text-gold">Annotated Script: 3.1.1</h2>
-          <p class="text-[10px] uppercase tracking-widest font-bold opacity-70">Topic: Introduction to Frame of Reference</p>
-        </div>
-        <div class="text-right">
-          <span class="bg-maroon px-3 py-1 rounded text-xs font-bold">45 MIN SESSION</span>
-        </div>
-      </div>
-
-      <div class="p-8 space-y-10 relative">
-        <div class="absolute left-[41px] top-10 bottom-10 w-0.5 bg-slate-100"></div>
-
-        <div class="relative pl-16">
-          <div class="absolute left-0 top-0 w-10 h-10 bg-maroon rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg z-10">00</div>
-          <h4 class="text-maroon font-bold uppercase text-sm mb-1">The Hook: The Store Analogy <span class="text-slate-400 ml-2 font-normal">(Slides 1)</span></h4>
-          <p class="text-slate-700 text-sm leading-relaxed">
-            <strong>Script:</strong> "Class, if I tell you all to meet me at 'The Store' at 4:00 PM today, how many of you will show up to the same place?" <br>
-            <em class="text-teal-600 block mt-2">● Teacher Note: Wait for students to realize they don't know WHICH store. Drive home that coordinates mean nothing without a shared system.</em>
-          </p>
-        </div>
-
-        <div class="relative pl-16">
-          <div class="absolute left-0 top-0 w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg z-10">05</div>
-          <h4 class="text-slate-800 font-bold uppercase text-sm mb-1">Concept: Frame of Reference <span class="text-slate-400 ml-2 font-normal">(Slides 2-3)</span></h4>
-          <p class="text-slate-700 text-sm leading-relaxed">
-            <strong>Script:</strong> "In Science, we call this our 'Frame of Reference.' It is the zero point. It is the agreed-upon starting line for any measurement."<br>
-            <strong class="block mt-2">Look For:</strong> Students should be copying the definition from Slide 3 exactly into their glossaries.
-          </p>
-        </div>
-
-        <div class="relative pl-16">
-          <div class="absolute left-0 top-0 w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-lg z-10">15</div>
-          <h4 class="text-teal-600 font-bold uppercase text-sm mb-1">Activity: The Cosmic Address <span class="text-slate-400 ml-2 font-normal">(Slide 4)</span></h4>
-          <p class="text-slate-700 text-sm leading-relaxed">
-            <strong>Task:</strong> Students must write their "Address" zooming out. 
-            <ul class="text-[12px] mt-2 list-disc pl-4 text-slate-600">
-              <li>Desk # / Classroom</li>
-              <li>Southwest School</li>
-              <li>Tegucigalpa, Honduras</li>
-              <li>Planet Earth</li>
-              <li>Solar System / Orion Arm / Milky Way</li>
-            </ul>
-            <em class="text-maroon-accent block mt-2">● Walk around: Check that they aren't skipping "Honduras" or "Earth."</em>
-          </p>
-        </div>
-
-        <div class="relative pl-16">
-          <div class="absolute left-0 top-0 w-10 h-10 bg-gold rounded-full flex items-center justify-center text-maroon font-bold text-xs shadow-lg z-10">35</div>
-          <h4 class="text-slate-800 font-bold uppercase text-sm mb-1">Evaluation & Exit Ticket <span class="text-slate-400 ml-2 font-normal">(Slide 6)</span></h4>
-          <p class="text-slate-700 text-sm leading-relaxed">
-            <strong>Script:</strong> "Before the bell rings, write your final 'Cosmic Address' on your exit ticket. Hand it to me at the door."<br>
-            <strong class="block mt-2">Goal:</strong> 100% of students must identify "Earth" as our primary Frame of Reference for this unit.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="public-only bg-slate-200 p-20 rounded-xl text-center border-4 border-dashed border-slate-300">
-    <h2 class="sketch text-2xl text-slate-600">Teacher Files Restricted</h2>
-    <p class="text-slate-500 mb-6">Please login to view teacher files.</p>
-    <button onclick="login()" class="bg-maroon text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition shadow-lg">Teacher Login</button>
-  </div>
-</section>
+            </section>
 
     </main>
 
     <script src="scripts.js"></script>
     <script>
-        // Internal switch function for Hub Navigation
+        // 1. Logic to Load Saved Content on Start
+        document.addEventListener('DOMContentLoaded', () => {
+            const editables = document.querySelectorAll('[contenteditable="true"]');
+            editables.forEach(el => {
+                const savedValue = localStorage.getItem('7th-' + el.id);
+                if (savedValue) el.innerHTML = savedValue;
+            });
+            
+            // Check if admin is logged in to show the Save Bar
+            if(localStorage.getItem("sws_admin_auth") === "true") {
+                document.body.classList.add('admin-active');
+            }
+        });
+
+        // 2. Logic to Save Content
+        function saveLiveChanges() {
+            const editables = document.querySelectorAll('[contenteditable="true"]');
+            editables.forEach(el => {
+                localStorage.setItem('7th-' + el.id, el.innerHTML);
+            });
+            alert("Changes saved locally to this browser, Mr. Castro.");
+        }
+
         function switchView(viewName, btn) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
