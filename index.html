@@ -1,170 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Science at SWS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>SWS Science Hub</title>
 
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-192x192.png" sizes="192x192">
-    <link rel="apple-touch-icon" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-180x180.png">
 
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet" />
+    
     <style>
-      :root {
-        --sws-maroon: #ac2e55;
-        --sws-gold: #f9db66;
-        --sws-teal: #29c4a9;
-      }
-      body {
-        font-family: "Rubik", sans-serif;
-      }
-      .sketch {
-        font-family: "Cabin Sketch", cursive;
-      }
+      :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
+      body { font-family: "Rubik", sans-serif; overflow-x: hidden; }
+      .sketch { font-family: "Cabin Sketch", cursive; }
+      
+      /* Mobile optimization for the hero */
       .hero-gradient {
-        background: linear-gradient(
-            90deg,
-            var(--sws-gold) 40%,
-            rgba(249, 219, 102, 0.55) 100%
-          ),
+        background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249, 219, 102, 0.8) 100%),
           url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
-        background-size: cover;
-        background-position: center;
+        background-size: cover; background-position: center;
       }
     </style>
   </head>
+
   <body class="bg-slate-50">
-    <div
-      class="bg-slate-900 text-white py-2 px-6 flex justify-between items-center text-[10px] uppercase tracking-widest"
-    >
-      <div class="flex items-center space-x-4">
-        <span class="opacity-50 font-bold">Southwest School Hub</span>
-        <span class="admin-only hidden text-[#29c4a9]"
-          >● Admin Session Active</span
-        >
+    <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest sticky top-0 z-[60]">
+      <div class="flex items-center space-x-2">
+        <span class="opacity-50 hidden sm:inline">SWS Hub</span>
+        <span class="admin-only hidden text-[#29c4a9]">● Admin: Mr. Castro</span>
       </div>
       <div class="flex space-x-4">
-        <button
-          onclick="login()"
-          class="public-only hover:text-[#f9db66] transition"
-        >
-          Teacher Login
-        </button>
-        <button
-          onclick="logout()"
-          class="admin-only hidden hover:text-[#f9db66] transition"
-        >
-          Logout
-        </button>
+        <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Teacher Login</button>
+        <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
       </div>
     </div>
 
-    <nav class="bg-[#ac2e55] text-white p-4 sticky top-0 z-50 shadow-md">
-      <div class="max-w-6xl mx-auto flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-          <span class="sketch text-2xl font-bold tracking-widest uppercase"
-            >Science at SWS</span
-          >
+    <nav class="bg-[#ac2e55] text-white p-4 sticky top-8 z-50 shadow-lg">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <img src="https://southwestschoolhn.com/wp-content/uploads/2021/08/Recurso-1.png" class="h-8 sm:h-10 brightness-0 invert" alt="SWS">
+          <span class="sketch text-xl sm:text-2xl font-bold tracking-tight">SCIENCE HUB</span>
         </div>
-        <div class="space-x-8 font-medium text-sm uppercase">
-          <a href="index.html" class="border-b-2 border-[#f9db66] pb-1"
-            >Dashboard</a
-          >
-          <a href="science-fair.html" class="hover:text-[#f9db66] transition"
-            >Science Fair</a
-          >
-          <a href="safety.html" class="hover:text-[#f9db66] transition"
-            >Lab Safety</a
-          >
-          <a href="#curriculum-section" class="hover:text-[#f9db66] transition"
-            >Curriculum</a
-          >
+        <div class="flex space-x-4 sm:space-x-8 font-medium text-[10px] sm:text-sm uppercase overflow-x-auto no-scrollbar whitespace-nowrap ml-4">
+          <a href="index.html" class="border-b-2 border-[#f9db66] pb-1">Dashboard</a>
+          <a href="science-fair.html" class="hover:text-[#f9db66]">Science Fair</a>
+          <a href="safety.html" class="hover:text-[#f9db66]">Safety</a>
+          <a href="#curriculum-section" class="hover:text-[#f9db66]">Curriculum</a>
         </div>
       </div>
     </nav>
 
-    <header class="hero-gradient py-24 px-6 text-center shadow-inner">
-      <h1 class="sketch text-7xl text-[#ac2e55] mb-2">Mr. Castro</h1>
-      <p class="text-[#ac2e55] font-bold text-xl uppercase tracking-[0.3em]">
-        2025 - 2026
-      </p>
+    <header class="hero-gradient py-12 sm:py-24 px-6 text-center shadow-inner">
+      <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 leading-tight">Master Binder</h1>
+      <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.2em]">Academic Year 2026</p>
     </header>
 
-    <main class="max-w-7xl mx-auto p-6 -mt-12 space-y-12">
-      <section id="curriculum-section" class="pt-10">
-        <div
-          class="flex justify-between items-end mb-8 border-b-2 border-[#ac2e55]/20 pb-4"
-        >
-          <h2 class="sketch text-5xl text-[#ac2e55]">Curriculum Hub</h2>
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 -mt-8 sm:-mt-12 space-y-8 sm:space-y-12">
+      
+      <section id="curriculum-section" class="pt-6">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-8 border-b-2 border-[#ac2e55]/20 pb-4">
+          <h2 class="sketch text-4xl sm:text-5xl text-[#ac2e55] mb-2 sm:mb-0">Curriculum</h2>
+          <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Master Plans</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div
-            class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col"
-          >
-            <div
-              class="bg-slate-800 p-4 flex justify-between items-center text-white"
-            >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
               <span class="sketch text-2xl">7th Grade</span>
-              <span class="bg-[#29c4a9] text-[10px] px-2 py-1 rounded font-bold"
-                >PLANETARY SCIENCE</span
-              >
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Planetary Science</span>
             </div>
-            <div class="p-6 flex-grow space-y-3">
-              <a
-                href="7th-hub.html"
-                class="block w-full text-center py-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-sm font-bold transition text-slate-600"
-                >Quarter Plan</a
-              >
-
+            <div class="p-5 flex-grow space-y-3">
+              <a href="7th-hub.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Quarter Plan</a>
+              
               <div class="admin-only hidden">
-                <a
-                  href="7th-slides.html"
-                  class="block w-full text-center py-3 bg-maroon text-white rounded-lg hover:bg-rose-800 text-sm font-bold transition shadow-md"
-                  >Weekly Plan (Slides)</a
-                >
+                <a href="7th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl hover:bg-rose-800 text-sm font-bold transition shadow-md">Launch Weekly Slides 🚀</a>
               </div>
-
-              <div
-                class="public-only text-[10px] text-center text-slate-400 italic"
-              >
-                Teacher login required for Weekly Slides.
+              
+              <div class="public-only text-[10px] text-center text-slate-400 py-2 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+                🔒 Teacher login required for Slides
               </div>
             </div>
           </div>
 
-          <div
-            class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-[#ac2e55] flex flex-col scale-105 shadow-2xl z-10"
-          >
-            <div
-              class="bg-[#ac2e55] p-4 flex justify-between items-center text-white"
-            >
-              <span class="sketch text-2xl text-[#f9db66]">11th Chem</span>
-              <span
-                class="bg-white/20 text-[10px] px-2 py-1 rounded font-bold uppercase"
-                >Stoichiometry</span
-              >
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-maroon flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-maroon p-4 flex justify-between items-center text-white" style="background-color: var(--sws-maroon);">
+              <span class="sketch text-2xl text-gold" style="color: var(--sws-gold);">11th Chem</span>
+              <span class="bg-white/20 text-[9px] px-2 py-1 rounded font-bold uppercase">Stoichiometry</span>
             </div>
-            <div class="p-6 flex-grow space-y-3">
-              <a
-                href="moles.html"
-                class="block w-full text-center py-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-sm font-bold transition text-slate-600"
-                >Molar Mass Tools</a
-              >
-              <a
-                href="#"
-                class="block w-full text-center py-3 bg-[#ac2e55] text-white rounded-lg hover:bg-rose-800 text-sm font-bold transition shadow-md"
-                >Weekly Plan</a
-              >
+            <div class="p-5 flex-grow space-y-3">
+              <a href="moles.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Molar Mass Tools</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
+              </div>
             </div>
           </div>
-        </div>
+
+          </div>
       </section>
     </main>
 
