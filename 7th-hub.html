@@ -3,123 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science at Southwest | Seventh Grade</title>
+    <title>Science Hub | 7th Grade</title>
 
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
-        .tab-btn.active { border-bottom: 4px solid var(--sws-gold); color: var(--sws-gold); }
-        .view { display: none; }
-        .view.active { display: block; }
-        
-        /* Formal Jornalización Styling */
-        .j-container { background: white; color: black; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: Arial, sans-serif; min-width: 800px; }
-        .j-header { text-align: center; font-weight: bold; text-transform: uppercase; font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid black; padding-bottom: 10px; }
-        .j-info-bar { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; font-weight: bold; }
-        .j-line { border-bottom: 1px solid black; flex-grow: 1; margin-left: 5px; height: 14px; }
-        table.j-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; font-size: 11px; }
-        table.j-table th, table.j-table td { border: 1px solid black; padding: 4px 6px; vertical-align: middle; }
-        table.j-table th { background: #f2f2f2; text-transform: uppercase; text-align: center; }
-        .col-date { width: 45px; text-align: center; font-weight: bold; background: #fafafa; }
-        .j-row { height: 32px; }
-        .no-class { color: #999; font-style: italic; background: #fdfdfd; }
-        .points { color: var(--sws-maroon); font-weight: bold; font-size: 9px; }
+        :root { 
+            --sws-maroon: #ac2e55; 
+            --sws-maroon-faded: #fdf2f5; /* Very light wash */
+            --sws-maroon-soft: #c86b85;  /* Desaturated */
+            --sws-gold: #f9db66; 
+            --sws-teal: #29c4a9; 
+            --slate-text: #334155;
+        }
 
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
+        body { font-family: "Rubik", sans-serif; background-color: #f8fafc; color: var(--slate-text); }
+        .sketch { font-family: "Cabin Sketch", cursive; }
+        
+        /* Navigation - Thinner and more subtle */
+        nav { background-color: var(--sws-maroon); box-shadow: 0 4px 12px rgba(172, 46, 85, 0.15); }
+        .tab-btn { color: #ffffffa0; transition: all 0.3s ease; border-bottom: 3px solid transparent; }
+        .tab-btn.active { color: white; border-bottom-color: var(--sws-gold); }
+
+        /* VIEW TRANSITIONS */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* THE STACKER CARDS - "Washed Out" Design */
+        .week-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, var(--sws-maroon-faded) 0%, #ffffff 100%);
+            border-bottom: 1px solid #fce7eb;
+            padding: 1.5rem 2rem;
+        }
+
+        .day-box {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .day-box:hover { background: #fdfdfd; border-color: var(--sws-maroon-soft); }
+
+        .no-class-box {
+            background: #f1f5f9;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            border: 1px dashed #cbd5e1;
+        }
+
+        /* Responsive Table for Jornalización */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 1rem; }
+        .j-table { min-width: 850px; background: white; border-collapse: collapse; }
+        .j-table th { background: #f8fafc; color: var(--sws-maroon); font-size: 0.7rem; padding: 12px; border: 1px solid #e2e8f0; }
+        .j-table td { border: 1px solid #f1f5f9; padding: 10px; font-size: 0.8rem; }
 
         @media print {
             nav, .tab-btn, .btn-print-hide { display: none !important; }
-            .j-container { box-shadow: none; padding: 0; width: 100%; }
             body { background: white; }
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900">
+<body>
 
-    <nav class="bg-[#ac2e55] text-white shadow-xl sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="sticky top-0 z-50 text-white">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <a href="index.html" class="sketch text-2xl text-[#f9db66]">7TH GRADE HUB</a>
-                <span class="opacity-50 text-xs uppercase font-bold border-l pl-4 border-white/20">Planetary Science</span>
+                <a href="index.html" class="sketch text-xl text-white">SWS HUB</a>
+                <span class="opacity-30 text-[10px] uppercase font-bold border-l pl-4 border-white/40">7th Planetary Science</span>
             </div>
-            <div class="flex space-x-6 text-xs font-bold uppercase">
+            <div class="flex space-x-6 text-[10px] font-bold uppercase tracking-wider">
                 <button onclick="switchView('quarter', this)" class="tab-btn active pb-1">Quarter Plan</button>
-                <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly Plans</button>
-                <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Files</button>
-                <a href="7th-slides.html" class="bg-[#f9db66] text-[#ac2e55] px-3 py-1 rounded font-bold hover:scale-105 transition">Slides</a>
+                <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly Stacker</button>
+                <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Notes</button>
+                <a href="7th-slides.html" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg border border-white/20 transition">Slides 🚀</a>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8">
+    <main class="max-w-6xl mx-auto p-6 md:p-12">
 
-        <section id="view-quarter" class="view active animate-fade-in">
-            <div class="flex justify-end mb-4 btn-print-hide">
-                <button onclick="window.print()" class="text-xs bg-slate-800 text-white px-4 py-2 rounded font-bold transition">Print / Save PDF</button>
+        <section id="view-quarter" class="view active">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="sketch text-3xl text-slate-800">Parcial III Jornalización</h2>
+                <button onclick="window.print()" class="text-[10px] font-bold border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 transition btn-print-hide uppercase">Print for Binder</button>
             </div>
-            <div class="table-responsive">
-                <div class="j-container">
-                    <div class="j-header">Jornalización Parcial 7mo Grado</div>
-                    <div class="j-info-bar">
-                        <div class="flex" style="width: 45%">DOCENTE: <span class="j-line">CÉSAR CASTRO</span></div>
-                        <div class="flex" style="width: 35%">CLASE: <span class="j-line">PLANETARY SCIENCE</span></div>
-                        <div class="flex" style="width: 15%">PARCIAL: <span class="j-line">III</span></div>
-                    </div>
-
-                    <table class="j-table">
-                        <thead><tr><th class="col-date">Fecha</th><th>Semana 3.1</th><th class="col-date">Fecha</th><th>Semana 3.2</th><th class="col-date">Fecha</th><th>Semana 3.3</th></tr></thead>
-                        <tbody>
-                            <tr class="j-row"><td class="col-date">01/12</td><td>Where Am I? (Intro)</td><td class="col-date">01/19</td><td>Round / Flat Earth (Intro)</td><td class="col-date">01/26</td><td>Compare & Contrast</td></tr>
-                            <tr class="j-row"><td class="col-date">01/13</td><td class="no-class">No Class</td><td class="col-date">01/20</td><td class="no-class">No Class</td><td class="col-date">01/27</td><td class="no-class">No Class</td></tr>
-                            <tr class="j-row"><td class="col-date">01/14</td><td>Maps, Elevation, Frame Ref.</td><td class="col-date">01/21</td><td>Sailing Ships & Shadows</td><td class="col-date">01/28</td><td>Day and Night (Inv 3 Intro)</td></tr>
-                            <tr class="j-row"><td class="col-date">01/15</td><td>Worksheet R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/22</td><td>Shadow Inv R <span class="points">(H.W. 5 pts)</span></td><td class="col-date">01/29</td><td>Time Zones R <span class="points">(C.W. 5 pts)</span></td></tr>
-                            <tr class="j-row"><td class="col-date">01/16</td><td>Activity: Investigation 1</td><td class="col-date">01/23</td><td>Class Discussion R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/30</td><td>Making a Model</td></tr>
+            <div class="table-responsive bg-white shadow-sm border border-slate-200">
+                <table class="j-table w-full">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">Date</th><th class="text-left">Semana 3.1 - 3.3</th>
+                            <th style="width: 60px;">Date</th><th class="text-left">Semana 3.4 - 3.6</th>
+                            <th style="width: 60px;">Date</th><th class="text-left">Semana 3.7 - 3.10</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quarter-rows">
+                        <tr>
+                            <td class="font-bold text-center text-slate-400">01/12</td><td>Where Am I? (Intro)</td>
+                            <td class="font-bold text-center text-slate-400">02/02</td><td>Reinforce Concepts</td>
+                            <td class="font-bold text-center text-slate-400">02/23</td><td>Moon Craters Intro</td>
+                        </tr>
                         </tbody>
-                    </table>
-
-                    <table class="j-table">
-                        <thead><tr><th class="col-date">Fecha</th><th>Semana 3.4</th><th class="col-date">Fecha</th><th>Semana 3.5</th><th class="col-date">Fecha</th><th>Semana 3.6</th></tr></thead>
-                        <tbody>
-                            <tr class="j-row"><td class="col-date">02/02</td><td>Reinforce Concepts</td><td class="col-date">02/09</td><td>Midterms</td><td class="col-date">02/16</td><td>Discover the Moon</td></tr>
-                            <tr class="j-row"><td class="col-date">02/03</td><td class="no-class">No Class</td><td class="col-date">02/10</td><td class="no-class">No Class</td><td class="col-date">02/17</td><td class="no-class">No Class</td></tr>
-                            <tr class="j-row"><td class="col-date">02/04</td><td>Study Guide <span class="points">(C.W. 5 pts)</span></td><td class="col-date">02/11</td><td>Midterms</td><td class="col-date">02/18</td><td>Moon Phases</td></tr>
-                            <tr class="j-row"><td class="col-date">02/05</td><td>Oral Presentations</td><td class="col-date">02/12</td><td>Midterms</td><td class="col-date">02/19</td><td>Observe Moon <span class="points">(H.W. 5 pts)</span></td></tr>
-                            <tr class="j-row"><td class="col-date">02/06</td><td>Activity: Inv 3 (Group)</td><td class="col-date">02/13</td><td>Discussion: Midterms</td><td class="col-date">02/20</td><td>Moon Myths</td></tr>
-                        </tbody>
-                    </table>
-
-                    <table class="j-table">
-                        <thead><tr><th class="col-date">Fecha</th><th>Semana 3.7</th><th class="col-date">Fecha</th><th>Semana 3.8</th><th class="col-date">Fecha</th><th>Semana 3.9</th></tr></thead>
-                        <tbody>
-                            <tr class="j-row"><td class="col-date">02/23</td><td>Moon Craters (Intro)</td><td class="col-date">03/02</td><td>Origin of the Moon</td><td class="col-date">03/09</td><td>Crater Reading</td></tr>
-                            <tr class="j-row"><td class="col-date">02/24</td><td class="no-class">No Class</td><td class="col-date">03/03</td><td class="no-class">No Class</td><td class="col-date">03/10</td><td class="no-class">No Class</td></tr>
-                            <tr class="j-row"><td class="col-date">02/25</td><td>Activity <span class="points">(10 pts)</span></td><td class="col-date">03/04</td><td>Space Probes</td><td class="col-date">03/11</td><td>Engineering: Design</td></tr>
-                            <tr class="j-row"><td class="col-date">02/26</td><td>Reading: First Man</td><td class="col-date">03/05</td><td>Moon Olympics</td><td class="col-date">03/12</td><td>Science Jeopardy</td></tr>
-                            <tr class="j-row"><td class="col-date">02/27</td><td>Impacts on Earth</td><td class="col-date">03/06</td><td>Apollo/Artemis</td><td class="col-date">03/13</td><td>Tides</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
         </section>
 
-        <section id="view-weekly" class="view space-y-12">
-            <div id="weekly-loader" class="text-center py-20 text-slate-400 font-bold animate-pulse">Syncing with Master Spreadsheet...</div>
-            <div id="weekly-container" class="space-y-10">
+        <section id="view-weekly" class="view space-y-10">
+            <div id="weekly-loader" class="text-center py-20 text-slate-300 font-medium">Syncing with Master Sheet...</div>
+            <div id="weekly-container" class="space-y-12">
                 </div>
         </section>
 
         <section id="view-script" class="view">
-            <div class="admin-only hidden bg-white rounded-xl shadow-2xl p-8 border-l-8 border-slate-900">
-                <h2 class="sketch text-3xl mb-4">Teacher Notes & Scripts</h2>
-                <p class="text-sm">Day 1 scripts are active. Pulling more from database...</p>
+            <div class="admin-only hidden bg-white rounded-3xl shadow-sm p-10 border border-slate-200">
+                <h2 class="sketch text-3xl mb-6 text-slate-800">Teacher Logic & Keys</h2>
+                <div class="space-y-6 text-slate-600">
+                    <p class="text-sm bg-slate-50 p-4 rounded-xl border-l-4 border-maroon">Day 1: Ensure students understand that a "Map" is just a projection from a specific Frame of Reference.</p>
+                </div>
             </div>
-            <div class="public-only text-center py-20 bg-slate-200 rounded-xl">
-                 <h2 class="sketch text-2xl text-slate-600">Restricted Access</h2>
-                 <button onclick="login()" class="bg-maroon text-white px-8 py-2 rounded-full font-bold mt-4">Login</button>
+            <div class="public-only text-center py-20 bg-slate-100 rounded-3xl border border-dashed border-slate-300">
+                 <p class="text-slate-400 font-bold uppercase text-xs tracking-widest">Restricted Area</p>
+                 <button onclick="login()" class="mt-4 bg-slate-800 text-white px-8 py-2 rounded-full font-bold shadow-md hover:bg-black transition">Login</button>
             </div>
         </section>
 
@@ -127,8 +150,7 @@
 
     <script src="scripts.js"></script>
     <script>
-        // PASTE YOUR CSV LINK HERE
-        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtnviC5QFMvabIKqngQBESngUuNXFBln40qt6IDTfN0x7WSkXJMhE7jRa3n6LVbQBduIsXh6-rIh28/pub?output=csv'; 
+        const SHEET_CSV_URL = 'YOUR_GOOGLE_CSV_LINK_HERE'; 
 
         async function loadWeeklyPlan() {
             const container = document.getElementById('weekly-container');
@@ -137,40 +159,52 @@
             try {
                 const response = await fetch(SHEET_CSV_URL);
                 const csvData = await response.text();
-                
-                // Parse CSV rows
                 const rows = csvData.split('\n').map(row => row.split(','));
                 
-                // Clear container before adding
                 container.innerHTML = '';
 
-                // Loop through rows (skip header row 0)
                 for (let i = 1; i < rows.length; i++) {
                     const r = rows[i];
-                    if(r.length < 5) continue; // Skip empty rows
+                    if(r.length < 5) continue;
 
                     const weekHtml = `
-                        <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
-                            <div class="bg-[#ac2e55] p-6 text-white">
-                                <h2 class="sketch text-4xl text-[#f9db66] mb-1">${r[0]}</h2>
-                                <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">${r[1]}</p>
+                        <div class="week-card">
+                            <div class="week-header flex justify-between items-end">
+                                <div>
+                                    <h2 class="sketch text-4xl text-slate-800">${r[0]}</h2>
+                                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">${r[1]}</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-slate-300 uppercase">Planetary Science</span>
                             </div>
                             <div class="p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
-                                <div class="border p-4 rounded bg-slate-50"><strong>MON</strong><br><span class="text-xs text-maroon font-bold uppercase">${r[2]}</span><p class="text-[10px] mt-2 italic">${r[3]}</p></div>
-                                <div class="border p-4 rounded bg-slate-100 opacity-40 flex items-center justify-center font-bold text-xs uppercase text-center">No Class</div>
-                                <div class="border p-4 rounded bg-slate-50"><strong>WED</strong><br><span class="text-xs text-maroon font-bold uppercase">${r[4]}</span><p class="text-[10px] mt-2 italic">${r[5]}</p></div>
-                                <div class="border p-4 rounded bg-yellow-50 border-yellow-200"><strong>THU</strong><br><span class="text-xs text-maroon font-bold uppercase">${r[6]}</span><p class="text-[10px] mt-2 font-bold text-teal-600">${r[7]}</p></div>
-                                <div class="border p-4 rounded bg-slate-50"><strong>FRI</strong><br><span class="text-xs text-maroon font-bold uppercase">${r[8]}</span><p class="text-[10px] mt-2 italic">${r[9]}</p></div>
+                                <div class="day-box">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span>
+                                    <h4 class="text-sm font-bold text-slate-800 mt-1 uppercase">${r[2]}</h4>
+                                    <p class="text-[10px] text-slate-500 mt-1 italic">${r[3]}</p>
+                                </div>
+                                <div class="day-box no-class-box">No Class</div>
+                                <div class="day-box">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Wednesday</span>
+                                    <h4 class="text-sm font-bold text-slate-800 mt-1 uppercase">${r[4]}</h4>
+                                    <p class="text-[10px] text-slate-500 mt-1 italic">${r[5]}</p>
+                                </div>
+                                <div class="day-box" style="border-bottom: 4px solid var(--sws-gold)">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span>
+                                    <h4 class="text-sm font-bold text-slate-800 mt-1 uppercase">${r[6]}</h4>
+                                    <p class="text-[10px] text-slate-600 mt-1 font-medium">${r[7]}</p>
+                                </div>
+                                <div class="day-box">
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span>
+                                    <h4 class="text-sm font-bold text-slate-800 mt-1 uppercase">${r[8]}</h4>
+                                    <p class="text-[10px] text-slate-500 mt-1 italic">${r[9]}</p>
+                                </div>
                             </div>
                         </div>
                     `;
                     container.innerHTML += weekHtml;
                 }
-
                 loader.classList.add('hidden');
-            } catch (error) {
-                console.error("Sheet Sync Failed:", error);
-            }
+            } catch (e) { console.error("Sync Error", e); }
         }
 
         function switchView(viewName, btn) {
