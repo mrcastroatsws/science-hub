@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7th Grade Hub | SWS</title>
+    <title>7th Grade Hub | SWS Master Binder</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
@@ -12,20 +12,37 @@
         .tab-btn.active { border-bottom: 4px solid var(--sws-gold); color: var(--sws-gold); }
         .view { display: none; }
         .view.active { display: block; }
-        table th { background-color: var(--sws-maroon); color: white; text-transform: uppercase; font-size: 0.75rem; padding: 10px; }
-        table td { border: 1px solid #e2e8f0; padding: 8px; vertical-align: top; font-size: 0.8rem; }
-        .week-head { background-color: #f8fafc; font-weight: bold; color: var(--sws-maroon); border-bottom: 2px solid var(--sws-maroon); }
+        
+        /* --- Formal Jornalización Styling --- */
+        .j-container { background: white; color: black; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-family: Arial, sans-serif; }
+        .j-header { text-align: center; font-weight: bold; text-transform: uppercase; font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid black; padding-bottom: 10px; }
+        .j-info-bar { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; font-weight: bold; }
+        .j-line { border-bottom: 1px solid black; flex-grow: 1; margin-left: 5px; height: 14px; }
+        
+        table.j-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; font-size: 11px; }
+        table.j-table th, table.j-table td { border: 1px solid black; padding: 4px 6px; vertical-align: middle; }
+        table.j-table th { background: #f2f2f2; text-transform: uppercase; text-align: center; }
+        .col-date { width: 45px; text-align: center; font-weight: bold; background: #fafafa; }
+        .j-row { height: 32px; }
+        .no-class { color: #999; font-style: italic; background: #fdfdfd; }
+        .points { color: var(--sws-maroon); font-weight: bold; font-size: 9px; }
+
+        @media print {
+            nav, .tab-btn, .btn-print-hide { display: none !important; }
+            .j-container { box-shadow: none; padding: 0; width: 100%; }
+            body { background: white; }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-100 text-slate-900">
 
     <nav class="bg-[#ac2e55] text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <a href="index.html" class="sketch text-2xl text-[#f9db66]">Home</a>
+                <a href="index.html" class="sketch text-2xl text-[#f9db66]">7TH GRADE HUB</a>
                 <span class="opacity-50 text-xs uppercase font-bold border-l pl-4 border-white/20">Planetary Science</span>
             </div>
-            <div class="flex space-x-8 text-xs font-bold uppercase">
+            <div class="flex space-x-6 text-xs font-bold uppercase">
                 <button onclick="switchView('quarter', this)" class="tab-btn active pb-1">Quarter Plan</button>
                 <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly (3.1)</button>
                 <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Script</button>
@@ -36,40 +53,79 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-8">
 
-        <section id="view-quarter" class="view active">
-            <div class="bg-white rounded-xl shadow-2xl overflow-x-auto">
-                <div class="p-6 bg-slate-50 border-b flex justify-between items-center">
-                    <h2 class="sketch text-3xl text-[#ac2e55]">Jornalización Parcial - III Parcial</h2>
-                    <div class="text-right text-[10px] uppercase font-bold text-slate-400">Docente: César Castro</div>
+        <section id="view-quarter" class="view active animate-fade-in">
+            <div class="flex justify-end mb-4 btn-print-hide">
+                <button onclick="window.print()" class="text-xs bg-slate-800 text-white px-4 py-2 rounded font-bold hover:bg-black">Print / Save PDF</button>
+            </div>
+
+            <div class="j-container">
+                <div class="j-header">Jornalización Parcial 7mo Grado</div>
+                
+                <div class="j-info-bar">
+                    <div class="flex w-[45%]">DOCENTE: <span class="j-line">CÉSAR CASTRO</span></div>
+                    <div class="flex w-[35%]">CLASE: <span class="j-line">PLANETARY SCIENCE</span></div>
+                    <div class="flex w-[15%]">PARCIAL: <span class="j-line">III</span></div>
                 </div>
-                <table class="w-full border-collapse">
+
+                <table class="j-table">
                     <thead>
                         <tr>
-                            <th class="w-1/3">Semanas 3.1 - 3.3</th>
-                            <th class="w-1/3">Semanas 3.4 - 3.6</th>
-                            <th class="w-1/3">Semanas 3.7 - 3.10</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.1</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.2</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.3</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="j-row"><td class="col-date">01/12</td><td>Where Am I? (Intro)</td><td class="col-date">01/19</td><td>Round / Flat Earth (Intro)</td><td class="col-date">01/26</td><td>Compare & Contrast</td></tr>
+                        <tr class="j-row"><td class="col-date">01/13</td><td class="no-class">No Class</td><td class="col-date">01/20</td><td class="no-class">No Class</td><td class="col-date">01/27</td><td class="no-class">No Class</td></tr>
+                        <tr class="j-row"><td class="col-date">01/14</td><td>Maps, Elevation, Frame Ref.</td><td class="col-date">01/21</td><td>Sailing Ships & Shadows</td><td class="col-date">01/28</td><td>Day and Night (Inv 3 Intro)</td></tr>
+                        <tr class="j-row"><td class="col-date">01/15</td><td>Worksheet R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/22</td><td>Shadow Inv R <span class="points">(H.W. 5 pts)</span></td><td class="col-date">01/29</td><td>Time Zones R <span class="points">(C.W. 5 pts)</span></td></tr>
+                        <tr class="j-row"><td class="col-date">01/16</td><td>Activity: Investigation 1</td><td class="col-date">01/23</td><td>Class Discussion R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">01/30</td><td>Making a Model</td></tr>
+                    </tbody>
+                </table>
+
+                <table class="j-table">
+                    <thead>
                         <tr>
-                            <td><strong>3.1 (01/12):</strong> Where Am I?<br>Establishing Frame of Ref.</td>
-                            <td><strong>3.4 (02/02):</strong> Reinforce Concepts<br>Concept Review (3.1-3.3)</td>
-                            <td><strong>3.7 (02/23):</strong> Moon Craters<br>Intro & Part 6 Impacts</td>
+                            <th class="col-date">Fecha</th><th>Semana 3.4</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.5</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.6</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="j-row"><td class="col-date">02/02</td><td>Reinforce Concepts (3.1-3.3)</td><td class="col-date">02/09</td><td>Midterms</td><td class="col-date">02/16</td><td>Discover the Moon (Intro)</td></tr>
+                        <tr class="j-row"><td class="col-date">02/03</td><td class="no-class">No Class</td><td class="col-date">02/10</td><td class="no-class">No Class</td><td class="col-date">02/17</td><td class="no-class">No Class</td></tr>
+                        <tr class="j-row"><td class="col-date">02/04</td><td>Study Guide R <span class="points">(C.W. 5 pts)</span></td><td class="col-date">02/11</td><td>Midterms</td><td class="col-date">02/18</td><td>The Phases of the Moon</td></tr>
+                        <tr class="j-row"><td class="col-date">02/05</td><td>Oral Presentations</td><td class="col-date">02/12</td><td>Midterms</td><td class="col-date">02/19</td><td>Observe Moon R <span class="points">(H.W. 5 pts)</span></td></tr>
+                        <tr class="j-row"><td class="j-row col-date">02/06</td><td>Activity: Inv 3 (Group)</td><td class="col-date">02/13</td><td>Discussion: Midterms</td><td class="col-date">02/20</td><td>Read and Discuss Moon Myths</td></tr>
+                    </tbody>
+                </table>
+
+                <table class="j-table">
+                    <thead>
                         <tr>
-                            <td><strong>3.2 (01/19):</strong> Round vs Flat Earth<br>Shadows & Sailing Ships</td>
-                            <td><strong>3.5 (02/09):</strong> Midterms<br><span class="text-maroon font-bold">(20 pts)</span></td>
-                            <td><strong>3.8 (03/02):</strong> Origin of the Moon<br>CW#3 (5 pts) / Moon Olympics</td>
+                            <th class="col-date">Fecha</th><th>Semana 3.7</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.8</th>
+                            <th class="col-date">Fecha</th><th>Semana 3.9</th>
                         </tr>
-                        <tr>
-                            <td><strong>3.3 (01/26):</strong> Day & Night<br>Time Zones / Making a Model</td>
-                            <td><strong>3.6 (02/16):</strong> Discover the Moon<br>Phases & Moon Myths</td>
-                            <td><strong>3.9 (03/09):</strong> Engineering Design<br>Planetary Science Jeopardy</td>
-                        </tr>
-                        <tr class="bg-yellow-50">
-                            <td colspan="2" class="text-center font-bold italic">End of Regular Instruction</td>
-                            <td><strong>3.10 (03/16):</strong> Quarter Exams<br><span class="text-maroon font-bold">(20 pts)</span></td>
-                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="j-row"><td class="col-date">02/23</td><td>Moon Craters (Intro)</td><td class="col-date">03/02</td><td>Origin of the Moon <span class="points">(C.W. 5 pts)</span></td><td class="col-date">03/09</td><td>The Crater that Ended it All</td></tr>
+                        <tr class="j-row"><td class="col-date">02/24</td><td class="no-class">No Class</td><td class="col-date">03/03</td><td class="no-class">No Class</td><td class="col-date">03/10</td><td class="no-class">No Class</td></tr>
+                        <tr class="j-row"><td class="col-date">02/25</td><td>Model Craters <span class="points">(Activity 10 pts)</span></td><td class="col-date">03/04</td><td>Reading: Space Probes</td><td class="col-date">03/11</td><td>Engineering: Design</td></tr>
+                        <tr class="j-row"><td class="col-date">02/26</td><td>First Man on Moon / HW Disc.</td><td class="col-date">03/05</td><td>Review: Moon Olympics</td><td class="col-date">03/12</td><td>Planetary Science Jeopardy</td></tr>
+                        <tr class="j-row"><td class="col-date">02/27</td><td>Part 6: Impacts on Earth</td><td class="col-date">03/06</td><td>Apollo and Artemis Discussion</td><td class="col-date">03/13</td><td>High Tide vs. Low Tide</td></tr>
+                    </tbody>
+                </table>
+
+                <table class="j-table" style="width: 33.3%;">
+                    <thead><tr><th class="col-date">Fecha</th><th>Semana 3.10</th></tr></thead>
+                    <tbody>
+                        <tr class="j-row"><td class="col-date">03/16</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
+                        <tr class="j-row"><td class="col-date">03/17</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
+                        <tr class="j-row"><td class="col-date">03/18</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
+                        <tr class="j-row"><td class="col-date">03/19</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
+                        <tr class="j-row"><td class="col-date">03/20</td><td>Quarter Exams <span class="points">(20 pts)</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -78,63 +134,42 @@
         <section id="view-weekly" class="view">
             <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
                 <div class="bg-maroon p-8 text-white">
-                    <h3 class="text-gold sketch text-4xl mb-2">Week 3.1: 12th Jan - 16th Jan</h3>
-                    <p class="text-sm opacity-80 uppercase tracking-widest font-bold">General Objective: Intro to Frame of Reference & Mapping</p>
+                    <h2 class="sketch text-5xl text-[#f9db66] mb-2">Week 3.1</h2>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em]">12th Jan - 16th Jan | Intro to Frame of Reference</p>
                 </div>
-                <div class="p-6 grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div class="border p-4 rounded-lg bg-slate-50">
-                        <h4 class="font-bold border-b mb-2">Monday</h4>
-                        <p class="text-[10px] font-bold text-maroon uppercase">Where Am I?</p>
-                        <p class="text-[10px] text-slate-500 mt-2">Activity: Zoom Out (Classroom to Earth)</p>
-                    </div>
-                    <div class="border p-4 rounded-lg opacity-40 bg-slate-100 flex items-center justify-center">
-                        <span class="text-xs font-bold uppercase rotate-12">No Class</span>
-                    </div>
-                    <div class="border p-4 rounded-lg bg-slate-50">
-                        <h4 class="font-bold border-b mb-2">Wednesday</h4>
-                        <p class="text-[10px] font-bold text-maroon uppercase">Maps & Elevation</p>
-                        <p class="text-[10px] text-slate-500 mt-2">Activity: Contour Lines & Profile Sketch</p>
-                    </div>
-                    <div class="border p-4 rounded-lg bg-yellow-50 border-yellow-200">
-                        <h4 class="font-bold border-b mb-2">Thursday</h4>
-                        <p class="text-[10px] font-bold text-maroon uppercase">Review & CW#1</p>
-                        <p class="text-[10px] font-bold text-teal-600 mt-2">Worksheet R (5 pts)</p>
-                    </div>
-                    <div class="border p-4 rounded-lg bg-slate-50">
-                        <h4 class="font-bold border-b mb-2">Friday</h4>
-                        <p class="text-[10px] font-bold text-maroon uppercase">Investigation 1</p>
-                        <p class="text-[10px] text-slate-500 mt-2">HW: Begin Moon Log (Obs 1)</p>
-                    </div>
+                <div class="p-8 grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="border p-4 rounded bg-slate-50"><strong>MON (01/12)</strong><br><span class="text-xs text-maroon font-bold uppercase">Where Am I?</span><p class="text-[10px] mt-2 italic">Activity: Zoom Out</p></div>
+                    <div class="border p-4 rounded bg-slate-100 opacity-50 flex items-center justify-center font-bold text-xs uppercase">No Class</div>
+                    <div class="border p-4 rounded bg-slate-50"><strong>WED (01/14)</strong><br><span class="text-xs text-maroon font-bold uppercase">Maps & Elevation</span><p class="text-[10px] mt-2 italic">Activity: Profile Sketch</p></div>
+                    <div class="border p-4 rounded bg-yellow-50"><strong>THU (01/15)</strong><br><span class="text-xs text-maroon font-bold uppercase">Review & CW#1</span><p class="text-[10px] mt-2 font-bold text-teal-600">Worksheet R (5 pts)</p></div>
+                    <div class="border p-4 rounded bg-slate-50"><strong>FRI (01/16)</strong><br><span class="text-xs text-maroon font-bold uppercase">Investigation 1</span><p class="text-[10px] mt-2 italic">HW: Begin Moon Log</p></div>
                 </div>
             </div>
         </section>
 
         <section id="view-script" class="view">
-            <div class="admin-only hidden bg-white rounded-xl shadow-2xl p-8 border-l-8 border-slate-900">
-                <h2 class="sketch text-4xl text-slate-800 mb-6 border-b pb-2">Teacher Script: Week 3.1.1</h2>
-                <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <span class="font-mono text-maroon font-bold">00:00</span>
-                        <p class="text-sm"><strong>The Hook:</strong> Ask about meeting at "the store." Drive the point that coordinates are meaningless without a system.</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <span class="font-mono text-maroon font-bold">10:00</span>
-                        <p class="text-sm"><strong>The Demo:</strong> Show the slide of the room vs the slide of the Earth. Ask: "Is our frame the same?"</p>
-                    </div>
-                    <div class="flex gap-4">
-                        <span class="font-mono text-maroon font-bold">35:00</span>
-                        <p class="text-sm"><strong>Exit Ticket:</strong> Ensure every student has their "Cosmic Address" written down before the bell.</p>
-                    </div>
+            <div class="bg-white rounded-xl shadow-2xl p-8 border-l-8 border-slate-900">
+                <div class="admin-only hidden">
+                    <h2 class="sketch text-3xl mb-4">Annotated Teacher Script (3.1.1)</h2>
+                    <p class="text-sm italic">Include minute-by-minute cues here...</p>
                 </div>
-            </div>
-            <div class="public-only bg-slate-200 p-20 rounded-xl text-center">
-                <p class="italic text-slate-500">Teacher credentials required to view lesson scripts.</p>
-                <button onclick="login()" class="mt-4 bg-maroon text-white px-6 py-2 rounded-full font-bold">Login to Unlock</button>
+                <div class="public-only text-center py-20">
+                    <p class="italic text-slate-400">Teacher Login Required for Script.</p>
+                </div>
             </div>
         </section>
 
     </main>
 
     <script src="scripts.js"></script>
+    <script>
+        // Internal switch function for Hub Navigation
+        function switchView(viewName, btn) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+    </script>
 </body>
 </html>
