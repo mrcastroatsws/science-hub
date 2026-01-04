@@ -9,6 +9,24 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* Hide everything by default to prevent the "flash" */
+#slide-vault { display: none; }
+
+/* The Gotcha Screen */
+#gotcha-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #0f0; /* Matrix Green */
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    padding: 20px;
+}
         :root {
             --sws-maroon: #ac2e55;
             --sws-gold: #f9db66;
@@ -61,6 +79,41 @@
         .progress-fill { height: 100%; background: var(--sws-gold); width: 0%; transition: width 0.3s; }
     </style>
 </head>
+<body class="bg-slate-50">
+    <div id="gotcha-screen">
+        <h1 style="color: #0f0; font-size: 3rem;">ACCESS DENIED</h1>
+        <p style="font-size: 1.5rem;">Nice try, detective. <br>I see you trying to peek.</p>
+        <div style="margin: 20px; font-size: 1rem; opacity: 0.7;">
+            REDIRECTING TO DASHBOARD...
+        </div>
+    </div>
+
+    <div id="slide-vault">
+        <div class="slide-container">
+            </div>
+        
+        </div>
+
+    <script>
+        // IMMEDIATE GUARDING LOGIC
+        (function() {
+            const isAuthorized = localStorage.getItem("sws_admin_auth");
+            const vault = document.getElementById('slide-vault');
+            const gotcha = document.getElementById('gotcha-screen');
+
+            if (isAuthorized === "true") {
+                // User is Mr. Castro - show the slides
+                vault.style.display = 'block';
+            } else {
+                // User is a student - show the Gotcha and boot them
+                gotcha.style.display = 'flex';
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 3000); // Give them 3 seconds to feel the "Gotcha"
+            }
+        })();
+    </script>
+
 <body>
 
     <div class="slide-container">
