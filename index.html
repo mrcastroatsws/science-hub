@@ -6,6 +6,7 @@
     <title>Science at Southwest</title>
 
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-180x180.png">
 
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,23 +17,26 @@
       body { font-family: "Rubik", sans-serif; overflow-x: hidden; }
       .sketch { font-family: "Cabin Sketch", cursive; }
       
-      /* Mobile optimization for the hero */
       .hero-gradient {
-        background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249, 219, 102, 0.8) 100%),
+        background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
           url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
         background-size: cover; background-position: center;
       }
+
+      /* Navigation scrollbar hide */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
   </head>
 
   <body class="bg-slate-50">
     <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest sticky top-0 z-[60]">
       <div class="flex items-center space-x-2">
-        <span class="opacity-50 hidden sm:inline">Science at Southwest</span>
-        <span class="admin-only hidden text-[#29c4a9]">● Admin: Mr. Castro</span>
+        <span class="opacity-50 hidden sm:inline text-[#29c4a9]">SWS Science Department</span>
+        <span class="admin-only hidden text-[#29c4a9] font-bold">● Admin Session: Mr. Castro</span>
       </div>
       <div class="flex space-x-4">
-        <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Login</button>
+        <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Teacher Login</button>
         <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
       </div>
     </div>
@@ -44,23 +48,26 @@
         </div>
         <div class="flex space-x-4 sm:space-x-8 font-medium text-[10px] sm:text-sm uppercase overflow-x-auto no-scrollbar whitespace-nowrap ml-4">
           <a href="index.html" class="border-b-2 border-[#f9db66] pb-1">Dashboard</a>
-          <a href="science-fair.html" class="hover:text-[#f9db66]">Science Fair</a>
-          <a href="safety.html" class="hover:text-[#f9db66]">Safety</a>
-          <a href="#curriculum-section" class="hover:text-[#f9db66]">Curriculum</a>
+          <a href="science-fair.html" class="hover:text-[#f9db66] transition">Science Fair</a>
+          <a href="safety.html" class="hover:text-[#f9db66] transition">Lab Safety</a>
+          <a href="#curriculum-section" class="hover:text-[#f9db66] transition">Curriculum</a>
         </div>
       </div>
     </nav>
 
     <header class="hero-gradient py-12 sm:py-24 px-6 text-center shadow-inner">
-      <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 leading-tight">Mr. Castro</h1>
-      <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.2em]">2025 - 2026</p>
+      <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 leading-tight">Master Binder</h1>
+      <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.3em]">Academic Year 2025 - 2026</p>
     </header>
 
     <main class="max-w-7xl mx-auto p-4 sm:p-6 -mt-8 sm:-mt-12 space-y-8 sm:space-y-12">
       
       <section id="curriculum-section" class="pt-6">
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-8 border-b-2 border-[#ac2e55]/20 pb-4">
-            <br><br><br><br>
+        <div class="flex flex-col sm:flex-row justify-between items-end mb-8 border-b-2 border-[#ac2e55]/20 pb-4">
+            <div>
+                <h2 class="sketch text-4xl sm:text-5xl text-[#ac2e55]">Curriculum Hub</h2>
+                <p class="text-slate-500 font-bold uppercase tracking-widest text-[10px] mt-2">7th through 11th Grade</p>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -72,13 +79,74 @@
             </div>
             <div class="p-5 flex-grow space-y-3">
               <a href="7th-hub.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Quarter Plan</a>
-              
               <div class="admin-only hidden">
-                <a href="7th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl hover:bg-rose-800 text-sm font-bold transition shadow-md">Launch Weekly Slides 🚀</a>
+                <a href="7th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold shadow-md">Launch Weekly Slides 🚀</a>
               </div>
-              
-              <div class="public-only text-[10px] text-center text-slate-400 py-2 bg-slate-50 rounded-lg border border-dashed border-slate-200">
-                Login Required
+              <div class="public-only text-[10px] text-center text-slate-400 py-2 bg-slate-50 rounded-lg border border-dashed border-slate-200 italic">🔒 Teacher login required for Slides</div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
+              <span class="sketch text-2xl">8th Grade</span>
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Electronics</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-maroon flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-maroon p-4 flex justify-between items-center text-white" style="background-color: var(--sws-maroon);">
+              <span class="sketch text-2xl text-gold" style="color: var(--sws-gold);">9th Grade</span>
+              <span class="bg-white/20 text-[9px] px-2 py-1 rounded font-bold uppercase">Chemistry Focus</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Launch Weekly Slides 🚀</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
+              <span class="sketch text-2xl">10th Biology</span>
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Life Sciences</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
+              <span class="sketch text-2xl">10th Chem</span>
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Chemical Systems</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
+              <span class="sketch text-2xl">11th Biology</span>
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Adv. Life Sciences</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
+              <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
               </div>
             </div>
           </div>
@@ -91,12 +159,25 @@
             <div class="p-5 flex-grow space-y-3">
               <a href="moles.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Molar Mass Tools</a>
               <div class="admin-only hidden">
+                <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold shadow-md">Launch Weekly Slides 🚀</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
+            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
+              <span class="sketch text-2xl">11th Econ</span>
+              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Economics</span>
+            </div>
+            <div class="p-5 flex-grow space-y-3">
+              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Annual Plan</a>
+              <div class="admin-only hidden">
                 <a href="#" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold">Weekly Plan</a>
               </div>
             </div>
           </div>
 
-          </div>
+        </div>
       </section>
     </main>
 
