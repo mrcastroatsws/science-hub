@@ -1,397 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planetary Science | Week 3.1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWS | Planetary Science Master Deck 3.1</title>
 
-    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png"
+href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png"
+sizes="32x32">
 
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
-    <style>
-        /* Hide everything by default to prevent the "flash" */
-#slide-vault { display: none; }
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-/* The Gotcha Screen */
-#gotcha-screen {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #000;
-    color: #0f0; /* Matrix Green */
-    z-index: 9999;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Courier New', monospace;
-    text-align: center;
-    padding: 20px;
+<style>
+:root{
+--sws-maroon:#ac2e55;
+--sws-gold:#f9db66;
+--sws-teal:#29c4a9;
+--bg:#0f172a;
+--text:#f1f5f9;
+--glass:rgba(255,255,255,.04);
+--border:rgba(255,255,255,.12);
 }
-        :root {
-            --sws-maroon: #ac2e55;
-            --sws-gold: #f9db66;
-            --sws-teal: #29c4a9;
-            --bg-color: #0f172a; 
-            --text-color: #f1f5f9;
-            --secondary-bg: rgba(255,255,255,0.05);
-        }
 
-        body {
-            margin: 0; padding: 0;
-            font-family: 'Rubik', sans-serif;
-            background-color: var(--bg-color); color: var(--text-color);
-            overflow: hidden; height: 100vh;
-            display: flex; flex-direction: column;
-        }
+*{box-sizing:border-box}
 
-        .sketch { font-family: 'Cabin Sketch', cursive; }
-        h1 { font-size: 3.2rem; margin-bottom: 10px; color: var(--sws-gold); text-transform: uppercase; letter-spacing: 1px; }
-        h2 { font-size: 2rem; color: var(--sws-teal); margin-bottom: 20px; font-weight: 400; }
-        h3 { font-size: 1.3rem; color: var(--sws-maroon); text-transform: uppercase; margin-bottom: 5px; }
-        p, li { font-size: 1.5rem; line-height: 1.4; margin-bottom: 15px; }
-        .accent { color: var(--sws-gold); font-weight: bold; }
+body{
+margin:0;
+font-family:Rubik,sans-serif;
+background:var(--bg);
+color:var(--text);
+height:100vh;
+overflow:hidden;
+}
 
-        .slide-container { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; padding: 40px; }
-        .slide { display: none; width: 100%; max-width: 1200px; height: 100%; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: fadeIn 0.4s ease-in-out; }
-        .slide.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+#slide-vault{display:none}
+#gotcha-screen{
+display:none;
+position:fixed;
+inset:0;
+background:#000;
+color:#0f0;
+z-index:9999;
+font-family:JetBrains Mono,monospace;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
 
-        .day-badge { position: absolute; top: 30px; left: 40px; background: var(--sws-maroon); color: white; padding: 5px 15px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; letter-spacing: 1px; z-index: 10; }
-        .objective-box { background: var(--secondary-bg); border-left: 6px solid var(--sws-teal); padding: 25px; text-align: left; border-radius: 0 12px 12px 0; max-width: 850px; margin: 15px 0; }
-        .activity-box { background: var(--secondary-bg); border: 2px solid var(--sws-maroon); padding: 25px; border-radius: 12px; max-width: 850px; margin: 15px 0; }
-        
-        /* Menu Cards Row */
-        .menu-grid { display: flex; gap: 15px; justify-content: center; width: 100%; margin-top: 25px; flex-wrap: nowrap; }
-        .menu-card { background: var(--secondary-bg); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; width: 19%; cursor: pointer; transition: 0.2s; text-align: left; position: relative; }
-        .menu-card:hover { border-color: var(--sws-gold); transform: translateY(-5px); background: rgba(249, 219, 102, 0.05); }
-        .card-date { font-size: 0.7rem; font-weight: bold; opacity: 0.6; color: var(--sws-teal); }
-        .card-topic { font-size: 0.9rem; font-weight: bold; margin-top: 5px; line-height: 1.2; }
+/* NAV */
+.nav{
+position:fixed;
+top:20px;
+right:20px;
+display:flex;
+gap:8px;
+z-index:200;
+}
 
-        button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; font-size: 1rem; cursor: pointer; border-radius: 6px; margin: 5px; font-family: 'Rubik', sans-serif; transition: 0.2s; }
-        button:hover { background: var(--sws-maroon); border-color: var(--sws-maroon); }
-        .reveal-btn { background: var(--sws-teal); border: none; color: var(--bg-color); font-weight: bold; }
-        .hidden-content { visibility: hidden; opacity: 0; transition: opacity 0.3s; }
-        .visible { visibility: visible; opacity: 1; }
-        .timer-display { font-size: 5rem; font-weight: bold; color: var(--sws-gold); font-family: monospace; margin: 15px 0; }
+button{
+background:var(--glass);
+border:1px solid var(--border);
+color:white;
+padding:10px 16px;
+border-radius:6px;
+cursor:pointer;
+font-weight:700;
+}
 
-        .nav-buttons { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
-        .progress-bar { height: 4px; background: rgba(255,255,255,0.1); width: 100%; position: absolute; bottom: 0; }
-        .progress-fill { height: 100%; background: var(--sws-gold); width: 0%; transition: width 0.3s; }
-    </style>
+/* SLIDES */
+.stage{
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:80px;
+}
+
+.slide{
+display:none;
+max-width:1200px;
+width:100%;
+text-align:center;
+animation:fade .4s ease;
+}
+
+.slide.active{display:block}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{font-size:3.8rem;color:var(--sws-gold)}
+h2{color:var(--sws-teal);font-weight:400}
+h3{color:var(--sws-maroon)}
+
+.sketch{font-family:Cabin Sketch,cursive}
+.mono{font-family:JetBrains Mono,monospace}
+
+.box{
+background:var(--glass);
+border-left:8px solid var(--sws-teal);
+padding:30px;
+margin:25px auto;
+max-width:900px;
+text-align:left;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.card{
+background:var(--glass);
+border:1px solid var(--border);
+padding:25px;
+border-radius:16px;
+text-align:left;
+}
+
+.badge{
+display:inline-block;
+padding:6px 16px;
+border-radius:40px;
+font-size:.7rem;
+font-weight:800;
+letter-spacing:1px;
+background:var(--sws-maroon);
+margin-bottom:15px;
+}
+
+.design{background:#f15a24}
+
+.timer{
+font-size:6rem;
+font-family:JetBrains Mono;
+color:var(--sws-gold);
+}
+
+/* PROGRESS */
+.progress{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:4px;
+background:rgba(255,255,255,.1);
+}
+.progress-fill{
+height:100%;
+width:0%;
+background:linear-gradient(to right,var(--sws-maroon),var(--sws-teal));
+transition:.3s;
+}
+</style>
 </head>
-<body class="bg-slate-50">
-    <div id="gotcha-screen">
-        <h1 style="color: #0f0; font-size: 3rem;">ACCESS DENIED</h1>
-        <p style="font-size: 1.5rem;">Nice try, detective. <br>I see you trying to peek.</p>
-        <div style="margin: 20px; font-size: 1rem; opacity: 0.7;">
-            REDIRECTING TO DASHBOARD
-        </div>
-    </div>
-
-    <div id="slide-vault">
-        <div class="slide-container">
-            </div>
-        
-        </div>
-
-    <script>
-        // IMMEDIATE GUARDING LOGIC
-        (function() {
-            const isAuthorized = localStorage.getItem("sws_admin_auth");
-            const vault = document.getElementById('slide-vault');
-            const gotcha = document.getElementById('gotcha-screen');
-
-            if (isAuthorized === "true") {
-                // User is Mr. Castro - show the slides
-                vault.style.display = 'block';
-            } else {
-                // User is a student - show the Gotcha and boot them
-                gotcha.style.display = 'flex';
-                setTimeout(() => {
-                    window.location.href = "index.html";
-                }, 3000); // Give them 3 seconds to feel the "Gotcha"
-            }
-        })();
-    </script>
 
 <body>
 
-    <div class="slide-container">
+<div id="gotcha-screen">
+<h1>ACCESS DENIED</h1>
+<p>Teacher authentication required.</p>
+</div>
 
-        <div class="slide active">
-            <h1 class="sketch" style="font-size: 4.5rem; color: var(--sws-maroon);">Planetary Science</h1>
-            <h2 style="color: var(--sws-gold);">Week 3.1 Master Deck</h2>
-            <div class="objective-box">
-                <h3 style="margin: 0; font-size: 0.9rem; opacity: 0.7;">Weekly Objective:</h3>
-                <p style="font-size: 1.1rem; margin: 10px 0 0 0;">Introduce "Frame of Reference" and 2D/3D representations (maps). Establish the baseline for Investigation 1: Sky Observation.</p>
-            </div>
-            
-            <p style="margin-top: 20px; font-style: italic; opacity: 0.8; font-size: 1.2rem;">Select Lesson Segment:</p>
-            
-            <div class="menu-grid">
-                <div class="menu-card" onclick="goToSlide(1)">
-                    <div class="card-date">JAN 12 (3.1.1)</div>
-                    <div class="card-topic accent">MONDAY</div>
-                    <div class="card-topic">Where Am I? Intro</div>
-                </div>
-                <div class="menu-card" style="opacity: 0.5; cursor: default;">
-                    <div class="card-date">JAN 13 (3.1.2)</div>
-                    <div class="card-topic" style="color: var(--sws-maroon)">TUESDAY</div>
-                    <div class="card-topic">NO CLASS</div>
-                </div>
-                <div class="menu-card" onclick="goToSlide(7)">
-                    <div class="card-date">JAN 14 (3.1.3)</div>
-                    <div class="card-topic accent">WEDNESDAY</div>
-                    <div class="card-topic">Maps & Elevation</div>
-                </div>
-                <div class="menu-card" onclick="goToSlide(11)">
-                    <div class="card-date">JAN 15 (3.1.4)</div>
-                    <div class="card-topic accent">THURSDAY</div>
-                    <div class="card-topic">Application (CW#1)</div>
-                </div>
-                <div class="menu-card" onclick="goToSlide(14)">
-                    <div class="card-date">JAN 16 (3.1.5)</div>
-                    <div class="card-topic accent">FRIDAY</div>
-                    <div class="card-topic">Investigation 1</div>
-                </div>
-            </div>
-        </div>
+<div id="slide-vault">
 
-        <div class="slide">
-            <div class="day-badge">MON 3.1.1</div>
-            <h1 class="sketch">The Hook</h1>
-            <div style="font-size: 5rem; margin: 15px;">🏪 🤔</div>
-            <p style="font-size: 2rem; font-weight: bold;">"If I tell you to meet me at <span class="accent">the store</span>, how do you know which one?"</p>
-        </div>
+<div class="nav">
+<button onclick="changeSlide(-1)">❮ Prev</button>
+<button onclick="changeSlide(1)">Next ❯</button>
+<button onclick="location.href='index.html'">🏠 Hub</button>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">MON 3.1.1</div>
-            <h1>Daily Objective</h1>
-            <div class="objective-box">
-                <p style="margin: 0;">Define <span class="teal-accent">Frame of Reference</span> and explain why it is necessary for locating objects.</p>
-            </div>
-        </div>
+<div class="stage">
 
-        <div class="slide">
-            <div class="day-badge">MON 3.1.1</div>
-            <h1>Key Concept</h1>
-            <h2 class="sketch" style="font-size: 2.8rem; color: var(--sws-gold);">Frame of Reference</h2>
-            <p>A set of criteria or values in relation to which <span class="teal-accent">measurements</span> can be made.</p>
-        </div>
+<!-- MENU -->
+<div class="slide active">
+<h1 class="sketch">Planetary Science</h1>
+<h2>Quarter 3 • Week 3.1</h2>
 
-        <div class="slide">
-            <div class="day-badge">MON 3.1.1</div>
-            <h1>Activity: Zoom Out</h1>
-            <p>Write your address starting from <strong>right here</strong>.</p>
-            <div style="display: flex; gap: 10px; align-items: center; margin-top: 25px; flex-wrap: wrap; justify-content: center; font-size: 1.2rem;">
-                <span class="activity-box" style="padding: 10px; margin: 0;">Room</span> →
-                <span class="activity-box" style="padding: 10px; margin: 0;">School</span> →
-                <span class="activity-box" style="padding: 10px; margin: 0;">City</span> →
-                <span class="activity-box" style="padding: 10px; margin: 0;">Country</span> →
-                <span class="activity-box" style="padding: 10px; margin: 0; border-color: var(--sws-gold);">Earth</span>
-            </div>
-        </div>
+<div class="box">
+<p><strong>Weekly Mission:</strong></p>
+<p>
+Students will establish a <strong>Frame of Reference</strong>, learn how scientists convert
+<strong>3D planetary terrain into 2D maps</strong>, and apply these ideas through a
+<strong>Design Thinking investigation</strong> that culminates in the launch of
+<strong>Investigation 1: Moon Log</strong>.
+</p>
+</div>
 
-        <div class="slide" style="background: var(--sws-maroon);">
-            <h1 style="color: var(--sws-gold);">🧠 Brain Break!</h1>
-            <div style="font-size: 4rem;">🧘</div>
-            <h2>Stand up & Stretch</h2>
-            <p>Reach for the "Zenith" (highest point above you)!</p>
-            <div class="timer-display" id="timer-break" style="color: white; font-size: 3.5rem;">00:30</div>
-            <button style="background: var(--sws-gold); color: var(--sws-maroon); border: none; font-weight: bold;" onclick="startTimer('timer-break', 30)">Start 30s Timer</button>
-        </div>
+<div class="grid">
+<div class="card" onclick="goToSlide(1)">Monday • Empathize</div>
+<div class="card" onclick="goToSlide(7)">Wednesday • Define</div>
+<div class="card" onclick="goToSlide(13)">Thursday • Ideate</div>
+<div class="card" onclick="goToSlide(18)">Friday • Prototype & Test</div>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">MON 3.1.1</div>
-            <h1>Exit Ticket 🎟️</h1>
-            <div class="activity-box" style="border-color: var(--sws-teal);">
-                <h3>The Cosmic Address</h3>
-                <p>Complete your full "Cosmic Address" on your exit slip.</p>
-                <p style="font-size: 0.9rem; opacity: 0.7;">Evaluation: Participation</p>
-            </div>
-        </div>
+<!-- ================= MONDAY ================= -->
+<div class="slide">
+<span class="badge">MON 3.1.1 • EMPATHIZE</span>
+<h1 class="sketch">The Store Paradox</h1>
+<p style="font-size:2.2rem">“Meet me at the store.”</p>
+<p>Why is this instruction useless?</p>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
-            <h1>Daily Objective</h1>
-            <div class="objective-box">
-                <p style="margin: 0;">Interpret <span class="teal-accent">contour maps</span> and elevation data (3D to 2D representations).</p>
-            </div>
-        </div>
+<div class="slide">
+<span class="badge">MON 3.1.1</span>
+<h1>Frame of Reference</h1>
+<div class="box">
+<p>
+A <strong>Frame of Reference</strong> is a system that allows us to describe
+location using an <strong>origin</strong>, a <strong>direction</strong>,
+and a <strong>scale</strong>.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
-            <h1>The Map Problem</h1>
-            <div style="display: flex; justify-content: center; gap: 40px; align-items: center; margin: 30px 0;">
-                <div><div style="font-size: 5rem;">🌍</div><p class="accent">3D Reality</p></div>
-                <div style="font-size: 3rem; opacity: 0.4;">vs.</div>
-                <div><div style="font-size: 5rem;">🗺️</div><p class="accent">2D Map</p></div>
-            </div>
-        </div>
+<div class="slide">
+<span class="badge">MON 3.1.1</span>
+<h1 class="sketch">Empathy Link</h1>
+<div class="box">
+<p>
+Design Thinking starts by asking:
+<strong>Who needs clear location information, and why?</strong>
+</p>
+<p>
+Astronauts, pilots, scientists, and engineers all fail without shared
+reference frames.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
-            <h1>Showing Elevation</h1>
-            <h2 class="sketch" style="color: var(--sws-gold); font-size: 3rem;">Contour Lines</h2>
-            <p>Lines that connect points of equal <span class="teal-accent">elevation</span>.</p>
-            <div style="position: relative; width: 250px; height: 150px; margin: 20px auto;">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 20px; border: 2px solid var(--sws-gold); border-radius: 50%;"></div>
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 80px; border: 2px solid var(--sws-maroon); border-radius: 50%;"></div>
-                 <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 220px; height: 140px; border: 2px solid var(--sws-teal); border-radius: 50%;"></div>
-            </div>
-            <p style="font-size: 1rem;">Bird's Eye View</p>
-        </div>
+<div class="slide">
+<span class="badge">MON 3.1.1</span>
+<h1 class="sketch">Exit Ticket</h1>
+<div class="box">
+<p>
+Write your <strong>Cosmic Address</strong> starting from your desk and expanding
+outward to the observable universe.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-teal);">WED 3.1.3</div>
-            <h1>Activity: Profile Sketch</h1>
-            <div class="activity-box">
-                <p><strong>Task:</strong> Convert the contour lines on the board into a "Side Profile" sketch in your notebook.</p>
-                <p class="teal-accent">Evaluation: Map Sketch</p>
-            </div>
-        </div>
+<!-- ================= WEDNESDAY ================= -->
+<div class="slide">
+<span class="badge">WED 3.1.3 • DEFINE</span>
+<h1>From Reality to Representation</h1>
+<p>How do scientists describe a 3D surface on flat paper?</p>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
-            <h1 style="color: var(--sws-maroon);">Application Day</h1>
-            <div class="activity-box" style="border-color: var(--sws-gold); background: rgba(249, 219, 102, 0.1);">
-                <h3 style="font-size: 2rem; margin-bottom: 5px;">Classwork #1</h3>
-                <p>Worksheet R: Mapping & Elevation Puzzles</p>
-                <p style="font-weight: bold; font-size: 1.2rem; color: var(--sws-maroon);">Value: 5 Points</p>
-            </div>
-        </div>
+<div class="slide">
+<span class="badge">WED 3.1.3</span>
+<h1 class="sketch">Contour Lines</h1>
+<div class="box">
+<p>
+Contour lines connect points of <strong>equal elevation</strong>.
+They allow us to define terrain without seeing it directly.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
-            <h1>Work Timer</h1>
-            <div class="timer-display" id="timer-cw1">20:00</div>
-            <button class="reveal-btn" style="background: var(--sws-gold); color: var(--sws-maroon);" onclick="startTimer('timer-cw1', 1200)">Start 20 Min Timer</button>
-        </div>
+<div class="slide">
+<span class="badge">WED 3.1.3</span>
+<h1 class="sketch">Define the Problem</h1>
+<div class="box">
+<p>
+<strong>Problem Statement:</strong><br>
+Scientists need a way to represent elevation accurately on 2D maps
+so that explorers can navigate unknown terrain safely.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge" style="background: var(--sws-gold); color: var(--sws-maroon);">THU 3.1.4</div>
-            <h1>Review Session</h1>
-            <p>Exchange papers with a neighbor.</p>
-            <p>Let's verify our elevation profiles together.</p>
-        </div>
+<!-- ================= THURSDAY ================= -->
+<div class="slide">
+<span class="badge">THU 3.1.4 • IDEATE</span>
+<h1 class="sketch">Classwork #1</h1>
+<div class="box">
+<p>
+Using elevation data, sketch how a hill would appear using contour lines.
+Label steep and gentle slopes.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">FRI 3.1.5</div>
-            <h1>Daily Objective</h1>
-            <div class="objective-box">
-                <p style="margin: 0;">Initiate <span class="teal-accent">Investigation 1</span>. Establish the system for recording celestial positions.</p>
-            </div>
-        </div>
+<div class="slide">
+<span class="badge">THU 3.1.4</span>
+<h1 class="mono">WORK TIME</h1>
+<div class="timer" id="timer">20:00</div>
+<button onclick="startTimer(1200)">Start 20 Minutes</button>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">FRI 3.1.5</div>
-            <h1 class="sketch" style="color: var(--sws-teal);">Investigation 1</h1>
-            <h2>"What's in the Neighborhood?"</h2>
-            <div style="font-size: 4rem; margin: 15px;">🌘</div>
-            <p>We are starting our <strong>Moon Log</strong> tonight.</p>
-        </div>
+<div class="slide">
+<span class="badge">THU 3.1.4</span>
+<h1 class="sketch">Ideation Check</h1>
+<div class="box">
+<p>
+How many different ways could elevation be communicated visually?
+Which method is clearest for a first-time explorer?
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">FRI 3.1.5</div>
-            <h1>Vocabulary Check</h1>
-            <div style="text-align: left; display: inline-block;">
-                <div style="margin-bottom: 20px;">
-                    <strong style="font-size: 1.8rem; color: var(--sws-gold);">1. Horizon:</strong>
-                    <button class="reveal-btn" style="padding: 2px 10px; font-size: 0.8rem; vertical-align: middle;" onclick="reveal(this)">Reveal</button>
-                    <p class="hidden-content" style="font-size: 1.2rem; margin: 0; padding-left: 20px;">Where the sky appears to meet the Earth.</p>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <strong style="font-size: 1.8rem; color: var(--sws-gold);">2. Zenith:</strong>
-                    <button class="reveal-btn" style="padding: 2px 10px; font-size: 0.8rem; vertical-align: middle;" onclick="reveal(this)">Reveal</button>
-                    <p class="hidden-content" style="font-size: 1.2rem; margin: 0; padding-left: 20px;">The point directly above your head.</p>
-                </div>
-            </div>
-        </div>
+<!-- ================= FRIDAY ================= -->
+<div class="slide">
+<span class="badge design">FRI 3.1.5 • PROTOTYPE</span>
+<h1 class="sketch">Design Challenge</h1>
+<h2>Planetary Base Camp</h2>
+<div class="box">
+<p>
+Design a human base camp on a hostile planetary surface.
+Your design must rely on a <strong>fixed frame of reference</strong>.
+</p>
+</div>
+</div>
 
-        <div class="slide">
-            <div class="day-badge">FRI 3.1.5</div>
-            <h1>Lab Setup & HW</h1>
-            <div class="activity-box" style="border-color: var(--sws-maroon);">
-                <h3>📓 Moon Log Setup</h3>
-                <p>Label your first log entry: <strong>Observation 1</strong>.</p>
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
-                <p class="accent">Homework: Record the Moon's position this weekend.</p>
-            </div>
-        </div>
+<div class="slide">
+<span class="badge design">FRI 3.1.5</span>
+<h1>Prototype</h1>
+<div class="box">
+<p>
+Sketch your base camp from above.
+Label elevation, hazards, and safe zones.
+</p>
+</div>
+</div>
 
-    </div> 
+<div class="slide">
+<span class="badge design">FRI 3.1.5 • TEST</span>
+<h1>Moon Log Launch</h1>
+<div class="box">
+<p>
+This weekend you begin <strong>Investigation 1: Moon Log</strong>.
+Choose one observation spot and keep it fixed.
+</p>
+<p>
+Changing your location changes your data — and invalidates your science.
+</p>
+</div>
+</div>
 
-    <div class="nav-buttons">
-        <button onclick="window.location.href='index.html'" style="background: var(--sws-teal); color: var(--bg-color); border: none; font-weight: bold;">🏠 Hub</button>
-        <button onclick="goToSlide(0)">☰ Menu</button>
-        <button onclick="changeSlide(-1)">❮ Prev</button>
-        <button onclick="changeSlide(1)">Next ❯</button>
-    </div>
-    
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+<div class="slide">
+<h1 class="sketch">Module 3.1 Complete</h1>
+<p>Next: Motion, Orbits, and Reference Frames in Space</p>
+</div>
 
-    <script>
-        // --- SECURITY GUARD ---
-(function() {
-    const isAuthorized = localStorage.getItem("sws_admin_auth");
-    if (isAuthorized !== "true") {
-        alert("Unauthorized Access. Redirecting to Dashboard...");
-        window.location.href = "index.html";
-    }
+</div>
+
+<div class="progress">
+<div class="progress-fill" id="bar"></div>
+</div>
+
+</div>
+
+<script>
+(function(){
+const auth=localStorage.getItem("sws_admin_auth");
+if(auth==="true"){
+document.getElementById("slide-vault").style.display="block";
+}else{
+document.getElementById("gotcha-screen").style.display="flex";
+setTimeout(()=>location.href="index.html",3000);
+}
 })();
-// --- END SECURITY GUARD ---
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const progress = document.getElementById('progress');
 
-        function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-            updateProgress();
-            stopAllTimers();
-        }
-        function changeSlide(n) { showSlide(currentSlide + n); }
-        function goToSlide(n) { showSlide(n); }
+let current=0;
+const slides=document.querySelectorAll(".slide");
+const bar=document.getElementById("bar");
 
-        function updateProgress() {
-            const percent = ((currentSlide) / (slides.length - 1)) * 100;
-            progress.style.width = percent + "%";
-        }
+function update(){
+slides.forEach((s,i)=>s.classList.toggle("active",i===current));
+bar.style.width=(current/(slides.length-1))*100+"%";
+}
+function changeSlide(n){
+current=Math.max(0,Math.min(slides.length-1,current+n));
+update();
+}
+function goToSlide(n){
+current=n;
+update();
+}
 
-        function reveal(btn) {
-            const content = btn.nextElementSibling;
-            content.classList.toggle('visible');
-            btn.textContent = content.classList.contains('visible') ? "Hide" : "Reveal";
-        }
+let timerRef;
+function startTimer(sec){
+clearInterval(timerRef);
+let t=sec;
+const el=document.getElementById("timer");
+timerRef=setInterval(()=>{
+let m=Math.floor(t/60);
+let s=t%60;
+el.textContent=`${m}:${s<10?'0'+s:s}`;
+if(--t<0){
+clearInterval(timerRef);
+el.textContent="DONE";
+}
+},1000);
+}
 
-        let activeTimerInterval;
-        function startTimer(displayId, duration) {
-            stopAllTimers();
-            const display = document.getElementById(displayId);
-            let timer = duration, minutes, seconds;
-            activeTimerInterval = setInterval(() => {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-                if (--timer < 0) {
-                    stopAllTimers();
-                    display.textContent = "TIME'S UP";
-                    display.style.color = "#ac2e55";
-                }
-            }, 1000);
-        }
-        function stopAllTimers() { if (activeTimerInterval) clearInterval(activeTimerInterval); }
+document.addEventListener("keydown",e=>{
+if(e.key==="ArrowRight"||e.key===" ")changeSlide(1);
+if(e.key==="ArrowLeft")changeSlide(-1);
+if(e.key==="Escape")goToSlide(0);
+});
 
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
-            if(e.key === 'ArrowLeft') changeSlide(-1);
-            if(e.key === 'Escape') goToSlide(0);
-        });
+update();
+</script>
 
-        updateProgress();
-    </script>
 </body>
 </html>
