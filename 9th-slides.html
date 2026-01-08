@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Chemistry Master Deck 3.1</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --sws-teal: #29c4a9;
+            --chem-purple: #8e44ad; /* Chemistry Identity Color */
+            --bg-color: #0f172a; 
+            --text-color: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+            background-image: radial-gradient(circle at 10% 20%, rgba(142, 68, 173, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(41, 196, 169, 0.1) 0%, transparent 40%);
+        }
+
+        /* --- VAULT SECURITY --- */
+        #gotcha-screen {
+            display: none; position: fixed; inset: 0; background: #000; color: #f00;
+            z-index: 99999; flex-direction: column; justify-content: center;
+            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
+        }
+
+        #slide-vault { display: none; flex: 1; position: relative; width: 100%; height: 100%; }
+
+        /* --- NAVIGATION --- */
+        .nav-master {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 10px; z-index: 9000;
+        }
+
+        .btn-nav {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white; padding: 10px 15px;
+            font-size: 0.8rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700;
+            transition: 0.3s; text-transform: uppercase;
+        }
+
+        .btn-nav:hover { background: var(--chem-purple); border-color: var(--chem-purple); transform: translateY(-2px); }
+
+        /* --- SLIDE ARCHITECTURE --- */
+        .stage {
+            height: 100%; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            padding: 60px;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 1100px;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            animation: atomFade 0.5s ease-in-out;
+        }
+
+        .slide.active { display: flex; }
+
+        @keyframes atomFade {
+            0% { opacity: 0; transform: scale(0.95) rotate(-1deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .sketch { font-family: 'Cabin Sketch', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        h1 { font-size: 4rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
+        h2 { font-size: 2.2rem; color: var(--chem-purple); margin-top: 10px; font-weight: 400; }
+        
+        .box-concept {
+            background: var(--glass);
+            border-left: 6px solid var(--chem-purple);
+            padding: 30px; text-align: left;
+            border-radius: 0 20px 20px 0;
+            margin: 30px 0; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .grid-menu {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 15px; width: 100%; margin-top: 40px;
+        }
+
+        .card-menu {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 20px; border-radius: 12px;
+            cursor: pointer; transition: 0.3s; text-align: left;
+        }
+        .card-menu:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
+
+        .day-badge {
+            position: absolute; top: 40px; left: 50px;
+            font-family: 'JetBrains Mono'; font-size: 0.9rem;
+            color: var(--sws-maroon); background: var(--sws-gold);
+            padding: 5px 15px; border-radius: 4px; font-weight: 700;
+        }
+
+        /* --- INTERACTIVE ELEMENTS --- */
+        .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px; }
+        .btn-mc {
+            background: rgba(255,255,255,0.05); border: 2px solid var(--border);
+            color: white; padding: 20px; font-size: 1.2rem;
+            border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s;
+        }
+        .btn-mc:hover { border-color: var(--chem-purple); }
+        .correct { background: rgba(41, 196, 169, 0.2) !important; border-color: var(--sws-teal) !important; }
+        .wrong { background: rgba(172, 46, 85, 0.2) !important; border-color: var(--sws-maroon) !important; opacity: 0.6; }
+
+        .timer-display { font-size: 7rem; font-family: 'JetBrains Mono'; color: var(--sws-gold); margin: 20px 0; }
+        
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: var(--chem-purple); width: 0%; transition: width 0.3s ease; }
+
+        .sf-check {
+            border: 2px dashed var(--sws-teal); background: rgba(41, 196, 169, 0.05);
+            padding: 20px; border-radius: 15px; margin-top: 20px; width: 100%;
+            display: flex; align-items: center; gap: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="gotcha-screen">
+        <h1 class="mono">CHEMICAL HAZARD</h1>
+        <p>ACCESS DENIED. AUTHORIZED PERSONNEL ONLY.</p>
+    </div>
+
+    <div id="slide-vault">
+        <nav class="nav-master">
+            <button class="btn-nav" onclick="goToSlide(0)">Index</button>
+            <button class="btn-nav" onclick="changeSlide(-1)">Prev</button>
+            <button class="btn-nav" onclick="changeSlide(1)">Next</button>
+            <button class="btn-nav" style="border-color:var(--sws-gold); color:var(--sws-gold)" onclick="location.href='index.html'">Hub</button>
+        </nav>
+
+        <div class="stage">
+
+            <div class="slide active">
+                <h1 class="sketch">Chemistry 9</h1>
+                <h2>Week 3.1: The Central Science</h2>
+                <div class="box-concept">
+                    <p><strong>Objective:</strong> Define Chemistry and Matter, master Lab Safety protocols, distinguishing Mass vs Weight, and prepare for Classwork #1.</p>
+                    <p class="mono" style="font-size: 0.9rem; color: var(--sws-teal);"> SCIENCE FAIR CHECKPOINT: TOPIC SELECTION</p>
+                </div>
+                <div class="grid-menu">
+                    <div class="card-menu" onclick="goToSlide(1)">
+                        <div class="mono" style="color:var(--chem-purple)">MON 01/12</div>
+                        <div class="sketch">Intro Concepts</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(5)">
+                        <div class="mono" style="color:var(--chem-purple)">TUE 01/13</div>
+                        <div class="sketch">Lab Safety</div>
+                    </div>
+                    <div class="card-menu" style="opacity:0.5; cursor: default;">
+                        <div class="mono">WED 01/14</div>
+                        <div class="sketch">NO CLASS</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(9)">
+                        <div class="mono" style="color:var(--sws-gold)">THU 01/15</div>
+                        <div class="sketch">CW #1 Review</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(16)">
+                        <div class="mono" style="color:var(--sws-maroon)">FRI 01/16</div>
+                        <div class="sketch">Reaction Demo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | INTRO</div>
+                <h1 class="sketch">What is it?</h1>
+                <div class="box-concept">
+                    <p><strong>Chemistry:</strong> The study of the composition, structure, and properties of matter and the changes it undergoes.</p>
+                </div>
+                <p style="font-size: 1.5rem;">"Everything you touch, taste, or smell is a chemical."</p>
+                
+
+[Image of molecular structure models]
+
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | DEFINITIONS</div>
+                <h1>The Building Blocks</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                    <div class="card-menu">
+                        <h3 style="color:var(--sws-gold)">Matter</h3>
+                        <p>Anything that has mass and takes up space (Volume).</p>
+                    </div>
+                    <div class="card-menu">
+                        <h3 style="color:var(--sws-gold)">Chemical</h3>
+                        <p>Any substance that has a <strong>definite composition</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | MISCONCEPTIONS</div>
+                <h1 class="sketch">Mass vs. Weight</h1>
+                <h2>Are they the same?</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" style="border-color: var(--sws-teal)">
+                        <strong>MASS</strong><br>
+                        Measure of the amount of matter.<br>
+                        <em>Does not change on the Moon.</em>
+                    </button>
+                    <button class="btn-mc" style="border-color: var(--sws-maroon)">
+                        <strong>WEIGHT</strong><br>
+                        Measure of gravitational pull.<br>
+                        <em>Changes depending on gravity.</em>
+                    </button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | SCIENCE FAIR CHECK</div>
+                <h1 class="sketch">Science Fair Status</h1>
+                <div class="sf-check">
+                    <div style="font-size: 3rem;">🧪</div>
+                    <div>
+                        <h3>Checkpoint: Topic Selection</h3>
+                        <p>Does your topic involve a <strong>testable variable</strong>? If you are just "building a volcano," that is a model, not an experiment.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | SAFETY</div>
+                <h1 style="color:var(--sws-maroon)">Lab Protocol</h1>
+                <h2>Protecting Yourself</h2>
+                <div class="box-concept">
+                    <p><strong>Eye Wash Station:</strong> Used if chemicals splash in eyes. Rinse for 15 mins.</p>
+                    <p><strong>Safety Shower:</strong> Used for large spills on body.</p>
+                    <p><strong>Goggles:</strong> Must be worn at all times.</p>
+                </div>
+                
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | SAFETY</div>
+                <h1>Scenario Check</h1>
+                <div class="card-menu" style="width: 80%; text-align: center;">
+                    <p style="font-size: 1.5rem;">"You spill a small amount of acid on your hand. Do you run to the shower?"</p>
+                    <button class="btn-nav" onclick="alert('NO. Use the sink for small spills. Shower is for full body emergencies.')">Reveal Answer</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | ACTIVITY</div>
+                <h1 class="sketch">Observation vs Inference</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card-menu">
+                        <h3>Observation</h3>
+                        <p>Direct data using senses.<br><em>"The liquid is bubbling."</em></p>
+                    </div>
+                    <div class="card-menu">
+                        <h3>Inference</h3>
+                        <p>Conclusion based on observation.<br><em>"The liquid is boiling because it is hot."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | CW#1 REVIEW</div>
+                <h1 class="sketch">Classwork #1</h1>
+                <h2 style="color:white">Assessment Prep</h2>
+                <div class="box-concept" style="padding:10px; margin:10px;">
+                    <p>We will review the exact questions for today's 5-point evaluation.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW#1 | Q1</div>
+                <h2>The study of composition, structure, and properties of matter is:</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Biology</button>
+                    <button class="btn-mc" onclick="check(this, false)">B) Physics</button>
+                    <button class="btn-mc" onclick="check(this, true)">C) Chemistry</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Geology</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW#1 | Q2</div>
+                <h2>Any substance that has a definite composition is called a:</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Mixture</button>
+                    <button class="btn-mc" onclick="check(this, true)">B) Chemical</button>
+                    <button class="btn-mc" onclick="check(this, false)">C) Gas</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Variable</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW#1 | Q3</div>
+                <h2>Which safety item is used if a chemical splashes into your eyes?</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Fire Blanket</button>
+                    <button class="btn-mc" onclick="check(this, false)">B) Shower</button>
+                    <button class="btn-mc" onclick="check(this, true)">C) Eye Wash Station</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Fume Hood</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW#1 | Q4</div>
+                <h2>In a reaction, the starting substances are called:</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Products</button>
+                    <button class="btn-mc" onclick="check(this, false)">B) Results</button>
+                    <button class="btn-mc" onclick="check(this, true)">C) Reactants</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Catalysts</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW#1 | T/F</div>
+                <h1>True or False?</h1>
+                <div class="box-concept" style="border-left-color: var(--sws-maroon)">
+                    <p><strong>Statement:</strong> "Mass and Weight are the same thing; both change depending on gravity."</p>
+                </div>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">TRUE</button>
+                    <button class="btn-mc" onclick="check(this, true)">FALSE</button>
+                </div>
+                <p class="hidden-content" style="display:block; margin-top:10px; font-size:1rem;">Correction: Mass is constant; only Weight changes with gravity.</p>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | WORK TIME</div>
+                <h1>Classwork #1 Execution</h1>
+                <div class="timer-display" id="timer-cw">20:00</div>
+                <button class="btn-nav" style="background:var(--sws-gold); color:black;" onclick="startTimer(1200, 'timer-cw')">Start Timer</button>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">FRI | DEMO</div>
+                <h1 class="sketch">Chemical Reaction</h1>
+                <h2>Reactants & Products</h2>
+                <div class="box-concept">
+                    <p><strong>Reactants:</strong> The substances you start with (Left side).</p>
+                    <p><strong>Products:</strong> The new substances formed (Right side).</p>
+                    <p class="mono">A + B → AB</p>
+                </div>
+                
+
+[Image of chemical reaction diagram]
+
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">FRI | SCIENCE FAIR</div>
+                <h1 class="sketch">Science Fair Prep</h1>
+                <div class="sf-check">
+                    <div style="font-size: 3rem;">📅</div>
+                    <div>
+                        <h3>Upcoming Deadline: Hypothesis</h3>
+                        <p>By next week, you must turn your topic into a prediction.</p>
+                        <p class="mono">"If [IV] increases, then [DV] will..."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge" style="background:var(--sws-teal); color:black;">BONUS</div>
+                <h1 class="sketch">Design Thinking: The Project</h1>
+                <h2>Empathize & Define</h2>
+                <div class="box-concept">
+                    <p><strong>Empathize:</strong> Why does your Science Fair project matter? Who does it help?</p>
+                    <p><strong>Define:</strong> Write your problem statement clearly.</p>
+                    <p><em>"Farmers need a better fertilizer because soil is degrading."</em></p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">WEEK 3.1</div>
+                <h1 class="sketch">Module Complete</h1>
+                <p>Next Week: Scientific Method & Variables</p>
+                <button class="btn-nav" onclick="goToSlide(0)">Return to Menu</button>
+            </div>
+
+        </div> <div class="progress-bar">
+            <div class="progress-fill" id="p-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- SECURITY ---
+        (function() {
+            const auth = localStorage.getItem("sws_admin_auth");
+            if (auth !== "true") { 
+                document.getElementById('gotcha-screen').style.display = 'flex'; 
+                setTimeout(() => { window.location.href = "index.html"; }, 3000); 
+            } else { document.getElementById('slide-vault').style.display = 'block'; }
+        })();
+
+        // --- CORE ENGINE ---
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pBar = document.getElementById('p-bar');
+
+        function updateUI() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            const pc = (current / (slides.length - 1)) * 100;
+            pBar.style.width = pc + "%";
+        }
+
+        function changeSlide(n) {
+            current = Math.max(0, Math.min(slides.length - 1, current + n));
+            updateUI();
+        }
+
+        function goToSlide(n) { current = n; updateUI(); }
+
+        // --- MC LOGIC ---
+        function check(btn, isCorrect) {
+            const siblings = btn.parentElement.children;
+            for (let s of siblings) { s.classList.remove('correct', 'wrong'); }
+            if (isCorrect) { btn.classList.add('correct'); } 
+            else { btn.classList.add('wrong'); }
+        }
+
+        // --- TIMER ---
+        let clock;
+        function startTimer(sec, id) {
+            clearInterval(clock);
+            let t = sec;
+            const disp = document.getElementById(id);
+            clock = setInterval(() => {
+                let m = Math.floor(t / 60);
+                let s = t % 60;
+                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+                if (--t < 0) {
+                    clearInterval(clock);
+                    disp.textContent = "DONE";
+                    disp.style.color = "var(--sws-maroon)";
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if(e.key === 'ArrowLeft') changeSlide(-1);
+            if(e.key === 'Escape') goToSlide(0);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
