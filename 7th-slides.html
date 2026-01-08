@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWS | Planetary Science Master Deck 3.1</title>
+<title>Planetary Science | Week 3.1 Master Deck</title>
 
-<link rel="icon" type="image/png"
-href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png"
-sizes="32x32">
+<link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
 
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -18,11 +16,8 @@ sizes="32x32">
 --sws-teal:#29c4a9;
 --bg:#0f172a;
 --text:#f1f5f9;
---glass:rgba(255,255,255,.04);
---border:rgba(255,255,255,.12);
+--glass:rgba(255,255,255,.05);
 }
-
-*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -48,39 +43,18 @@ flex-direction:column;
 text-align:center;
 }
 
-/* NAV */
-.nav{
-position:fixed;
-top:20px;
-right:20px;
-display:flex;
-gap:8px;
-z-index:200;
-}
-
-button{
-background:var(--glass);
-border:1px solid var(--border);
-color:white;
-padding:10px 16px;
-border-radius:6px;
-cursor:pointer;
-font-weight:700;
-}
-
-/* SLIDES */
-.stage{
+.slide-container{
 height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:80px;
+padding:40px;
 }
 
 .slide{
 display:none;
-max-width:1200px;
 width:100%;
+max-width:1200px;
 text-align:center;
 animation:fade .4s ease;
 }
@@ -92,69 +66,76 @@ from{opacity:0;transform:translateY(10px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-h1{font-size:3.8rem;color:var(--sws-gold)}
-h2{color:var(--sws-teal);font-weight:400}
+h1{font-size:3.5rem;color:var(--sws-gold)}
+h2{color:var(--sws-teal)}
 h3{color:var(--sws-maroon)}
-
 .sketch{font-family:Cabin Sketch,cursive}
 .mono{font-family:JetBrains Mono,monospace}
 
 .box{
 background:var(--glass);
-border-left:8px solid var(--sws-teal);
-padding:30px;
-margin:25px auto;
+border-left:6px solid var(--sws-teal);
+padding:25px;
+margin:20px auto;
 max-width:900px;
 text-align:left;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-margin-top:30px;
-}
-
 .card{
 background:var(--glass);
-border:1px solid var(--border);
-padding:25px;
-border-radius:16px;
+border:1px solid rgba(255,255,255,.1);
+padding:20px;
+border-radius:12px;
+margin:10px 0;
 text-align:left;
 }
 
 .badge{
 display:inline-block;
-padding:6px 16px;
-border-radius:40px;
-font-size:.7rem;
-font-weight:800;
+padding:5px 14px;
+border-radius:4px;
+font-size:.75rem;
+font-weight:700;
 letter-spacing:1px;
 background:var(--sws-maroon);
-margin-bottom:15px;
+color:#fff;
+margin-bottom:10px;
 }
 
-.design{background:#f15a24}
-
-.timer{
-font-size:6rem;
-font-family:JetBrains Mono;
-color:var(--sws-gold);
+.nav{
+position:fixed;
+top:20px;
+right:20px;
+display:flex;
+gap:8px;
+z-index:100;
 }
 
-/* PROGRESS */
+button{
+background:var(--glass);
+border:1px solid rgba(255,255,255,.2);
+color:white;
+padding:10px 16px;
+border-radius:6px;
+cursor:pointer;
+font-weight:700;
+}
+
+button:hover{background:var(--sws-maroon)}
+
 .progress{
 position:fixed;
 bottom:0;
 left:0;
-width:100%;
 height:4px;
+width:100%;
 background:rgba(255,255,255,.1);
 }
+
 .progress-fill{
 height:100%;
-width:0%;
 background:linear-gradient(to right,var(--sws-maroon),var(--sws-teal));
+width:0%;
 transition:.3s;
 }
 </style>
@@ -170,191 +151,119 @@ transition:.3s;
 <div id="slide-vault">
 
 <div class="nav">
-<button onclick="changeSlide(-1)">❮ Prev</button>
-<button onclick="changeSlide(1)">Next ❯</button>
-<button onclick="location.href='index.html'">🏠 Hub</button>
+<button onclick="changeSlide(-1)">Prev</button>
+<button onclick="changeSlide(1)">Next</button>
+<button onclick="location.href='index.html'">Hub</button>
 </div>
 
-<div class="stage">
+<div class="slide-container">
 
-<!-- MENU -->
+<!-- TITLE -->
 <div class="slide active">
 <h1 class="sketch">Planetary Science</h1>
-<h2>Quarter 3 • Week 3.1</h2>
-
+<h2>Week 3.1 — Frames, Maps & Observation</h2>
 <div class="box">
-<p><strong>Weekly Mission:</strong></p>
-<p>
-Students will establish a <strong>Frame of Reference</strong>, learn how scientists convert
-<strong>3D planetary terrain into 2D maps</strong>, and apply these ideas through a
-<strong>Design Thinking investigation</strong> that culminates in the launch of
-<strong>Investigation 1: Moon Log</strong>.
-</p>
-</div>
-
-<div class="grid">
-<div class="card" onclick="goToSlide(1)">Monday • Empathize</div>
-<div class="card" onclick="goToSlide(7)">Wednesday • Define</div>
-<div class="card" onclick="goToSlide(13)">Thursday • Ideate</div>
-<div class="card" onclick="goToSlide(18)">Friday • Prototype & Test</div>
+<p><strong>Weekly Objective:</strong><br>
+Define Frame of Reference, interpret contour maps, and establish Investigation 1: Moon Observation.</p>
 </div>
 </div>
 
-<!-- ================= MONDAY ================= -->
+<!-- MONDAY -->
 <div class="slide">
-<span class="badge">MON 3.1.1 • EMPATHIZE</span>
-<h1 class="sketch">The Store Paradox</h1>
-<p style="font-size:2.2rem">“Meet me at the store.”</p>
-<p>Why is this instruction useless?</p>
+<span class="badge">MON 3.1.1</span>
+<h1 class="sketch">Where Am I?</h1>
+<p style="font-size:2rem;">“Meet me at the store.”</p>
+<p>Why is this instruction incomplete?</p>
 </div>
 
 <div class="slide">
 <span class="badge">MON 3.1.1</span>
 <h1>Frame of Reference</h1>
 <div class="box">
-<p>
-A <strong>Frame of Reference</strong> is a system that allows us to describe
-location using an <strong>origin</strong>, a <strong>direction</strong>,
-and a <strong>scale</strong>.
-</p>
+<p><strong>Definition:</strong> A set of criteria or values in relation to which measurements or judgments can be made.</p>
 </div>
 </div>
 
 <div class="slide">
 <span class="badge">MON 3.1.1</span>
-<h1 class="sketch">Empathy Link</h1>
-<div class="box">
-<p>
-Design Thinking starts by asking:
-<strong>Who needs clear location information, and why?</strong>
-</p>
-<p>
-Astronauts, pilots, scientists, and engineers all fail without shared
-reference frames.
-</p>
-</div>
+<h1 class="sketch">Cosmic Address</h1>
+<p>Classroom → School → City → Country → Earth → Solar System</p>
 </div>
 
 <div class="slide">
 <span class="badge">MON 3.1.1</span>
-<h1 class="sketch">Exit Ticket</h1>
-<div class="box">
-<p>
-Write your <strong>Cosmic Address</strong> starting from your desk and expanding
-outward to the observable universe.
-</p>
+<h1>Exit Ticket</h1>
+<div class="card">
+<p>Write your full cosmic address starting from your desk.</p>
 </div>
 </div>
 
-<!-- ================= WEDNESDAY ================= -->
+<!-- WEDNESDAY -->
 <div class="slide">
-<span class="badge">WED 3.1.3 • DEFINE</span>
-<h1>From Reality to Representation</h1>
-<p>How do scientists describe a 3D surface on flat paper?</p>
+<span class="badge" style="background:var(--sws-teal)">WED 3.1.3</span>
+<h1>3D to 2D</h1>
+<p>How do we show mountains on flat maps?</p>
 </div>
 
 <div class="slide">
-<span class="badge">WED 3.1.3</span>
+<span class="badge" style="background:var(--sws-teal)">WED 3.1.3</span>
 <h1 class="sketch">Contour Lines</h1>
-<div class="box">
-<p>
-Contour lines connect points of <strong>equal elevation</strong>.
-They allow us to define terrain without seeing it directly.
-</p>
-</div>
+<p>Lines that connect points of equal elevation.</p>
 </div>
 
 <div class="slide">
-<span class="badge">WED 3.1.3</span>
-<h1 class="sketch">Define the Problem</h1>
-<div class="box">
-<p>
-<strong>Problem Statement:</strong><br>
-Scientists need a way to represent elevation accurately on 2D maps
-so that explorers can navigate unknown terrain safely.
-</p>
+<span class="badge" style="background:var(--sws-teal)">WED 3.1.3</span>
+<h1>Key Vocabulary</h1>
+<div class="card">
+<p><strong>Elevation:</strong> Height above sea level</p>
+<p><strong>Horizon:</strong> Where Earth and sky appear to meet</p>
+<p><strong>Zenith:</strong> Point directly overhead</p>
 </div>
 </div>
 
-<!-- ================= THURSDAY ================= -->
+<!-- THURSDAY -->
 <div class="slide">
-<span class="badge">THU 3.1.4 • IDEATE</span>
-<h1 class="sketch">Classwork #1</h1>
-<div class="box">
-<p>
-Using elevation data, sketch how a hill would appear using contour lines.
-Label steep and gentle slopes.
-</p>
-</div>
+<span class="badge" style="background:var(--sws-gold);color:#000">THU 3.1.4</span>
+<h1>Classwork #1</h1>
+<p>Mapping & elevation practice</p>
 </div>
 
 <div class="slide">
-<span class="badge">THU 3.1.4</span>
-<h1 class="mono">WORK TIME</h1>
-<div class="timer" id="timer">20:00</div>
-<button onclick="startTimer(1200)">Start 20 Minutes</button>
+<span class="badge" style="background:var(--sws-gold);color:#000">THU 3.1.4</span>
+<h1>Peer Review</h1>
+<p>Check contour spacing and profile accuracy.</p>
+</div>
+
+<!-- FRIDAY -->
+<div class="slide">
+<span class="badge">FRI 3.1.5</span>
+<h1 class="sketch">Investigation 1</h1>
+<p>Moon Log Launch</p>
 </div>
 
 <div class="slide">
-<span class="badge">THU 3.1.4</span>
-<h1 class="sketch">Ideation Check</h1>
-<div class="box">
-<p>
-How many different ways could elevation be communicated visually?
-Which method is clearest for a first-time explorer?
-</p>
+<span class="badge">FRI 3.1.5</span>
+<h1>Vocabulary Mastery</h1>
+<div class="card">
+<p>Why must observations be taken from the same location?</p>
 </div>
 </div>
 
-<!-- ================= FRIDAY ================= -->
+<!-- REVIEW -->
 <div class="slide">
-<span class="badge design">FRI 3.1.5 • PROTOTYPE</span>
-<h1 class="sketch">Design Challenge</h1>
-<h2>Planetary Base Camp</h2>
-<div class="box">
-<p>
-Design a human base camp on a hostile planetary surface.
-Your design must rely on a <strong>fixed frame of reference</strong>.
-</p>
+<h1 class="sketch">Review Check</h1>
+<div class="card mono">
+<p>1. A set of criteria for measurements is a <strong>Frame of Reference</strong>.</p>
+<p>2. Looking straight down is a <strong>Bird’s Eye View</strong>.</p>
+<p>3. Lines of equal elevation are <strong>Contour Lines</strong>.</p>
+<p>4. The point overhead is the <strong>Zenith</strong>.</p>
+<p>5. The cosmic address starts with <strong>Our Classroom</strong>.</p>
 </div>
-</div>
-
-<div class="slide">
-<span class="badge design">FRI 3.1.5</span>
-<h1>Prototype</h1>
-<div class="box">
-<p>
-Sketch your base camp from above.
-Label elevation, hazards, and safe zones.
-</p>
-</div>
-</div>
-
-<div class="slide">
-<span class="badge design">FRI 3.1.5 • TEST</span>
-<h1>Moon Log Launch</h1>
-<div class="box">
-<p>
-This weekend you begin <strong>Investigation 1: Moon Log</strong>.
-Choose one observation spot and keep it fixed.
-</p>
-<p>
-Changing your location changes your data — and invalidates your science.
-</p>
-</div>
-</div>
-
-<div class="slide">
-<h1 class="sketch">Module 3.1 Complete</h1>
-<p>Next: Motion, Orbits, and Reference Frames in Space</p>
 </div>
 
 </div>
 
-<div class="progress">
-<div class="progress-fill" id="bar"></div>
-</div>
-
+<div class="progress"><div class="progress-fill" id="bar"></div></div>
 </div>
 
 <script>
@@ -376,36 +285,11 @@ function update(){
 slides.forEach((s,i)=>s.classList.toggle("active",i===current));
 bar.style.width=(current/(slides.length-1))*100+"%";
 }
+
 function changeSlide(n){
 current=Math.max(0,Math.min(slides.length-1,current+n));
 update();
 }
-function goToSlide(n){
-current=n;
-update();
-}
-
-let timerRef;
-function startTimer(sec){
-clearInterval(timerRef);
-let t=sec;
-const el=document.getElementById("timer");
-timerRef=setInterval(()=>{
-let m=Math.floor(t/60);
-let s=t%60;
-el.textContent=`${m}:${s<10?'0'+s:s}`;
-if(--t<0){
-clearInterval(timerRef);
-el.textContent="DONE";
-}
-},1000);
-}
-
-document.addEventListener("keydown",e=>{
-if(e.key==="ArrowRight"||e.key===" ")changeSlide(1);
-if(e.key==="ArrowLeft")changeSlide(-1);
-if(e.key==="Escape")goToSlide(0);
-});
 
 update();
 </script>
