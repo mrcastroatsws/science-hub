@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Fair | SWS 2026</title>
+    <title>Science Fair</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -11,20 +11,20 @@
 
     <div class="bg-slate-800 text-white py-2 px-6 flex justify-between items-center text-xs">
         <div class="flex items-center space-x-4">
-            <span class="opacity-70 italic">Southwest School Hub v1.0</span>
+            <span class="opacity-70 italic">Southwest School</span>
             <span class="admin-only hidden bg-[#29c4a9] text-white px-2 py-0.5 rounded font-bold">ADMIN ACTIVE</span>
         </div>
         <div>
-            <button onclick="login()" class="public-only hover:text-[#f9db66] transition underline">Teacher Login</button>
+            <button onclick="login()" class="public-only hover:text-[#f9db66] transition underline">Login</button>
             <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition underline">Logout</button>
         </div>
     </div>
 
     <header class="bg-[#ac2e55] text-white p-8 text-center shadow-lg relative">
-        <h1 class="text-4xl font-bold tracking-widest uppercase mb-2">Science Fair 2026</h1>
-        <p class="text-[#f9db66] font-semibold italic">9th & 11th Grade Progress Portal</p>
+        <h1 class="text-4xl font-bold tracking-widest uppercase mb-2">Science Fair</h1>
+        <p class="text-[#f9db66] font-semibold italic">Progress Portal</p>
         
-        <a href="index.html" class="absolute top-8 left-8 text-sm opacity-50 hover:opacity-100 transition">← Dashboard</a>
+        <a href="index.html" class="absolute top-8 left-8 text-sm opacity-50 hover:opacity-100 transition">Home</a>
     </header>
 
     <main class="max-w-5xl mx-auto p-6 space-y-8">
@@ -60,23 +60,23 @@
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">CW#2</span>
+                        <span class="block text-sm text-slate-500">Classwork</span>
                         <span class="text-xl font-bold text-[#ac2e55]">Bitácora</span>
-                        <span class="block text-xs font-bold text-slate-400">5 pts</span>
+                        <span class="block text-xs font-bold text-slate-400">TBA</span>
                     </div>
                     <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">CW#4</span>
+                        <span class="block text-sm text-slate-500">Classwork</span>
                         <span class="text-xl font-bold text-[#ac2e55]">Trifolio</span>
-                        <span class="block text-xs font-bold text-slate-400">8 pts</span>
+                        <span class="block text-xs font-bold text-slate-400">TBA</span>
                     </div>
                     <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">HW#2</span>
+                        <span class="block text-sm text-slate-500">Homework</span>
                         <span class="text-xl font-bold text-[#ac2e55]">Setup</span>
-                        <span class="block text-xs font-bold text-slate-400">2 pts</span>
+                        <span class="block text-xs font-bold text-slate-400">TBA</span>
                     </div>
                     <div class="p-4 bg-[#f9db66] border rounded text-center hover:shadow-lg transition cursor-help">
                         <span class="block text-sm text-[#ac2e55]">Activity</span>
-                        <span class="text-xl font-bold text-[#ac2e55]">Oral Defense</span>
+                        <span class="text-xl font-bold text-[#ac2e55]">Oral Presentation</span>
                         <span class="block text-xs font-bold text-[#ac2e55]">10 pts</span>
                     </div>
                 </div>
@@ -86,8 +86,8 @@
         <section class="bg-slate-900 text-white p-8 rounded-2xl shadow-xl flex flex-col items-center relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#ac2e55] opacity-20 rounded-full"></div>
             
-            <h3 class="text-2xl font-bold text-[#f9db66] z-10">Daily Progress Check-in</h3>
-            <p class="text-slate-400 italic mb-6 z-10">Open your log books. We have 5 minutes for updates.</p>
+            <h3 class="text-2xl font-bold text-[#f9db66] z-10">Check-in Timer</h3>
+            <p class="text-slate-400 italic mb-6 z-10">Open your science logs. We will work on updates for 5 minutes.</p>
             
             <div id="timerDisplay" class="text-7xl font-mono text-[#29c4a9] mb-6 z-10 tabular-nums">05:00</div>
             
