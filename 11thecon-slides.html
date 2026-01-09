@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Economics 11 Master Deck</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --econ-green: #1e5128;
+            --econ-light: #4e944f;
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --bg-color: #0f172a; 
+            --text-color: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
+                url('https://www.transparenttextures.com/patterns/money.png');
+        }
+
+        /* --- ACCESS CONTROL --- */
+        #gotcha-screen {
+            display: none; position: fixed; inset: 0; background: #000; color: #0f0;
+            z-index: 99999; flex-direction: column; justify-content: center;
+            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
+        }
+
+        #slide-vault { 
+            visibility: hidden;
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            width: 100%; 
+        }
+
+        /* --- STAGE & CENTERING --- */
+        .stage {
+            flex: 1;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* FLICKER FIX: Badge pinned to stage */
+        #master-day-badge {
+            position: absolute; top: 20px; left: 20px;
+            font-family: 'JetBrains Mono'; font-size: 0.8rem;
+            color: var(--bg-color); background: var(--sws-gold);
+            padding: 5px 12px; border-radius: 4px; font-weight: 700;
+            z-index: 1000;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 1000px;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            animation: slideIn 0.4s ease-out;
+        }
+        .slide.active { display: flex; }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- NAVIGATION UI (Optimized for Mobile) --- */
+        .nav-top { position: fixed; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 9000; }
+        .nav-bottom-left { position: fixed; bottom: 25px; left: 20px; z-index: 9000; }
+        .nav-bottom-right { position: fixed; bottom: 25px; right: 20px; display: flex; gap: 10px; z-index: 9000; }
+
+        .btn-ui {
+            background: var(--glass); border: 1px solid var(--border);
+            color: white; padding: 12px 18px; font-size: 0.75rem; cursor: pointer;
+            border-radius: 8px; font-weight: 700; text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-ui:hover { background: var(--econ-light); border-color: var(--econ-light); }
+        .btn-teacher { border-color: var(--sws-gold); color: var(--sws-gold); }
+        .btn-teacher.active { background: var(--sws-gold); color: black; }
+
+        /* --- CONTENT STYLES --- */
+        .box-concept { background: var(--glass); border-left: 6px solid var(--econ-light); padding: 20px; text-align: left; border-radius: 0 15px 15px 0; margin: 15px 0; width: 100%; }
+        .sketch { font-family: 'Cabin Sketch', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: 3rem; margin: 0; color: var(--sws-gold); }
+        h2 { font-size: 1.5rem; color: var(--econ-light); margin-top: 5px; }
+
+        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; margin-top: 20px; }
+        @media (min-width: 768px) { .grid-menu { grid-template-columns: repeat(4, 1fr); } h1 { font-size: 4rem; } }
+
+        .day-card { background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 10px; cursor: pointer; text-align: left; }
+        .day-card:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
+
+        /* --- TEACHER MODE --- */
+        .teacher-only { display: none; width: 100%; margin-top: 15px; border: 2px dashed var(--sws-gold); background: rgba(249, 219, 102, 0.05); padding: 15px; border-radius: 10px; text-align: left; font-size: 0.9rem; color: var(--sws-gold); }
+        body.teacher-mode .teacher-only { display: block; }
+
+        /* --- INTERACTIVES --- */
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: var(--econ-light); width: 0%; transition: width 0.3s ease; }
+        .mc-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; margin: 5px 0; text-align: left; font-size: 1rem; }
+        .correct { background: rgba(78, 148, 79, 0.3) !important; border-color: var(--econ-light) !important; }
+    </style>
+</head>
+<body>
+
+    <div id="gotcha-screen">
+        <h1 class="mono">FINANCIAL LOCKDOWN</h1>
+        <p>ACCESS DENIED. REDIRECTING...</p>
+    </div>
+
+    <div id="slide-vault">
+        <nav class="nav-top">
+            <button class="btn-ui" onclick="goToSlide(0)">Index</button>
+            <button class="btn-ui" style="color:var(--sws-gold)" onclick="location.href='index.html'">Hub</button>
+        </nav>
+
+        <nav class="nav-bottom-left">
+            <button class="btn-ui btn-teacher" id="teacher-toggle" onclick="toggleTeacherMode()">Teacher Mode</button>
+        </nav>
+        <nav class="nav-bottom-right">
+            <button class="btn-ui" onclick="changeSlide(-1)">Prev</button>
+            <button class="btn-ui" onclick="changeSlide(1)">Next</button>
+        </nav>
+
+        <div class="stage">
+            <div id="master-day-badge">ECON 11</div>
+
+            <div class="slide active" data-badge="OVERVIEW">
+                <h1 class="sketch">Economics 11</h1>
+                <h2>Quarter III: Money & Banking</h2>
+                <div class="grid-menu">
+                    <div class="day-card" onclick="goToSlide(1)"><div>MON | 01/12</div><div class="sketch">Financial Trip</div></div>
+                    <div class="day-card" onclick="goToSlide(3)"><div>WED | 01/14</div><div class="sketch">What is Money?</div></div>
+                    <div class="day-card" onclick="goToSlide(7)"><div>WEEK 3.1</div><div class="sketch">CW #1 Review</div></div>
+                    <div class="day-card" onclick="goToSlide(13)"><div>BONUS</div><div class="sketch">The Fed/BCH</div></div>
+                </div>
+                <div class="teacher-only">
+                    <p><strong>Goal:</strong> Transition from Macroeconomics to Monetary Policy. Collect feedback on travel interest.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="MON | TRAVEL">
+                <h1 class="sketch">Gira Financiera 2026</h1>
+                <h2>Tegucigalpa: CNBS & BCH</h2>
+                <div class="box-concept">
+                    <p><strong>Objective:</strong> Visit the National Banking Commission (CNBS) and the Central Bank (BCH) to see theory in action.</p>
+                    <ul>
+                        <li><strong>CNBS:</strong> Financial Education & Family Budget Workshop.</li>
+                        <li><strong>BCH:</strong> Monetary Policy & Numismatic Museum.</li>
+                    </ul>
+                </div>
+                <p class="mono" style="color:var(--sws-gold)">Target Date: Feb 20, 2026</p>
+            </div>
+
+            <div class="slide" data-badge="MON | LOGISTICS">
+                <h1>Economic Route 2026</h1>
+                <div class="box-concept">
+                    <p><strong>Proposed Stops:</strong></p>
+                    <p>1. ZIP Villanueva (Foreign Investment)</p>
+                    <p>2. ENP Puerto Cortés (Global Logistics)</p>
+                    <p>3. El Cajón (Energy Infrastructure)</p>
+                </div>
+                <div class="teacher-only">
+                    <p>Explain that understanding Customs (Aduanas) helps visualize how taxes become the National Budget.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="WED | FUNCTIONS">
+                <h1 class="sketch">Functions of Money</h1>
+                <div class="box-concept">
+                    <ol>
+                        <li><strong>Medium of Exchange:</strong> Used to buy goods/services.</li>
+                        <li><strong>Unit of Account:</strong> A "price tag" to compare values.</li>
+                        <li><strong>Store of Value:</strong> Holds its purchasing power for the future.</li>
+                    </ol>
+                </div>
+                
+            </div>
+
+            <div class="slide" data-badge="WED | TYPES">
+                <h1>Types of Money</h1>
+                <div class="grid-menu">
+                    <div class="day-card"><h3>Commodity</h3><p>Value in itself (Gold, Cacao).</p></div>
+                    <div class="day-card"><h3>Representative</h3><p>Paper backed by gold/silver.</p></div>
+                    <div class="day-card"><h3>Fiat</h3><p>Value by Gov decree (Lempira, Dollar).</p></div>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="WED | CHARACTERISTICS">
+                <h1>Characteristics</h1>
+                <div class="box-concept">
+                    <p><strong>Portability:</strong> Easy to carry.<br><strong>Divisibility:</strong> Can be broken into smaller change.<br><strong>Uniformity:</strong> All $1 bills look the same.</p>
+                </div>
+                <div class="teacher-only">
+                    <p>Activity: Ask students why a "Diamond" would be bad money. (Hard to divide without losing value).</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="CW #1 | MC">
+                <h1 class="sketch">Classwork Review</h1>
+                <p>Which function allows us to compare values (Price Tags)?</p>
+                <div style="width:100%">
+                    <button class="mc-btn" onclick="this.classList.add('wrong')">A) Store of Value</button>
+                    <button class="mc-btn" onclick="this.classList.add('correct')">B) Unit of Account</button>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="CW #1 | MC">
+                <h2>The Central Bank of Honduras was founded in:</h2>
+                <div style="width:100%">
+                    <button class="mc-btn" onclick="this.classList.add('wrong')">A) 1920</button>
+                    <button class="mc-btn" onclick="this.classList.add('correct')">B) 1950</button>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="CW #1 | T/F">
+                <h1>True or False?</h1>
+                <p>"The Gold Standard is still used today to back the US Dollar."</p>
+                <div class="grid-menu">
+                    <button class="mc-btn" style="text-align:center" onclick="this.style.background='red'">TRUE</button>
+                    <button class="mc-btn" style="text-align:center" onclick="this.style.background='green'">FALSE</button>
+                </div>
+                <div class="teacher-only">
+                    <p>Correction: The US left the Gold Standard in 1971. We use Fiat money now.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="CW #1 | DIAGRAM">
+                <h1 class="sketch">Evolution Flowchart</h1>
+                <div class="box-concept">
+                    <p class="mono">Barter -> Commodity -> Representative -> Fiat</p>
+                </div>
+                
+            </div>
+
+            <div class="slide" data-badge="CW #1 | SHORT ANSWER">
+                <h2>Central Bank Trust</h2>
+                <p>How does the BCH maintain trust in the Lempira?</p>
+                <div class="box-concept">
+                    <p class="reveal-box" style="background:#222; color:transparent; cursor:pointer;" onclick="this.style.color='var(--sws-gold)'">
+                        By regulating the money supply to control inflation and ensuring the currency is accepted for all debts.
+                    </p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="BONUS | CRYPTO">
+                <h1 class="sketch">The Bitcoin Debate</h1>
+                <div class="box-concept">
+                    <p>Is Bitcoin a good <strong>Unit of Account</strong>?</p>
+                    <p>Consider: If a coffee costs 0.0001 BTC today and 0.0005 BTC tomorrow, can we use it to set stable prices?</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="END">
+                <h1 class="sketch">Module 3.1 Complete</h1>
+                <button class="btn-ui" onclick="goToSlide(0)">Index</button>
+            </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
+    </div>
+
+    <script>
+        // --- SECURITY ---
+        (function() {
+            const STORAGE_KEY = "sws_layout_config_v2";
+            const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+            const SALT = "_SWS_SECURE";
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            const vault = document.getElementById('slide-vault');
+            const gotcha = document.getElementById('gotcha-screen');
+
+            try {
+                const isValid = candidate && btoa(atob(candidate) + SALT) === LOCK_VALUE;
+                if (isValid) {
+                    vault.style.visibility = 'visible'; 
+                    vault.style.display = 'flex';
+                } else {
+                    gotcha.style.display = 'flex';
+                    setTimeout(() => { window.location.href = "index.html"; }, 3000);
+                }
+            } catch (e) {
+                gotcha.style.display = 'flex';
+                setTimeout(() => { window.location.href = "index.html"; }, 3000);
+            }
+        })();
+
+        // --- NAVIGATION ---
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pBar = document.getElementById('p-bar');
+        const masterBadge = document.getElementById('master-day-badge');
+
+        function updateUI() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            const activeSlide = slides[current];
+            if (activeSlide.dataset.badge) { masterBadge.textContent = activeSlide.dataset.badge; }
+            const pc = (current / (slides.length - 1)) * 100;
+            pBar.style.width = pc + "%";
+        }
+
+        function changeSlide(n) { current = Math.max(0, Math.min(slides.length - 1, current + n)); updateUI(); }
+        function goToSlide(n) { current = n; updateUI(); }
+        function toggleTeacherMode() { 
+            document.body.classList.toggle('teacher-mode'); 
+            const btn = document.getElementById('teacher-toggle');
+            btn.classList.toggle('active');
+        }
+
+        function startTimer(sec, id) {
+            let t = sec; const disp = document.getElementById(id);
+            const clock = setInterval(() => {
+                let m = Math.floor(t / 60); let s = t % 60;
+                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+                if (--t < 0) { clearInterval(clock); disp.textContent = "DONE"; }
+            }, 1000);
+        }
+
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if(e.key === 'ArrowLeft') changeSlide(-1);
+            if(e.key === 'Escape') goToSlide(0);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
