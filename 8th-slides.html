@@ -38,7 +38,13 @@
             align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
         }
 
-        #slide-vault { display: none; flex: 1; position: relative; width: 100%; height: 100%; }
+        /* FIXED: Added display:flex and height to vault for centering */
+        #slide-vault { 
+            display: none; 
+            flex-direction: column;
+            height: 100vh; 
+            width: 100%; 
+        }
 
         /* --- NAVIGATION --- */
         .nav-master {
@@ -47,22 +53,18 @@
         }
 
         .btn-nav {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: white; padding: 10px 15px;
-            font-size: 0.8rem; cursor: pointer;
-            border-radius: 6px; font-weight: 700;
-            transition: 0.3s;
-            text-transform: uppercase;
+            background: var(--glass); border: 1px solid var(--border);
+            color: white; padding: 10px 15px; font-size: 0.8rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700; transition: 0.3s; text-transform: uppercase;
         }
-
         .btn-nav:hover { background: var(--sws-teal); color: var(--bg-color); border-color: var(--sws-teal); }
 
         /* --- SLIDE ARCHITECTURE --- */
         .stage {
-            height: 100%; width: 100%;
+            flex: 1; /* Takes up all space between top and bottom */
             display: flex; justify-content: center; align-items: center;
             padding: 60px;
+            position: relative;
         }
 
         .slide {
@@ -87,12 +89,9 @@
         h2 { font-size: 2rem; color: var(--electric-blue); margin-top: 10px; font-weight: 400; }
         
         .box-concept {
-            background: var(--glass);
-            border-left: 6px solid var(--electric-blue);
-            padding: 30px; text-align: left;
-            border-radius: 0 20px 20px 0;
-            margin: 30px 0; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--glass); border-left: 6px solid var(--electric-blue);
+            padding: 30px; text-align: left; border-radius: 0 20px 20px 0;
+            margin: 30px 0; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .grid-menu {
@@ -102,8 +101,7 @@
 
         .card-menu {
             background: var(--glass); border: 1px solid var(--border);
-            padding: 20px; border-radius: 12px;
-            cursor: pointer; transition: 0.3s; text-align: left;
+            padding: 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: left;
         }
         .card-menu:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
 
@@ -131,10 +129,8 @@
         .progress-fill { height: 100%; background: var(--electric-blue); width: 0%; transition: width 0.3s ease; }
 
         .schematic-box {
-            border: 2px dashed var(--sws-teal);
-            padding: 40px; border-radius: 20px;
-            margin: 20px 0; width: 80%;
-            display: flex; justify-content: center; align-items: center;
+            border: 2px dashed var(--sws-teal); padding: 40px; border-radius: 20px;
+            margin: 20px 0; width: 80%; display: flex; justify-content: center; align-items: center;
             font-family: 'JetBrains Mono'; color: var(--sws-teal);
         }
     </style>
@@ -143,7 +139,8 @@
 
     <div id="gotcha-screen">
         <h1 class="mono">SYSTEM LOCKDOWN</h1>
-        <p>BIOMETRIC SCAN FAILED. GO AWAY.</p>
+        <p>BIOMETRIC SCAN FAILED. UNAUTHORIZED ACCESS DETECTED.</p>
+        <div style="margin-top: 20px; opacity: 0.5;">REDIRECTING...</div>
     </div>
 
     <div id="slide-vault">
@@ -155,7 +152,6 @@
         </nav>
 
         <div class="stage">
-
             <div class="slide active">
                 <h1 class="sketch">Electronics 8</h1>
                 <h2>Week 3.1: The Circuit Fundamentals</h2>
@@ -364,16 +360,29 @@
         </div> <div class="progress-bar">
             <div class="progress-fill" id="p-bar"></div>
         </div>
-    </div>
-
-    <script>
-        // --- SECURITY ---
+    </div> <script>
+        // --- UPDATED SECURITY (v2 Salted) ---
         (function() {
-            const auth = localStorage.getItem("sws_admin_auth");
-            if (auth !== "true") { 
-                document.getElementById('gotcha-screen').style.display = 'flex'; 
-                setTimeout(() => { window.location.href = "index.html"; }, 3000); 
-            } else { document.getElementById('slide-vault').style.display = 'block'; }
+            const STORAGE_KEY = "sws_layout_config_v2";
+            const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+            const SALT = "_SWS_SECURE";
+
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            const vault = document.getElementById('slide-vault');
+            const gotcha = document.getElementById('gotcha-screen');
+
+            try {
+                const isValid = candidate && btoa(atob(candidate) + SALT) === LOCK_VALUE;
+                if (isValid) {
+                    vault.style.display = 'flex'; // Use flex for centering
+                } else {
+                    gotcha.style.display = 'flex';
+                    setTimeout(() => { window.location.href = "index.html"; }, 3000);
+                }
+            } catch (e) {
+                gotcha.style.display = 'flex';
+                setTimeout(() => { window.location.href = "index.html"; }, 3000);
+            }
         })();
 
         // --- CORE ENGINE ---
