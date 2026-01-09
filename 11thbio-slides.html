@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | 11th Biology Master Deck 3.1</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bio-blue: #3498db;
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --sws-teal: #29c4a9;
+            --bg-color: #0f172a; 
+            --text-color: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
+                              url('https://www.transparenttextures.com/patterns/dna.png');
+        }
+
+        /* --- ACCESS CONTROL --- */
+        #gotcha-screen {
+            display: none; position: fixed; inset: 0; background: #000; color: #f00;
+            z-index: 99999; flex-direction: column; justify-content: center;
+            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
+        }
+
+        #slide-vault { 
+            visibility: hidden;
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            width: 100%; 
+        }
+
+        /* --- STAGE & MASTER BADGE --- */
+        .stage {
+            flex: 1;
+            display: flex; justify-content: center; align-items: center;
+            padding: 60px;
+            position: relative;
+        }
+
+        #master-day-badge {
+            position: absolute; top: 40px; left: 50px;
+            font-family: 'JetBrains Mono'; font-size: 0.9rem;
+            color: var(--bg-color); background: var(--sws-gold);
+            padding: 5px 15px; border-radius: 4px; font-weight: 700;
+            z-index: 1000;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 1100px;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            animation: slideFade 0.5s ease-in-out;
+        }
+        .slide.active { display: flex; }
+        @keyframes slideFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- UI ELEMENTS --- */
+        .nav-master { position: fixed; top: 25px; right: 30px; display: flex; gap: 10px; z-index: 9000; }
+        .btn-nav { background: var(--glass); border: 1px solid var(--border); color: white; padding: 10px 15px; font-size: 0.8rem; cursor: pointer; border-radius: 6px; font-weight: 700; transition: 0.3s; text-transform: uppercase; }
+        .btn-nav:hover { background: var(--bio-blue); border-color: var(--bio-blue); }
+        .btn-teacher { border-color: var(--sws-teal); color: var(--sws-teal); }
+        .btn-teacher.active { background: var(--sws-teal); color: black; }
+
+        .box-concept { background: var(--glass); border-left: 6px solid var(--bio-blue); padding: 30px; text-align: left; border-radius: 0 20px 20px 0; margin: 20px 0; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .sketch { font-family: 'Cabin Sketch', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        h1 { font-size: 3.8rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
+        h2 { font-size: 2rem; color: var(--bio-blue); margin-top: 10px; font-weight: 400; }
+
+        .grid-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; margin-top: 40px; }
+        .day-card { background: var(--glass); border: 1px solid var(--border); padding: 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: left; }
+        .day-card:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
+
+        /* --- TEACHER LOGIC --- */
+        .teacher-only { display: none; width: 100%; margin-top: 20px; border: 2px dashed var(--sws-teal); background: rgba(41, 196, 169, 0.1); padding: 20px; border-radius: 10px; text-align: left; }
+        body.teacher-mode .teacher-only { display: block; }
+        .textbook-ref { color: var(--sws-gold); font-weight: bold; border-bottom: 1px solid var(--sws-gold); padding-bottom: 2px; }
+
+        .classification-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin: 20px 0; }
+        .class-box { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: var(--bio-blue); width: 0%; transition: width 0.3s ease; }
+    </style>
+</head>
+<body>
+
+    <div id="gotcha-screen">
+        <h1 class="mono">SYSTEM LOCKDOWN</h1>
+        <p>REDIRECTING TO HUB...</p>
+    </div>
+
+    <div id="slide-vault">
+        <nav class="nav-master">
+            <button class="btn-nav" onclick="goToSlide(0)">Index</button>
+            <button class="btn-nav" onclick="changeSlide(-1)">Prev</button>
+            <button class="btn-nav" onclick="changeSlide(1)">Next</button>
+            <button class="btn-nav btn-teacher" id="teacher-toggle" onclick="toggleTeacherMode()">Teacher Mode</button>
+            <button class="btn-nav" style="border-color:var(--sws-gold); color:var(--sws-gold)" onclick="location.href='index.html'">Hub</button>
+        </nav>
+
+        <div class="stage">
+            <div id="master-day-badge">OVERVIEW</div>
+
+            <div class="slide active" data-badge="OVERVIEW">
+                <h1 class="sketch">Biology 11</h1>
+                <h2>Quarter III: Animal Kingdom</h2>
+                <div class="grid-menu">
+                    <div class="day-card" onclick="goToSlide(1)"><div>01/13</div><div class="sketch">Characteristics</div></div>
+                    <div class="day-card" onclick="goToSlide(4)"><div>01/14</div><div class="sketch">Inverts vs Chordates</div></div>
+                    <div class="day-card" onclick="goToSlide(8)"><div>01/15</div><div class="sketch">CW #1 Review</div></div>
+                    <div class="day-card" onclick="goToSlide(11)"><div>BONUS</div><div class="sketch">Challenge</div></div>
+                </div>
+                <div class="teacher-only">
+                    <p class="mono textbook-ref">Miller & Levine (TE p. T26 / 730)</p>
+                    <p>Stamp the weekly goal: Students must define the 4 essential traits of the Kingdom Animalia.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="3.1.1 | CHARACTERISTICS">
+                <h1 class="sketch">Essential Traits</h1>
+                <div class="box-concept">
+                    <p>All members of the Kingdom Animalia are:</p>
+                    <ul>
+                        <li><strong>Multicellular:</strong> Complex structure.</li>
+                        <li><strong>Heterotrophic:</strong> Consumer energy.</li>
+                        <li><strong>Eukaryotic:</strong> Has nucleus.</li>
+                        <li><strong>Flexible:</strong> No cell walls.</li>
+                    </ul>
+                </div>
+                <div class="teacher-only">
+                    <p class="textbook-ref">Miller & Levine (TE p. 730)</p>
+                    <p>Direct students to find the term <strong>'Eukaryote'</strong> on page 730 and identify the defining organelle.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="3.1.1 | HOMEOSTASIS">
+                <h1>Feedback Inhibition</h1>
+                <div class="box-concept">
+                    <p>Animals must maintain a stable environment (Homeostasis) using <strong>Negative Feedback</strong>.</p>
+                </div>
+                
+
+[Image of negative feedback mechanism in humans]
+
+                <div class="teacher-only">
+                    <p class="textbook-ref">Miller & Levine (TE p. 732)</p>
+                    <p>Ask students to find <strong>Figure 25-2</strong>. Have them explain why shivering is a form of feedback inhibition.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="3.1.2 | DIVERSITY">
+                <h1 class="sketch">95% vs. 5%</h1>
+                <div class="classification-grid">
+                    <div class="class-box">
+                        <h3 style="color:var(--sws-maroon)">Invertebrates</h3>
+                        <p>No backbone. (Jellyfish, Insects, Sponges)</p>
+                    </div>
+                    <div class="class-box">
+                        <h3 style="color:var(--bio-blue)">Chordates</h3>
+                        <p>Have a dorsal nerve cord. (Mammals, Reptiles)</p>
+                    </div>
+                </div>
+                <div class="teacher-only">
+                    <p class="textbook-ref">Miller & Levine (TE p. 734)</p>
+                    <p>Student Task: Search page 734 to list the 4 required traits of a chordate.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="3.1.2 | CHORDATE TRAITS">
+                <h1>The Chordate Blueprint</h1>
+                <div class="box-concept">
+                    <ol>
+                        <li>Dorsal Hollow Nerve Cord</li>
+                        <li>Notochord</li>
+                        <li>Post-anal Tail</li>
+                        <li>Pharyngeal Pouches</li>
+                    </ol>
+                </div>
+                
+            </div>
+
+            <div class="slide" data-badge="CW #1 | MC">
+                <h1 class="sketch">Classwork Review</h1>
+                <div class="box-concept">
+                    <p><strong>Q:</strong> Which is NOT an animal trait?</p>
+                    <p>A) Heterotrophic | B) Multicellular | <span style="color:var(--sws-gold)">C) Cell Walls</span></p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="CW #1 | COMPARISON">
+                <h1>Chordate vs Vertebrate</h1>
+                <div class="box-concept">
+                    <p>Are all chordates vertebrates?</p>
+                    <p style="color:var(--sws-teal); font-weight:bold;">NO. Most are, but some (like sea squirts) stay simple.</p>
+                </div>
+                <div class="teacher-only">
+                    <p class="textbook-ref">Miller & Levine (TE p. 735)</p>
+                    <p>Point to the <strong>'Build Vocabulary'</strong> note on page 735 regarding Vertebrates.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="BONUS | CHALLENGE">
+                <h1 class="sketch" style="color:var(--sws-teal)">The "Missing Link"</h1>
+                <div class="box-concept" style="border-left-color: var(--sws-teal)">
+                    <p>Find an animal that lives today that represents the transition from <strong>Invertebrate to Chordate</strong>.</p>
+                    <p><em>Hint: Check page 735 for 'Nonvertebrate Chordates'.</em></p>
+                </div>
+                <div class="teacher-only">
+                    <p>Winner gets a stamp. Looking for: **Tunicates** or **Lancelets**.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-badge="END">
+                <h1 class="sketch">Lesson Complete</h1>
+                <button class="btn-nav" onclick="goToSlide(0)">Index</button>
+            </div>
+
+        </div> <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
+    </div>
+
+    <script>
+        (function() {
+            const STORAGE_KEY = "sws_layout_config_v2";
+            const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+            const SALT = "_SWS_SECURE";
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            const vault = document.getElementById('slide-vault');
+            const gotcha = document.getElementById('gotcha-screen');
+
+            try {
+                const isValid = candidate && btoa(atob(candidate) + SALT) === LOCK_VALUE;
+                if (isValid) {
+                    vault.style.visibility = 'visible'; 
+                    vault.style.display = 'flex';
+                } else {
+                    gotcha.style.display = 'flex';
+                    setTimeout(() => { window.location.href = "index.html"; }, 3000);
+                }
+            } catch (e) {
+                gotcha.style.display = 'flex';
+                setTimeout(() => { window.location.href = "index.html"; }, 3000);
+            }
+        })();
+
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pBar = document.getElementById('p-bar');
+        const masterBadge = document.getElementById('master-day-badge');
+
+        function updateUI() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            const activeSlide = slides[current];
+            if (activeSlide.dataset.badge) { masterBadge.textContent = activeSlide.dataset.badge; }
+            const pc = (current / (slides.length - 1)) * 100;
+            pBar.style.width = pc + "%";
+        }
+
+        function changeSlide(n) { current = Math.max(0, Math.min(slides.length - 1, current + n)); updateUI(); }
+        function goToSlide(n) { current = n; updateUI(); }
+        
+        function toggleTeacherMode() {
+            document.body.classList.toggle('teacher-mode');
+            const btn = document.getElementById('teacher-toggle');
+            btn.classList.toggle('active');
+            btn.textContent = document.body.classList.contains('teacher-mode') ? "Teacher Mode: ON" : "Teacher Mode";
+        }
+
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if(e.key === 'ArrowLeft') changeSlide(-1);
+            if(e.key === 'Escape') goToSlide(0);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
