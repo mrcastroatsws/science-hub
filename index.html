@@ -390,14 +390,14 @@
                 nowEl.style.color = currentClass.t === 'b' ? '#f9db66' : 'white';
                 nextEl.innerText = nextClass ? `Next: ${nextClass.s} - ${nextClass.c}` : "End of Day";
             } else if (nextClass) {
-                nowEl.innerText = "Before Class / Break";
-                nextEl.innerText = `Next: ${nextClass.s} - ${nextClass.c}`;
+                nowEl.innerText = "No Class";
+                nextEl.innerText = `${nextClass.s} - ${nextClass.c}`;
             } else {
                 nowEl.innerText = "Done for the Day";
                 let nextDayIndex = day + 1;
                 if(nextDayIndex > 5) nextDayIndex = 1;
                 const nextDayFirst = schedule[nextDayIndex][0];
-                nextEl.innerText = `Next: Tomorrow ${nextDayFirst.s} - ${nextDayFirst.c}`;
+                nextEl.innerText = `${nextDayFirst.s} - ${nextDayFirst.c}`;
             }
         }
 
