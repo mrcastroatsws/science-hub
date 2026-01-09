@@ -1,4 +1,4 @@
-const CHALLENGE = "w5rCpsOxw6nCpMOmw63CqsOtw6rDosOgw6bDqsOcw6rDpsOqw63CpsOp"; 
+const CHALLENGE = "AAAAAAUPBgEHFQAGBwUBBAcBCQ=="; 
 const STORAGE_KEY = "sws_session_cipher_v5";
 
 function processCipher(text, key) {
@@ -23,16 +23,13 @@ function reverseCipher(encodedText, key) {
 }
 
 function checkAuth() {
-    // 1. Get the "Key" the user claims to have from storage
     const candidateKey = localStorage.getItem(STORAGE_KEY);
-
     if (!candidateKey) {
         setAdminState(false);
         return;
     }
-
     const decryptedMessage = reverseCipher(CHALLENGE, candidateKey);
-
+    
     if (decryptedMessage === "SWS-SECURE-SESSION") {
         setAdminState(true);
     } else {
@@ -60,7 +57,7 @@ function login() {
     const input = prompt("Enter Teacher Access Code:");
     if (!input) return;
 
-    // Test the input immediately
+    // Test the input immediately against the Challenge
     const attempt = reverseCipher(CHALLENGE, input);
 
     if (attempt === "SWS-SECURE-SESSION") {
@@ -69,7 +66,6 @@ function login() {
         location.reload();
     } else {
         alert("Access Denied.");
-        // Anti-Bruteforce: Clear storage on fail
         localStorage.removeItem(STORAGE_KEY);
     }
 }
@@ -82,7 +78,6 @@ function logout() {
 
 // --- NAVIGATION & UTILS ---
 function switchView(viewName, btn) {
-    // Re-verify auth on critical actions
     const key = localStorage.getItem(STORAGE_KEY);
     if (viewName === 'script' && reverseCipher(CHALLENGE, key || "") !== "SWS-SECURE-SESSION") {
         alert("Teacher Login Required.");
@@ -102,6 +97,25 @@ function toggleTeacherMode() {
         btn.classList.toggle('active');
         btn.textContent = document.body.classList.contains('teacher-mode') ? "Teacher Mode: ON" : "Teacher Mode";
     }
+}
+
+// --- TIMER LOGIC ---
+let timerInterval;
+function startTimer(duration, displayId) {
+    const display = document.getElementById(displayId);
+    if (!display) return;
+    clearInterval(timerInterval);
+    let timer = duration, minutes, seconds;
+    timerInterval = setInterval(() => {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        display.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        if (--timer < 0) {
+            clearInterval(timerInterval);
+            display.textContent = "DONE";
+            display.classList.add("text-red-500", "animate-pulse");
+        }
+    }, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', checkAuth);
