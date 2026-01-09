@@ -30,31 +30,35 @@
   </head>
 
   <body class="bg-slate-50">
-    <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest sticky top-0 z-[60]">
-      <div class="flex items-center space-x-2">
-        <span class="opacity-50 hidden sm:inline text-[#29c4a9]">Science at Southwest</span>
-        <span class="admin-only hidden text-[#29c4a9] font-bold">● Admin Session: Mr. Castro</span>
+    
+    <div class="sticky top-0 z-[60] w-full shadow-lg">
+      
+      <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest relative z-20">
+        <div class="flex items-center space-x-2">
+          <span class="opacity-50 hidden sm:inline text-[#29c4a9]">Science at Southwest</span>
+          <span class="admin-only hidden text-[#29c4a9] font-bold">● Admin Session: Mr. Castro</span>
+        </div>
+        <div class="flex space-x-4">
+          <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Teacher Login</button>
+          <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
+        </div>
       </div>
-      <div class="flex space-x-4">
-        <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Teacher Login</button>
-        <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
-      </div>
+
+      <nav class="bg-[#ac2e55] text-white p-4 relative z-10 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+          <div class="flex items-center space-x-3">
+            <span class="sketch text-xl sm:text-2xl font-bold tracking-tight">SCIENCE HUB</span>
+          </div>
+          <div class="flex space-x-4 sm:space-x-8 font-medium text-[10px] sm:text-sm uppercase overflow-x-auto no-scrollbar whitespace-nowrap ml-4">
+            <a href="index.html" class="border-b-2 border-[#f9db66] pb-1">Dashboard</a>
+            <a href="science-fair.html" class="hover:text-[#f9db66] transition">Science Fair</a>
+            <a href="safety.html" class="hover:text-[#f9db66] transition">Safety</a>
+            <a href="#curriculum-section" class="hover:text-[#f9db66] transition">Curriculum</a>
+          </div>
+        </div>
+      </nav>
+      
     </div>
-
-    <nav class="bg-[#ac2e55] text-white p-4 sticky top-8 z-50 shadow-lg">
-      <div class="max-w-7xl mx-auto flex justify-between items-center">
-        <div class="flex items-center space-x-3">
-          <span class="sketch text-xl sm:text-2xl font-bold tracking-tight">SCIENCE HUB</span>
-        </div>
-        <div class="flex space-x-4 sm:space-x-8 font-medium text-[10px] sm:text-sm uppercase overflow-x-auto no-scrollbar whitespace-nowrap ml-4">
-          <a href="index.html" class="border-b-2 border-[#f9db66] pb-1">Dashboard</a>
-          <a href="science-fair.html" class="hover:text-[#f9db66] transition">Science Fair</a>
-          <a href="safety.html" class="hover:text-[#f9db66] transition">Safety</a>
-          <a href="#curriculum-section" class="hover:text-[#f9db66] transition">Curriculum</a>
-        </div>
-      </div>
-    </nav>
-
     <header class="hero-gradient py-12 sm:py-24 px-6 text-center shadow-inner">
       <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 leading-tight">Mr. Castro</h1>
       <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.3em]">2025 - 2026</p>
@@ -161,7 +165,7 @@
               </div>
             </div>
           </div>
-
+          
           <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
             <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
               <span class="sketch text-2xl">11th Grade</span>
@@ -187,6 +191,7 @@
               </div>
             </div>
           </div>
+
         </div>
         <br>
       </section>
