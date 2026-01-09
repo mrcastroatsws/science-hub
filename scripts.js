@@ -1,26 +1,26 @@
 const ADMIN_TOKEN = "U1dTMjAyNg=="; 
 
-const AUTH_KEY = "sws_layout_config_v2"; 
-const AUTH_VAL = "active_user_mode";
+const STORAGE_KEY = "sws_config_cache_v4"; 
 
-// --- ADMIN GATEKEEPER LOGIC ---
 function checkAuth() {
-    const currentSession = localStorage.getItem(AUTH_KEY);
+    // 1. Get the value from the browser
+    const userSession = localStorage.getItem(STORAGE_KEY);
+    const isAuthorized = (userSession === ADMIN_TOKEN);
+
+    // 3. UI Toggle
     const adminSections = document.querySelectorAll('.admin-only');
     const publicSections = document.querySelectorAll('.public-only');
     const teacherBtns = document.querySelectorAll('.btn-teacher');
 
-    if (currentSession === AUTH_VAL) {
-        // User is Logged In
+    if (isAuthorized) {
+        // User is Legit
         adminSections.forEach(el => el.classList.remove('hidden'));
         publicSections.forEach(el => el.classList.add('hidden'));
-        // If we are on a slide deck, show the Teacher Mode button
         teacherBtns.forEach(el => el.style.display = 'block');
     } else {
-        // User is Logged Out
+        // User is NOT Legit (or tried to hack with "true")
         adminSections.forEach(el => el.classList.add('hidden'));
         publicSections.forEach(el => el.classList.remove('hidden'));
-        // Hide Teacher Mode button on slides if not logged in
         teacherBtns.forEach(el => el.style.display = 'none');
     }
 }
@@ -30,43 +30,44 @@ function login() {
     
     if (!input) return;
 
-    // Simple obfuscation (Base64) that works offline/locally
-    // This turns "SWS2026" into "U1dTMjAyNg=="
-    const encoded = btoa(input);
+    // Encode what the user typed to see if it matches the token
+    const encodedInput = btoa(input);
 
-    if (encoded === ADMIN_TOKEN) {
-        localStorage.setItem(AUTH_KEY, AUTH_VAL);
+    if (encodedInput === ADMIN_TOKEN) {
+        // SUCCESS: We store the TOKEN, not "true"
+        localStorage.setItem(STORAGE_KEY, ADMIN_TOKEN);
         checkAuth();
         alert("Access Granted. Welcome, Mr. Castro.");
         location.reload(); 
     } else {
         alert("Access Denied.");
-        console.log("Debug Info:", encoded); // Check console if you can't login
     }
 }
 
 function logout() {
-    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(STORAGE_KEY);
     alert("Session Closed.");
     location.reload();
 }
 
 // --- NAVIGATION & VIEW LOGIC ---
 function switchView(viewName, btn) {
-    if (viewName === 'script' && localStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
+    // Security Check using the Token, not "true"
+    if (viewName === 'script' && localStorage.getItem(STORAGE_KEY) !== ADMIN_TOKEN) {
         alert("Teacher Login Required for Annotated Scripts.");
         return;
     }
-    // ... existing navigation logic if needed ...
+    // ... (Your existing navigation logic here if you have specific view switching) ...
 }
 
 // --- SLIDE DECK LOGIC (Shared) ---
-// This handles the Teacher Mode toggle inside the slide files
 function toggleTeacherMode() {
-    if (localStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
+    // Security Check
+    if (localStorage.getItem(STORAGE_KEY) !== ADMIN_TOKEN) {
         alert("Teacher Login Required.");
         return;
     }
+    
     document.body.classList.toggle('teacher-mode');
     const btn = document.getElementById('teacher-toggle');
     if(btn) {
