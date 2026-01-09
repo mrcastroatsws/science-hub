@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Safety & Culture</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --sws-teal: #29c4a9;
+            --slate-dark: #0f172a;
+            --slate-light: #f8fafc;
+        }
+
+        body { font-family: "Rubik", sans-serif; background-color: var(--slate-light); color: #334155; }
+        .sketch { font-family: "Cabin Sketch", cursive; }
+        .mono { font-family: "JetBrains Mono", monospace; }
+
+        /* HEADER */
+        nav { background-color: var(--sws-maroon); }
+        
+        /* CARDS */
+        .protocol-card {
+            background: white; border: 1px solid #e2e8f0; border-radius: 1rem;
+            padding: 1.5rem; transition: all 0.2s ease;
+            position: relative; overflow: hidden;
+        }
+        .protocol-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .protocol-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
+            background: #cbd5e1;
+        }
+        .protocol-card.safety::before { background: var(--sws-maroon); }
+        .protocol-card.routine::before { background: var(--sws-teal); }
+        .protocol-card.club::before { background: var(--sws-gold); }
+
+        /* GRID */
+        .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .section-title {
+            font-family: 'Cabin Sketch'; font-size: 2.5rem; color: var(--slate-dark);
+            margin-bottom: 1.5rem; border-bottom: 2px dashed #e2e8f0; padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="sketch text-2xl text-white tracking-widest hover:opacity-80 transition">SCIENCE PORTAL</a>
+                <span class="opacity-40 text-xs uppercase font-bold border-l pl-4 border-white/40 text-white tracking-wider">Protocol & Safety</span>
+            </div>
+            <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition border border-white/20">Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-12 space-y-16">
+
+        <section>
+            <h2 class="section-title text-sws-maroon">01. The Laboratory Protocol</h2>
+            
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-8 mb-8">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">⚠️</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-red-900 uppercase tracking-wide">The "Lab" Reality Check</h3>
+                        <p class="mt-2 text-red-800 leading-relaxed">
+                            Southwest School possesses a designated Science Laboratory. However, due to <strong>current equipment constraints and supply limitations</strong>, full-scale wet labs will be infrequent this year. 
+                        </p>
+                        <p class="mt-2 text-red-800 font-bold">
+                            Therefore, the Classroom IS the Laboratory.
+                        </p>
+                        <p class="mt-2 text-red-700 text-sm">
+                            Safety rules apply whether we are in the Lab room or at our desks handling models. 
+                            <strong>Respect for materials is non-negotiable.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-grid">
+                <div class="protocol-card safety">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">Personal Protective Equipment</h4>
+                    <p class="text-sm text-slate-600">When instructed, <strong>Goggles</strong> and <strong>Aprons</strong> must be worn. There are no exceptions for "just watching." If the gear is out, it is on.</p>
+                </div>
+                <div class="protocol-card safety">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">The "Zero" Zone</h4>
+                    <p class="text-sm text-slate-600">No food. No drinks (even water). No gum. Contamination risks are real, even with household chemicals.</p>
+                </div>
+                <div class="protocol-card safety">
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">Breakage Protocol</h4>
+                    <p class="text-sm text-slate-600">If glass breaks or liquid spills: <strong>FREEZE</strong>. Do not touch it. Raise your hand and call "Code Blue" immediately. I will handle the cleanup.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title text-sws-teal">02. Routines & Expectations</h2>
+            <p class="mb-8 text-slate-500 italic">"We are building habits of excellence. When I say these words, this is what they mean."</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="protocol-card routine">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800">MMVP</h4>
+                        <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">BEHAVIOR</span>
+                    </div>
+                    <ul class="text-sm space-y-2 text-slate-600">
+                        <li><strong>M</strong>ovement: Are we seated or standing?</li>
+                        <li><strong>M</strong>aterials: Are hands empty or writing?</li>
+                        <li><strong>V</strong>oice: Level 0 (Silent) to 3 (Presenting).</li>
+                        <li><strong>P</strong>articipation: How do you show engagement?</li>
+                    </ul>
+                </div>
+
+                <div class="protocol-card routine">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800">At-Bats</h4>
+                        <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">PRACTICE</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-2">Just like baseball, you need reps to hit a home run.</p>
+                    <p class="text-sm text-slate-600">When I say "At-Bat," it means <strong>independent, silent practice</strong>. You are testing your own brain, not your neighbor's.</p>
+                </div>
+
+                <div class="protocol-card routine">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800">Turn & Talk</h4>
+                        <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">DISCOURSE</span>
+                    </div>
+                    <p class="text-sm text-slate-600"><strong>Knee-to-Knee.</strong></p>
+                    <p class="text-sm text-slate-600 mt-2">1. Turn body to partner.<br>2. Partner A speaks (30s).<br>3. Partner B listens activey.<br>4. Switch.</p>
+                </div>
+
+                <div class="protocol-card routine">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800">Cold Call</h4>
+                        <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">ACCOUNTABILITY</span>
+                    </div>
+                    <p class="text-sm text-slate-600">I will call on students randomly, not just those with hands up.</p>
+                    <p class="text-sm text-slate-600 mt-2"><strong>Why?</strong> Because every mind matters, and everyone must be ready to contribute.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title text-sws-gold">03. Science Clubs & Culture</h2>
+            
+            <div class="bg-slate-800 text-white rounded-2xl p-8 md:p-12 overflow-hidden relative">
+                <div class="absolute top-0 right-0 opacity-10 text-[10rem] select-none">🧪</div>
+                
+                <div class="relative z-10 grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="sketch text-3xl text-sws-gold mb-4">Student-Led Initiative</h3>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            Science doesn't end when the bell rings. We are opening the floor for <strong>Student Science Clubs</strong>. If you have a passion, we can build a structure around it.
+                        </p>
+                        <p class="text-slate-400 text-sm italic">
+                            *Requires a minimum of 5 committed students and a proposal submitted to Mr. Castro.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
+                            <h4 class="font-bold text-sws-teal uppercase tracking-widest text-xs mb-1">Potential Club 01</h4>
+                            <p class="font-bold text-lg">Astronomy & Star Gazing</p>
+                            <p class="text-xs text-slate-400">Using the school grounds for night observation events.</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
+                            <h4 class="font-bold text-sws-maroon uppercase tracking-widest text-xs mb-1">Potential Club 02</h4>
+                            <p class="font-bold text-lg">Robotics & Engineering</p>
+                            <p class="text-xs text-slate-400">Basic circuit building and coding challenges.</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
+                            <h4 class="font-bold text-sws-gold uppercase tracking-widest text-xs mb-1">Potential Club 03</h4>
+                            <p class="font-bold text-lg">Botany & Gardening</p>
+                            <p class="text-xs text-slate-400">Managing a small plot for biology experiments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-slate-200 pt-8 mt-12 text-center">
+            <p class="mono text-xs text-slate-400 uppercase tracking-widest">
+                System Status: Active | Last Updated: Jan 2026
+            </p>
+            <p class="text-slate-500 text-sm mt-2 max-w-xl mx-auto">
+                This page is a living document. Guidelines may evolve as we acquire new equipment or as student needs change.
+            </p>
+            <div class="mt-6">
+                <a href="index.html" class="text-sws-maroon font-bold text-sm hover:underline">Return to Hub</a>
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>
