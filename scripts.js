@@ -1,38 +1,28 @@
-const CHALLENGE = "AAAAByMjDQYFEgcTIx0ADgQc"; 
-const STORAGE_KEY = "sws_session_cipher_v5";
+const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+const SALT = "_SWS_SECURE";
 
-function processCipher(text, key) {
-    let result = "";
-    for (let i = 0; i < text.length; i++) {
-        result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-    }
-    return btoa(result);
-}
-
-function reverseCipher(encodedText, key) {
-    try {
-        const text = atob(encodedText);
-        let result = "";
-        for (let i = 0; i < text.length; i++) {
-            result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return result;
-    } catch (e) {
-        return "";
-    }
-}
+const STORAGE_KEY = "sws_layout_config_v2";
 
 function checkAuth() {
-    const candidateKey = localStorage.getItem(STORAGE_KEY);
-    if (!candidateKey) {
+    const candidate = localStorage.getItem(STORAGE_KEY);
+
+    if (!candidate) {
         setAdminState(false);
         return;
     }
-    const decryptedMessage = reverseCipher(CHALLENGE, candidateKey);
-    
-    if (decryptedMessage === "SWS-SECURE-SESSION") {
-        setAdminState(true);
-    } else {
+
+    try {
+        const rawPassword = atob(candidate);
+        
+        const salted = rawPassword + SALT;
+        const check = btoa(salted);
+
+        if (check === LOCK_VALUE) {
+            setAdminState(true);
+        } else {
+            setAdminState(false);
+        }
+    } catch (e) {
         setAdminState(false);
     }
 }
@@ -57,11 +47,11 @@ function login() {
     const input = prompt("Enter Teacher Access Code:");
     if (!input) return;
 
-    // Test the input immediately against the Challenge
-    const attempt = reverseCipher(CHALLENGE, input);
+    const testSalted = input + SALT;
+    const testCheck = btoa(testSalted);
 
-    if (attempt === "SWS-SECURE-SESSION") {
-        localStorage.setItem(STORAGE_KEY, input);
+    if (testCheck === LOCK_VALUE) {
+        localStorage.setItem(STORAGE_KEY, btoa(input));
         alert("Access Granted. Welcome, Mr. Castro.");
         location.reload();
     } else {
@@ -76,21 +66,25 @@ function logout() {
     location.reload();
 }
 
-// --- NAVIGATION & UTILS ---
 function switchView(viewName, btn) {
-    const key = localStorage.getItem(STORAGE_KEY);
-    if (viewName === 'script' && reverseCipher(CHALLENGE, key || "") !== "SWS-SECURE-SESSION") {
-        alert("Teacher Login Required.");
-        return;
+    const candidate = localStorage.getItem(STORAGE_KEY);
+    // Double check auth before showing sensitive views
+    if (viewName === 'script') {
+        if (!candidate || btoa(atob(candidate) + SALT) !== LOCK_VALUE) {
+            alert("Teacher Login Required.");
+            return;
+        }
     }
 }
 
 function toggleTeacherMode() {
-    const key = localStorage.getItem(STORAGE_KEY);
-    if (reverseCipher(CHALLENGE, key || "") !== "SWS-SECURE-SESSION") {
-        alert("Teacher Login Required.");
+    const candidate = localStorage.getItem(STORAGE_KEY);
+    // Secure Check
+    if (!candidate || btoa(atob(candidate) + SALT) !== LOCK_VALUE) {
+        alert("Login Required");
         return;
     }
+    
     document.body.classList.toggle('teacher-mode');
     const btn = document.getElementById('teacher-toggle');
     if(btn) {
