@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWS | Chem 11: Week 3.2 | Molar Mass & Project</title>
+    <title>SWS | Chem 11: Week 3.2 | Molar Mass & Science Fair</title>
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --chem-purple: #8e44ad;
-            --chem-light: #a29bfe;
+            --chem-accent: #a29bfe;
             --sws-maroon: #ac2e55;
             --sws-gold: #f9db66;
             --sws-teal: #29c4a9;
@@ -32,18 +32,6 @@
                               url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
 
-        /* --- UI HEADER (FLICKER PROOF) --- */
-        .ui-header { position: absolute; top: 30px; left: 30px; z-index: 1000; text-align: left; }
-        #master-day-badge {
-            font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 700;
-            color: var(--bg-color); background: var(--sws-gold);
-            padding: 5px 15px; border-radius: 4px; display: inline-block;
-        }
-        #master-part-badge {
-            font-family: 'Cabin Sketch'; font-size: 1.8rem; color: var(--sws-teal);
-            margin-top: 8px; display: block;
-        }
-
         /* --- ACCESS CONTROL --- */
         #gotcha-screen {
             display: none; position: fixed; inset: 0; background: #000; color: #f00;
@@ -52,50 +40,66 @@
         }
         #slide-vault { visibility: hidden; display: flex; flex-direction: column; height: 100vh; width: 100%; }
 
+        /* --- UI HEADER (FLICKER PROOF) --- */
+        .ui-header { position: absolute; top: 20px; left: 20px; z-index: 1000; text-align: left; }
+        #master-day-badge {
+            font-family: 'JetBrains Mono'; font-size: 0.9rem; font-weight: 700;
+            color: var(--bg-color); background: var(--sws-gold);
+            padding: 4px 12px; border-radius: 4px; display: inline-block;
+        }
+        #master-part-badge {
+            font-family: 'Cabin Sketch'; font-size: 1.4rem; color: var(--sws-teal);
+            margin-top: 5px; display: block;
+        }
+
         /* --- NAVIGATION UI --- */
-        .nav-top { position: fixed; top: 30px; right: 30px; display: flex; gap: 10px; z-index: 9000; }
-        .nav-bottom-left { position: fixed; bottom: 30px; left: 30px; z-index: 9000; }
-        .nav-bottom-right { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 9000; }
+        .nav-top-right { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 9000; }
+        .nav-bottom-left { position: fixed; bottom: 20px; left: 20px; z-index: 9000; }
+        .nav-bottom-right { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 9000; }
 
         .btn-ui {
             background: var(--glass); border: 1px solid var(--border);
-            color: white; padding: 12px 20px; font-size: 0.8rem; cursor: pointer;
-            border-radius: 8px; font-weight: 700; text-transform: uppercase; transition: 0.2s;
+            color: white; padding: 10px 15px; font-size: 0.75rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700; text-transform: uppercase; transition: 0.2s;
         }
         .btn-ui:hover { background: var(--chem-purple); border-color: var(--chem-purple); }
         .btn-teacher { border-color: var(--sws-teal); color: var(--sws-teal); }
         .btn-teacher.active { background: var(--sws-teal); color: black; }
 
         /* --- STAGE --- */
-        .stage { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px; position: relative; }
+        .stage { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
         .slide { display: none; width: 100%; max-width: 1100px; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: slideUp 0.4s ease-out; }
         .slide.active { display: flex; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- DASHBOARD GRID --- */
+        .menu-grid { display: flex; gap: 10px; justify-content: center; width: 100%; margin-top: 20px; flex-wrap: wrap; }
+        .menu-card { background: var(--glass); border: 1px solid var(--border); padding: 12px; border-radius: 8px; width: 18%; cursor: pointer; transition: 0.2s; text-align: left; }
+        .menu-card:hover { border-color: var(--sws-gold); transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+        .card-date { font-size: 0.65rem; color: var(--sws-teal); font-weight: bold; }
+        .card-topic { font-size: 0.8rem; font-weight: bold; margin-top: 4px; line-height: 1.1; }
+
         /* --- CONTENT STYLES --- */
-        h1 { font-size: 3.8rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
-        .box-concept { background: var(--glass); border-left: 8px solid var(--chem-purple); padding: 30px; text-align: left; border-radius: 0 20px 20px 0; margin: 25px 0; width: 100%; font-size: 1.4rem; line-height: 1.5; }
-        .mono-display { font-family: 'JetBrains Mono'; font-size: 2.2rem; color: var(--chem-accent); margin: 20px 0; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
+        h1 { font-size: 3.5rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
+        .box-concept { background: var(--glass); border-left: 6px solid var(--chem-purple); padding: 20px; text-align: left; border-radius: 0 15px 15px 0; margin: 15px 0; width: 100%; font-size: 1.3rem; line-height: 1.4; }
         
         /* --- TEACHER MODE --- */
         .teacher-only {
-            display: none; width: 100%; margin-top: 20px;
+            display: none; width: 100%; margin-top: 15px;
             border: 2px dashed var(--sws-teal); background: rgba(41, 196, 169, 0.05);
-            padding: 25px; border-radius: 15px; text-align: left; font-size: 1rem; line-height: 1.6;
+            padding: 20px; border-radius: 12px; text-align: left; font-size: 0.95rem; line-height: 1.5;
         }
         body.teacher-mode .teacher-only { display: block; }
-        .tag { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--sws-gold); background: rgba(249, 219, 102, 0.1); padding: 2px 6px; border-radius: 4px; margin-right: 8px; }
+        .tag { font-weight: bold; text-transform: uppercase; font-size: 0.7rem; color: var(--sws-gold); background: rgba(249, 219, 102, 0.1); padding: 2px 6px; border-radius: 4px; margin-right: 8px; }
 
-        /* --- MATH CHALLENGE --- */
-        .scroll-box { background: #000; border: 1px solid var(--sws-maroon); padding: 25px; border-radius: 15px; text-align: left; font-family: 'JetBrains Mono'; font-size: 0.9rem; max-height: 300px; overflow-y: auto; width: 100%; }
-
-        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.1); }
         .progress-fill { height: 100%; background: var(--chem-purple); width: 0%; transition: width 0.3s ease; }
+        .scroll-box { background: #000; border: 1px solid var(--sws-maroon); padding: 20px; border-radius: 12px; text-align: left; font-family: 'JetBrains Mono'; font-size: 0.85rem; max-height: 250px; overflow-y: auto; width: 100%; }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .box-concept { font-size: 1.1rem; }
-            .nav-top { left: 160px; right: auto; }
+            .menu-card { width: 45%; }
+            h1 { font-size: 2.2rem; }
+            .box-concept { font-size: 1rem; }
         }
     </style>
 </head>
@@ -108,11 +112,11 @@
 
     <div id="slide-vault">
         <div class="ui-header">
-            <div id="master-day-badge">WED | 01/21</div>
-            <div id="master-part-badge">MOLAR MASS CALCS</div>
+            <div id="master-day-badge">WEEK 3.2</div>
+            <div id="master-part-badge">MOLAR MASS & SCIENCE FAIR</div>
         </div>
 
-        <nav class="nav-top">
+        <nav class="nav-top-right">
             <button class="btn-ui" onclick="goToSlide(0)">Restart</button>
             <button class="btn-ui" style="color:var(--sws-gold)" onclick="location.href='index.html'">Home</button>
         </nav>
@@ -128,122 +132,134 @@
 
         <div class="stage">
             
-            <div class="slide active" data-day="WEEK 3.2" data-part="III QUARTER PLAN">
-                <h1 class="sketch">Calculations & Project</h1>
+            <div class="slide active" data-day="WEEK 3.2" data-part="OVERVIEW">
+                <h1 class="sketch">Chemistry 11</h1>
+                <h2 style="color:var(--chem-accent)">Quarter III Master Deck</h2>
                 <div class="box-concept">
-                    <p><strong>3.2.3:</strong> Molar Mass Calculations (Grams, Moles, Units).</p>
-                    <p><strong>3.2.4:</strong> Science Fair Update (10 pts CW #2 Milestone).</p>
+                    <p><strong>General Objective:</strong> Transition from nomenclature to quantitative chemistry. Finalize Science Fair variables and experimental protocols.</p>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-card" style="opacity:0.5; cursor:default;">
+                        <div class="card-date">JAN 19</div>
+                        <div class="card-topic">MONDAY</div>
+                        <div class="card-topic">NO CLASS</div>
+                    </div>
+                    <div class="menu-card" style="opacity:0.5; cursor:default;">
+                        <div class="card-date">JAN 20</div>
+                        <div class="card-topic">TUESDAY</div>
+                        <div class="card-topic">NO CLASS</div>
+                    </div>
+                    <div class="menu-card" onclick="goToSlide(1)">
+                        <div class="card-date">JAN 21 (3.2.3)</div>
+                        <div class="card-topic" style="color:var(--sws-gold)">WEDNESDAY</div>
+                        <div class="card-topic">Molar Mass Calc</div>
+                    </div>
+                    <div class="menu-card" onclick="goToSlide(5)">
+                        <div class="card-date">JAN 22 (3.2.4)</div>
+                        <div class="card-topic" style="color:var(--sws-gold)">THURSDAY</div>
+                        <div class="card-topic">SF Progress (10pt)</div>
+                    </div>
+                    <div class="menu-card" style="opacity:0.5; cursor:default;">
+                        <div class="card-date">JAN 23</div>
+                        <div class="card-topic">FRIDAY</div>
+                        <div class="card-topic">NO CLASS</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" data-day="WED | 01/21" data-part="INITIAL PHASE">
+                <h1 class="sketch">Atomic Counting</h1>
+                <div class="box-concept">
+                    <p><strong>Review:</strong> How many atoms of each element are in <strong>3Fe₂(CO₃)₃</strong>?</p>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">STAMP</span> Precision is power. If we can't measure the mass, we can't conduct the experiment.</p>
-                    <p><span class="tag">PURPOSE</span> To transition from naming to quantitative stoichiometry.</p>
-                    <p><span class="tag">RESOURCE</span> Holt McDougal Modern Chemistry - Ch. 3 & 7.</p>
+                    <p><span class="tag">PURPOSE</span> Review subscripts and coefficients before applying molar mass.</p>
+                    <p><span class="tag">MMVP</span> Voice: 2 (Participating). Materials: Whiteboards out. Participation: Show me on 3.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="WED | 01/21" data-part="3.2.3 CALCULATION">
-                <h1 class="sketch">Atomic Weight to Molar Mass</h1>
+            <div class="slide" data-day="WED | 01/21" data-part="DURING PHASE">
+                <h1 class="sketch">Molar Mass Units</h1>
                 <div class="box-concept">
-                    <p><strong>Definition:</strong> The mass of one mole of a pure substance.</p>
-                    <p><strong>Units:</strong> Grams per mole (g/mol).</p>
-                    <p><strong>Source:</strong> The Average Atomic Mass on your Periodic Table.</p>
+                    <p><strong>Concept:</strong> Grams per mole (g/mol) allows us to bridge the gap between atoms and lab samples.</p>
+                    <p><strong>Process:</strong> Mass of Element $\times$ Quantity = Partial Mass.</p>
                 </div>
-                <div class="mono-display">1 mol C = 12.01 g</div>
+                
                 <div class="teacher-only">
-                    <p><span class="tag">MMVP</span> Voice: 0. Materials: Periodic Tables and Scientific Calculators out. Eyes on board.</p>
-                    <p><span class="tag">TEACHER VOICE</span> "Wait for 100% compliance. Narrate: 'I see Carlos has his table out, I see Sofia has her calculator ready...'"</p>
+                    <p><span class="tag">ACMO</span> Look for students forgetting to multiply the subscript into the atomic mass. Narrate when students are using two decimal places from the Periodic Table.</p>
+                    <p><span class="tag">TEXTBOOK</span> Modern Chemistry (Holt McDougal) Ch 7, Sec 3.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="WED | 01/21" data-part="3.2.3 COMPLEX UNITS">
-                <h1>Complex Formulas</h1>
+            <div class="slide" data-day="WED | 01/21" data-part="FINAL PHASE">
+                <h1 class="sketch">Exit Ticket</h1>
                 <div class="box-concept">
-                    <p>How do we handle <strong>Ammonium Sulfate</strong>?</p>
-                    <p class="mono" style="font-size: 2rem;">(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub></p>
-                    <ul>
-                        <li>N: $14.01 \times 2 = 28.02$</li>
-                        <li>H: $1.01 \times 8 = 8.08$</li>
-                        <li>S: $32.06 \times 1 = 32.06$</li>
-                        <li>O: $16.00 \times 4 = 64.00$</li>
-                    </ul>
+                    <p>Calculate the Molar Mass of Calcium Nitrate: <strong>Ca(NO₃)₂</strong>.</p>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">ACMO</span> Circulate. Monitor for students who forget to distribute the '2' to the Nitrogen. Use the 'Rain' metaphor.</p>
-                    <p><span class="tag">STAMP</span> Total: 132.16 g/mol.</p>
+                    <p><span class="tag">STAMP</span> Ca(40.08) + 2N(28.02) + 6O(96.00) = 164.10 g/mol.</p>
+                    <p><span class="tag">MMVP</span> Voice: 0. Movement: Stay seated until the bell rings.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="THU | 01/22" data-part="3.2.4 PROJECT WORK">
-                <h1 class="sketch" style="color:var(--sws-teal)">Science Fair: Progress</h1>
-                <div class="box-concept" style="border-left-color: var(--sws-teal)">
-                    <p><strong>Classwork #2 (Major Milestone - 10 pts):</strong></p>
-                    <p>Today is a heavy lifting day. We are finalizing:</p>
-                    <ul>
-                        <li><strong>Experimental Design:</strong> IV, DV, and Constants.</li>
-                        <li><strong>Chemical Connection:</strong> How does your project use matter/energy concepts?</li>
-                        <li><strong>Bitácora Entry:</strong> Detailed procedure draft.</li>
-                    </ul>
+            <div class="slide" data-day="THU | 01/22" data-part="INITIAL PHASE">
+                <h1 class="sketch">Science Fair: 10 Pts</h1>
+                <div class="box-concept">
+                    <p><strong>Objective:</strong> Audit Bitácora progress and finalize Experimental Variables.</p>
+                    <p><strong>MMVP:</strong> Bitácoras open to the 'Variables' page. Hands empty, eyes on screen.</p>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">TIME</span> 25 Minutes. High Engagement.</p>
-                    <p><span class="tag">MMVP</span> Voice: 1 (Whisper to partner). Movement: Seated. Participation: Updating Bitácora logs.</p>
-                    <p><span class="tag">ACMO</span> Individual check-ins. If a student is 'idle,' direct them immediately to the Bonus Challenge slide.</p>
+                    <p><span class="tag">TEACHER VOICE</span> Calm energy. "I am narrating the 10 students who already have their names and dates on the log entry..."</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="THU | 01/22" data-part="3.2.4 GRADING">
-                <h1>The 25-Point Path</h1>
+            <div class="slide" data-day="THU | 01/22" data-part="DURING PHASE">
+                <h1 class="sketch">Variable Matrix</h1>
                 <div class="box-concept">
-                    <p>1. Bitácora / Log (5 pts)</p>
-                    <p>2. Trifolio / Board (8 pts)</p>
-                    <p>3. Defensa Oral (10 pts)</p>
-                    <p>4. Setup & Punctuality (2 pts)</p>
+                    <p><strong>Independent Variable (IV):</strong> What are YOU changing?</p>
+                    <p><strong>Dependent Variable (DV):</strong> What is the CHEMICAL measuring tool? (pH, temperature, mass change).</p>
+                    <p><strong>Constants:</strong> What stays same to ensure a fair test?</p>
                 </div>
-                <p class="mono" style="color:var(--sws-gold)">CW #2 = Your progress check for these 25 points.</p>
+                <div class="teacher-only">
+                    <p><span class="tag">ENGAGE</span> Turn & Talk: "Compare your IV with your neighbor. Is it measurable or just descriptive?"</p>
+                    <p><span class="tag">ACMO</span> Academic Monitoring: Ensure 11th graders are moving beyond 'models' (volcanoes) to 'experiments' (rates of reaction).</p>
+                </div>
             </div>
 
-            <div class="slide" data-day="THU | 01/22" data-part="CW #2 REVIEW">
-                <h1 class="sketch">Molar Mass Challenge</h1>
-                <div class="box-concept">
-                    <p><strong>At-Bat:</strong> Calculate the Molar Mass of <strong>Iron(III) Carbonate</strong>.</p>
-                    <p class="mono" style="font-size: 2rem;">Fe<sub>2</sub>(CO<sub>3</sub>)<sub>3</sub></p>
+            <div class="slide" data-day="THU | 01/22" data-part="FINAL PHASE">
+                <h1 class="sketch">Classwork #2 Check</h1>
+                <div class="box-concept" style="border-left-color:var(--sws-gold)">
+                    <p>1. Procedures Drafted (3 pts)</p>
+                    <p>2. Variables Identified (4 pts)</p>
+                    <p>3. Chemical Connection (3 pts)</p>
                 </div>
-                <button class="btn-ui" onclick="document.getElementById('fe-sol').style.display='block'">Show Solution</button>
-                <div id="fe-sol" style="display:none; margin-top:10px;" class="mono">
-                    Fe: 55.85x2 | C: 12.01x3 | O: 16x9<br>
-                    <strong>Total: 291.73 g/mol</strong>
+                <div class="teacher-only">
+                    <p><span class="tag">STAMP</span> 10 points total for CW#2. Collect Bitácoras for grading.</p>
                 </div>
             </div>
 
             <div class="slide" data-day="BONUS" data-part="IDLE CHALLENGE">
                 <h1 class="sketch" style="color:var(--sws-maroon)">Elite Student Challenge</h1>
                 <div class="scroll-box">
-                    1. Expand $(x + 2y)^3$.<br>
-                    2. Roots of $x^3 + 3x^2 + 7x - 11 = 0$ (Sum/Product).<br>
-                    3. Geometric Series: $a=3, r=2/5$. Find Sum.<br>
-                    4. Compute $\log_9 27$.<br>
-                    5. Eq. of line through $(2, 3)$ and $(5, -1)$.<br>
-                    6. Area between $4x + 7y = 14, x = 1, y = -2$.<br>
-                    7. Solve: $(\sin \theta + \cos \theta)^2 = 3/2$ for $0 \le \theta \le 2\pi$.
+                    1. Expand $(x + 2y)^3$<br>
+                    2. Roots of $x^3 + 3x^2 + 7x - 11 = 0$<br>
+                    3. Sum of infinite geometric series: $a=3, r=2/5$<br>
+                    4. Compute $\log_9 27$<br>
+                    5. Find eq. of line through $(2, 3)$ and $(5, -1)$<br>
+                    6. Evaluate $\sin \frac{\pi}{6}$ and $\tan \frac{5\pi}{4}$
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">ANSWERS</span> 1) $x^3+6x^2y+12xy^2+8y^3$ | 3) $5$ | 4) $1.5$ | 7) $\pi/12, 5\pi/12, 13\pi/12, 17\pi/12$.</p>
+                    <p><span class="tag">ANSWERS</span> 1) $x^3+6x^2y+12xy^2+8y^3$ | 3) $5$ | 4) $1.5$ | 6) $0.5, 1$.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="END" data-part="WEEK 3.2 DONE">
-                <h1 class="sketch">Module Complete</h1>
-                <div class="box-concept">
-                    <p>Next week (3.3): <strong>Intermolecular Forces (CW #3 - 5 pts)</strong>.</p>
-                </div>
-                <button class="btn-ui" onclick="goToSlide(0)">Restart Module</button>
-            </div>
+        </div>
 
-        </div> <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
     </div>
 
     <script>
-        // --- SECURITY (v2) ---
+        // --- SECURITY ---
         (function() {
             const STORAGE_KEY = "sws_layout_config_v2";
             const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
@@ -267,7 +283,7 @@
             }
         })();
 
-        // --- NAVIGATION ---
+        // --- ENGINE ---
         let current = 0;
         const slides = document.querySelectorAll('.slide');
         const pBar = document.getElementById('p-bar');
@@ -287,21 +303,7 @@
 
         function changeSlide(n) { current = Math.max(0, Math.min(slides.length - 1, current + n)); updateUI(); }
         function goToSlide(n) { current = n; updateUI(); }
-        
-        function toggleTeacherMode() {
-            document.body.classList.toggle('teacher-mode');
-            const btn = document.getElementById('teacher-toggle');
-            if(btn) btn.classList.toggle('active');
-        }
-
-        function startTimer(sec, id) {
-            let t = sec; const disp = document.getElementById(id);
-            const clock = setInterval(() => {
-                let m = Math.floor(t / 60); let s = t % 60;
-                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-                if (--t < 0) { clearInterval(clock); disp.textContent = "DONE"; }
-            }, 1000);
-        }
+        function toggleTeacherMode() { document.body.classList.toggle('teacher-mode'); }
 
         document.addEventListener('keydown', e => {
             if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
