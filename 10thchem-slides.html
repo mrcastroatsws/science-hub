@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWS | Chemistry Master Deck 3.1</title>
+    <title>SWS | Chemistry 10 Master Deck 3.1</title>
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -126,16 +126,6 @@
         .day-date { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--chem-purple); font-weight: 700; margin-bottom: 5px; }
         .day-title { font-family: 'Cabin Sketch'; font-size: 1.4rem; line-height: 1.1; }
 
-        .extra-toggles {
-            display: flex; gap: 20px; width: 100%; justify-content: center; margin-top: 30px;
-        }
-        .btn-extra {
-            padding: 15px 30px; border-radius: 30px; border: 2px solid;
-            font-weight: 700; cursor: pointer; background: transparent; color: white;
-            transition: 0.3s;
-        }
-        .btn-extra:hover { transform: scale(1.05); }
-
         .day-badge {
             position: absolute; top: 40px; left: 50px;
             font-family: 'JetBrains Mono'; font-size: 0.9rem;
@@ -170,6 +160,14 @@
         
         .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
         .progress-fill { height: 100%; background: var(--chem-purple); width: 0%; transition: width 0.3s ease; }
+        
+        .example-box {
+            font-size: 3.5rem; font-family: 'JetBrains Mono'; letter-spacing: 3px;
+            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; border: 1px solid var(--sws-teal);
+            margin: 20px 0;
+        }
+        .sub { font-size: 2rem; vertical-align: sub; color: var(--sws-teal); }
+        .coef { color: var(--sws-maroon); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -192,15 +190,15 @@
 
             <div class="slide active">
                 <h1 class="sketch">Chemistry 10</h1>
-                <h2>Week 3.1: Formulas & Moles</h2>
+                <h2>Week 3.1: Formulas & Molar Mass</h2>
                 <div class="box-concept">
-                    <p><strong>Objective:</strong> Interpret chemical formulas, count atoms, understand Molar Mass (g/mol), and complete Classwork #1.</p>
+                    <p><strong>Weekly Objective:</strong> Master nomenclature, differentiate subscripts/coefficients, and calculate Molar Mass to bridge the gap to stoichiometry.</p>
                 </div>
                 
                 <div class="calendar-grid">
                     <div class="day-card" onclick="goToSlide(1)">
                         <div class="day-date">MON 01/12</div>
-                        <div class="day-title">Intro: Chemical Formulas</div>
+                        <div class="day-title">Formulas & Structure</div>
                     </div>
                     <div class="day-card disabled">
                         <div class="day-date">TUE 01/13</div>
@@ -210,198 +208,225 @@
                         <div class="day-date">WED 01/14</div>
                         <div class="day-title">NO CLASS</div>
                     </div>
-                    <div class="day-card" onclick="goToSlide(4)">
+                    <div class="day-card" onclick="goToSlide(9)">
                         <div class="day-date">THU 01/15</div>
                         <div class="day-title">Molar Mass (CW #1)</div>
                     </div>
-                    <div class="day-card" style="opacity:0.5; cursor:default">
+                    <div class="day-card disabled">
                         <div class="day-date">FRI 01/16</div>
-                        <div class="day-title">See 9th Grade</div>
+                        <div class="day-title">NO CLASS</div>
                     </div>
-                </div>
-
-                <div class="extra-toggles">
-                    <button class="btn-extra" style="border-color: var(--sws-teal);" onclick="goToSlide(7)">CW #1 REVIEW 📝</button>
-                    <button class="btn-extra" style="border-color: var(--sws-maroon);" onclick="goToSlide(13)">BONUS CHALLENGE 🚀</button>
                 </div>
 
                 <div class="teacher-only">
                     <span class="script-tag">ROUTINE: ENTRY</span>
-                    <p><strong>Volume 0.</strong> "Find your seats. Pencils out. We are calculating mass today."</p>
-                    <p><strong>Look For:</strong> Students with Periodic Tables ready.</p>
+                    <p><strong>Vol 0.</strong> "Pencils out. Lab Safety Contracts on the corner of your desk."</p>
+                    <p><strong>Goal:</strong> Collect all contracts before starting the Formula lesson.</p>
                 </div>
             </div>
 
             <div class="slide">
-                <div class="day-badge">MON | 3.1.1</div>
-                <h1 class="sketch">The Language of Chemistry</h1>
-                <p style="font-size: 2rem;">H<sub>2</sub>O vs. H<sub>2</sub>O<sub>2</sub></p>
+                <div class="day-badge">MON | INTRO</div>
+                <h1 class="sketch">Lab Safety Contract</h1>
+                <p style="font-size:1.5rem">Review & Sign</p>
                 <div class="box-concept">
-                    <p><strong>Chemical Formula:</strong> Indicates the relative number of atoms of each kind in a chemical compound.</p>
-                    <p><strong>Subscript:</strong> Small number to the right. Indicates quantity of the atom.</p>
+                    <p>1. No eating/drinking.</p>
+                    <p>2. Goggles ON during chemicals/heat.</p>
+                    <p>3. Broken glass -> Call Mr. Castro immediately.</p>
                 </div>
-                
+                <div class="teacher-only">
+                    <span class="script-tag">ACTION</span>
+                    <p>"Pass your contracts to the right. 30 seconds."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | CONCEPT 1</div>
+                <h1 class="sketch">Anatomy of a Formula</h1>
+                <div class="example-box">
+                    H<span class="sub">2</span>O
+                </div>
+                <div class="box-concept">
+                    <p><strong>Symbol (H):</strong> The Element (Hydrogen).</p>
+                    <p><strong>Subscript (2):</strong> The Quantity of atoms.</p>
+                    <p>No subscript? It equals 1.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | CONCEPT 2</div>
+                <h1>The Big Change</h1>
+                <div style="display:flex; gap:30px; justify-content:center; align-items:center;">
+                    <div class="example-box">H<span class="sub">2</span>O</div>
+                    <div style="font-size:3rem">vs</div>
+                    <div class="example-box">H<span class="sub">2</span>O<span class="sub">2</span></div>
+                </div>
+                <p><strong>Water</strong> vs <strong>Hydrogen Peroxide</strong></p>
                 <div class="teacher-only">
                     <span class="script-tag">TEACHER VOICE</span>
-                    <p>"One tiny number changes water (life) into hydrogen peroxide (poison). Precision matters."</p>
+                    <p>"One little number changes life-giving water into a poison you put on cuts. Precision is everything in Chemistry."</p>
                 </div>
             </div>
 
             <div class="slide">
-                <div class="day-badge">MON | PRACTICE</div>
-                <h1>Counting Atoms</h1>
-                <div class="card-menu" style="width: 60%; text-align:center; margin: 20px auto;">
-                    <h2 class="mono">(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub></h2>
-                    <p style="font-size:0.9rem; opacity:0.7">Ammonium Sulfate</p>
+                <div class="day-badge">MON | CONCEPT 3</div>
+                <h1>Coefficient vs Subscript</h1>
+                <div class="example-box">
+                    <span class="coef">2</span>H<span class="sub">2</span>O
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:10px; width:80%;">
-                    <div class="reveal-box" onclick="this.classList.add('revealed')">N = 2</div>
-                    <div class="reveal-box" onclick="this.classList.add('revealed')">H = 8</div>
-                    <div class="reveal-box" onclick="this.classList.add('revealed')">S = 1</div>
-                    <div class="reveal-box" onclick="this.classList.add('revealed')">O = 4</div>
+                <div class="box-concept">
+                    <p><strong>Coefficient (2):</strong> Multiplies the ENTIRE molecule.</p>
+                    <p>This means 2 separate water molecules.</p>
+                    <p>Total H = 4. Total O = 2.</p>
                 </div>
-                
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | SCAFFOLD</div>
+                <h1 class="sketch">Polyatomic Ions</h1>
+                <p>Parentheses protect the group.</p>
+                <div class="example-box">
+                    Ca<span class="sub">3</span>(PO<span class="sub">4</span>)<span class="sub">2</span>
+                </div>
+                <button class="btn-nav" onclick="document.getElementById('poly-sol').style.display='block'">Reveal Count</button>
+                <div id="poly-sol" style="display:none; margin-top:20px;">
+                    <p>Ca = 3</p>
+                    <p>P = 1 x 2 = <strong>2</strong></p>
+                    <p>O = 4 x 2 = <strong>8</strong></p>
+                </div>
                 <div class="teacher-only">
                     <span class="script-tag">MISCONCEPTION ALERT</span>
-                    <p>Students often forget to distribute the subscript outside the parenthesis. "The 2 belongs to the Nitrogen AND the Hydrogen."</p>
+                    <p>Students forget to distribute the outside 2 to the Phosphorus. "It rains on everyone inside the parenthesis."</p>
                 </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | GUIDED PRACTICE</div>
+                <h1>Let's Try It</h1>
+                <div class="example-box">
+                    <span class="coef">3</span>Mg(OH)<span class="sub">2</span>
+                </div>
+                <table>
+                    <tr><th>Element</th><th>Count</th></tr>
+                    <tr><td>Mg</td><td class="reveal-box" onclick="this.classList.add('revealed')">3</td></tr>
+                    <tr><td>O</td><td class="reveal-box" onclick="this.classList.add('revealed')">3 x 2 = 6</td></tr>
+                    <tr><td>H</td><td class="reveal-box" onclick="this.classList.add('revealed')">3 x 2 = 6</td></tr>
+                </table>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | EXIT TICKET</div>
+                <h1>Exit Ticket</h1>
+                <div class="box-concept" style="border-left-color: var(--sws-gold)">
+                    <p>On your sticky note:</p>
+                    <p>Calculate total Oxygen atoms in:</p>
+                    <h2 class="mono">4Mg(NO<span class="sub">3</span>)<span class="sub">2</span></h2>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">ANSWER KEY</span>
+                    <p>3 (inner) x 2 (outer) = 6.</p>
+                    <p>6 x 4 (coefficient) = <strong>24 Oxygen atoms</strong>.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | HOMEWORK</div>
+                <h1>Research HW</h1>
+                <p>Find one commercial product (Shampoo, Medicine, Food).</p>
+                <p>Write down one <strong>Chemical Formula</strong> from the ingredients list.</p>
             </div>
 
             <div class="slide">
                 <div class="day-badge">THU | 3.1.4</div>
                 <h1 class="sketch">Molar Mass</h1>
-                <h2>The Weight of a Mole</h2>
+                <h2>The Weight of the Mole</h2>
                 <div class="box-concept">
-                    <p><strong>Definition:</strong> The mass in grams of 1 mole of a substance.</p>
-                    <p><strong>Unit:</strong> g/mol</p>
-                    <p><strong>Source:</strong> The Periodic Table (Atomic Mass).</p>
+                    <p><strong>Concept:</strong> Atoms are too small to weigh individually. We weigh them in packs called Moles.</p>
+                    <p><strong>Unit:</strong> grams per mole (g/mol)</p>
                 </div>
             </div>
 
             <div class="slide">
-                <div class="day-badge">THU | CALCULATION</div>
-                <h1>Let's Calculate</h1>
-                <h2>CO<sub>2</sub></h2>
+                <div class="day-badge">THU | PROCESS</div>
+                <h1>The Algorithm</h1>
+                <div class="box-concept">
+                    <p>1. Find <strong>Atomic Mass</strong> on Periodic Table.</p>
+                    <p>2. Multiply by the <strong>Subscript</strong>.</p>
+                    <p>3. <strong>Add</strong> them all together.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | GUIDED PRACTICE</div>
+                <h1>Calculate CO<sub>2</sub></h1>
                 <table>
-                    <tr>
-                        <th>Element</th>
-                        <th>Qty</th>
-                        <th>Mass</th>
-                        <th>Total</th>
-                    </tr>
-                    <tr>
-                        <td>Carbon</td>
-                        <td>1</td>
-                        <td>12.01</td>
-                        <td class="reveal-box" onclick="this.classList.add('revealed')">12.01</td>
-                    </tr>
-                    <tr>
-                        <td>Oxygen</td>
-                        <td>2</td>
-                        <td>16.00</td>
-                        <td class="reveal-box" onclick="this.classList.add('revealed')">32.00</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="text-align:right; font-weight:bold;">MOLAR MASS:</td>
-                        <td class="reveal-box" onclick="this.classList.add('revealed')" style="color:var(--sws-gold); font-weight:bold;">44.01 g/mol</td>
-                    </tr>
+                    <tr><th>Element</th><th>Mass</th><th>Qty</th><th>Total</th></tr>
+                    <tr><td>Carbon</td><td>12.01</td><td>1</td><td class="reveal-box" onclick="this.classList.add('revealed')">12.01</td></tr>
+                    <tr><td>Oxygen</td><td>16.00</td><td>2</td><td class="reveal-box" onclick="this.classList.add('revealed')">32.00</td></tr>
+                    <tr><td colspan="3"><strong>TOTAL MOLAR MASS</strong></td><td class="reveal-box" onclick="this.classList.add('revealed')" style="color:var(--sws-gold)">44.01 g/mol</td></tr>
                 </table>
             </div>
 
             <div class="slide">
-                <div class="day-badge">THU | WORK TIME</div>
-                <h1>Classwork #1</h1>
-                <p>You have 20 minutes to complete the worksheet.</p>
+                <div class="day-badge">THU | CLASSWORK</div>
+                <h1 class="sketch">Classwork #1</h1>
+                <p>Complete the worksheet. You may use your Periodic Table.</p>
                 <div class="timer-display" id="timer-cw">20:00</div>
                 <button class="btn-nav" onclick="startTimer(1200, 'timer-cw')">Start Timer</button>
             </div>
 
             <div class="slide">
                 <div class="day-badge">CW REVIEW | PART A</div>
-                <h1 class="sketch">Fill in the Blanks</h1>
+                <h1>Fill in the Blank</h1>
                 <div class="box-concept">
-                    <p>1. An atom with a full outer shell follows the <span class="reveal-box" onclick="this.classList.add('revealed')">OCTET</span> rule.</p>
-                    <p>2. The share of electron pairs is a <span class="reveal-box" onclick="this.classList.add('revealed')">COVALENT</span> bond.</p>
-                    <p>3. C-14 is an <span class="reveal-box" onclick="this.classList.add('revealed')">ISOTOPE</span> (more neutrons).</p>
-                    <p>4. In a <span class="reveal-box" onclick="this.classList.add('revealed')">IONIC</span> bond, one atom "steals" electrons.</p>
-                    <p>5. Electrons used in bonding are in the <span class="reveal-box" onclick="this.classList.add('revealed')">VALENCE</span> shell.</p>
+                    <p>1. Full outer shell follows the <span class="reveal-box" onclick="this.classList.add('revealed')">OCTET</span> rule.</p>
+                    <p>2. Shared electrons = <span class="reveal-box" onclick="this.classList.add('revealed')">COVALENT</span> bond.</p>
+                    <p>3. Carbon-14 is an <span class="reveal-box" onclick="this.classList.add('revealed')">ISOTOPE</span>.</p>
+                    <p>4. Stealing electrons = <span class="reveal-box" onclick="this.classList.add('revealed')">IONIC</span> bond.</p>
+                    <p>5. Bonding electrons are in the <span class="reveal-box" onclick="this.classList.add('revealed')">VALENCE</span> shell.</p>
                 </div>
             </div>
 
             <div class="slide">
                 <div class="day-badge">CW REVIEW | PART B</div>
                 <h1>Table Check</h1>
-                <p>Check your subatomic particles.</p>
-                <div style="overflow-x:auto; width:100%;">
-                    <table style="font-size:0.8rem;">
-                        <tr>
-                            <th>Sym</th><th>Name</th><th>Protons</th><th>Neutrons</th><th>Electrons</th>
-                        </tr>
-                        <tr>
-                            <td>Na</td><td>Sodium</td><td>11</td><td class="reveal-box" onclick="this.classList.add('revealed')">12</td><td>11</td>
-                        </tr>
-                        <tr>
-                            <td>O<sup>2-</sup></td><td>Oxide</td><td>8</td><td>8</td><td class="reveal-box" onclick="this.classList.add('revealed')">10</td>
-                        </tr>
-                        <tr>
-                            <td>Au</td><td>Gold</td><td>79</td><td class="reveal-box" onclick="this.classList.add('revealed')">118</td><td>79</td>
-                        </tr>
-                    </table>
-                </div>
+                <table style="font-size:0.8rem">
+                    <tr><th>Sym</th><th>Protons</th><th>Neutrons</th><th>Electrons</th></tr>
+                    <tr><td>Na</td><td>11</td><td class="reveal-box" onclick="this.classList.add('revealed')">12</td><td>11</td></tr>
+                    <tr><td>O2-</td><td>8</td><td>8</td><td class="reveal-box" onclick="this.classList.add('revealed')">10</td></tr>
+                    <tr><td>Au</td><td>79</td><td class="reveal-box" onclick="this.classList.add('revealed')">118</td><td>79</td></tr>
+                </table>
                 <div class="teacher-only">
-                    <span class="script-tag">QUICK CHECK</span>
-                    <p>Ask: "Why does Oxide have 10 electrons?" (Gained 2). "How do we get Neutrons?" (Mass - Atomic #).</p>
+                    <span class="script-tag">CHECK</span>
+                    <p>"Who got the Neutrons for Gold? 197 - 79 = 118."</p>
                 </div>
             </div>
 
             <div class="slide">
-                <div class="day-badge">CW REVIEW | PART C</div>
-                <h1>Lewis Structures</h1>
-                <div class="grid-menu" style="grid-template-columns: 1fr 1fr 1fr;">
-                    <div class="card-menu" style="text-align:center;">
-                        <h3>P</h3>
-                        <p class="reveal-box" onclick="this.classList.add('revealed')">5 Dots</p>
-                    </div>
-                    <div class="card-menu" style="text-align:center;">
-                        <h3>Al</h3>
-                        <p class="reveal-box" onclick="this.classList.add('revealed')">3 Dots</p>
-                    </div>
-                    <div class="card-menu" style="text-align:center;">
-                        <h3>H<sub>2</sub>O</h3>
-                        <p class="reveal-box" onclick="this.classList.add('revealed')">O in center<br>2 Lone Pairs</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="day-badge">CW REVIEW | PART D</div>
-                <h1>Analysis Questions</h1>
+                <div class="day-badge">CW REVIEW | MATH</div>
+                <h1>The Calculations</h1>
                 <div class="box-concept">
-                    <p><strong>Noble Gases?</strong> Non-reactive because they have full valence shells (8 e-).</p>
-                    <p><strong>Conservation of Mass?</strong> Wood burning: Mass is NOT lost, it turns into gas (CO2 + Water Vapor).</p>
-                    <p><strong>Mole Calculation:</strong> If 1 mole He = 4g.<br>16g / 4g = <strong>4 Moles</strong>.</p>
+                    <p><strong>Helium Moles:</strong> 16g / 4g = <span class="reveal-box" onclick="this.classList.add('revealed')">4 Moles</span></p>
+                    <p><strong>Conservation of Mass:</strong> Wood ash is lighter because mass turned into GAS (CO2). It was not lost.</p>
+                    <p><strong>Hydrogen Count in (NH4)2SO4:</strong></p>
+                    <p>4 (inner) x 2 (outer) = <span class="reveal-box" onclick="this.classList.add('revealed')">8 Atoms</span></p>
                 </div>
             </div>
 
             <div class="slide">
                 <div class="day-badge">CW REVIEW | BONUS</div>
-                <h1 style="color:var(--sws-gold)">The Bonus</h1>
-                <p>Who is the scientist associated with the Mole?</p>
-                <div class="reveal-box" style="font-size:2rem; text-align:center; margin-top:20px;" onclick="this.classList.add('revealed')">AMEDEO AVOGADRO</div>
-                <p class="mono">6.022 x 10<sup>23</sup></p>
+                <h1 style="color:var(--sws-gold)">The Scientist</h1>
+                <p>Who is associated with 6.022 x 10<sup>23</sup>?</p>
+                <div class="reveal-box" style="font-size:3rem; text-align:center; margin-top:20px;" onclick="this.classList.add('revealed')">AVOGADRO</div>
             </div>
 
             <div class="slide">
                 <div class="day-badge" style="background:var(--sws-maroon)">BONUS CHALLENGE</div>
                 <h1 class="sketch">Design Thinking</h1>
-                <h2>The Avogadro Project</h2>
+                <h2>The "Mole" Metaphor</h2>
                 <div class="box-concept">
-                    <p><strong>Empathize:</strong> Why do students struggle to visualize atoms?</p>
-                    <p><strong>Ideate:</strong> Design a physical model or analogy to explain "The Mole" to a 5th grader.</p>
-                </div>
-                <div class="teacher-only">
-                    <span class="script-tag">EXTENSION</span>
-                    <p>"If you finish early, sketch an idea for a 'Mole Machine' that counts atoms for you."</p>
+                    <p><strong>Empathize:</strong> Why is "602 hexillion" hard to understand?</p>
+                    <p><strong>Ideate:</strong> Create a physical analogy (like 'Dozen' for eggs) to explain the Mole to a 5th grader.</p>
                 </div>
             </div>
 
