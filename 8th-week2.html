@@ -51,10 +51,11 @@
             z-index: 99999; flex-direction: column; justify-content: center;
             align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
         }
-        /* --- FIXED VAULT CSS --- */
+        
+        /* FIXED VAULT CSS */
         #slide-vault { 
-            display: none; /* CHANGED FROM visibility: hidden */
-            flex-direction: column;
+            display: none; 
+            flex-direction: column; 
             height: 100vh; 
             width: 100%; 
         }
@@ -70,8 +71,6 @@
             border-radius: 8px; font-weight: 700; text-transform: uppercase; transition: 0.2s;
         }
         .btn-ui:hover { background: var(--electric-blue); border-color: var(--electric-blue); color: #000; }
-        
-        /* Teacher Button - Distinct Style */
         .btn-teacher { border-color: var(--sws-teal); color: var(--sws-teal); }
         .btn-teacher.active { background: var(--sws-teal); color: black; }
 
@@ -91,12 +90,13 @@
         .card-menu { background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 10px; width: 18%; cursor: pointer; transition: 0.2s; text-align: left; }
         .card-menu:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
         
-        /* --- INTERACTIVE --- */
         .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px; }
         .btn-mc { background: rgba(255,255,255,0.05); border: 2px solid var(--border); color: white; padding: 20px; font-size: 1.2rem; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
         .btn-mc:hover { border-color: var(--electric-blue); }
         .correct { background: rgba(46, 204, 113, 0.2) !important; border-color: var(--sws-teal) !important; }
         .wrong { background: rgba(172, 46, 85, 0.2) !important; border-color: var(--sws-maroon) !important; opacity: 0.6; }
+
+        .schematic-box { border: 2px dashed var(--electric-blue); padding: 40px; border-radius: 20px; margin: 20px 0; width: 80%; display: flex; justify-content: center; align-items: center; font-family: 'JetBrains Mono'; color: var(--electric-blue); font-size: 1.5rem; }
 
         /* --- TEACHER MODE --- */
         .teacher-only {
@@ -113,7 +113,6 @@
         @media (max-width: 768px) {
             h1 { font-size: 2.8rem; }
             .card-menu { width: 45%; }
-            .box-concept { font-size: 1.1rem; padding: 20px; }
             .nav-top-right { top: 20px; right: 20px; gap: 8px; }
         }
     </style>
@@ -151,35 +150,48 @@
                 <h1 class="sketch">Week 3.2: Materials</h1>
                 <div class="box-concept">
                     <p><strong>General Objective:</strong> Distinguish between materials that allow electron flow and those that block it, and establish safety protocols.</p>
-                    <p><strong>Specific Objectives (SO):</strong></p>
-                    <ul>
-                        <li>Define Conductors vs. Insulators.</li>
-                        <li>Test materials experimentally.</li>
-                        <li>Analyze electrical safety hazards.</li>
-                    </ul>
                 </div>
                 <div class="grid-menu">
                     <div class="card-menu" onclick="goToSlide(1)"><span style="color:var(--electric-blue)">MON</span><br>Theory</div>
-                    <div class="card-menu" onclick="goToSlide(4)"><span style="color:var(--electric-blue)">TUE</span><br>Testing Lab</div>
+                    <div class="card-menu" onclick="goToSlide(5)"><span style="color:var(--electric-blue)">TUE</span><br>Testing Lab</div>
                     <div class="card-menu" style="opacity:0.5"><span style="color:gray">WED</span><br>No Class</div>
-                    <div class="card-menu" onclick="goToSlide(7)"><span style="color:var(--sws-gold)">THU</span><br>HW #1 Review</div>
-                    <div class="card-menu" onclick="goToSlide(10)"><span style="color:var(--sws-maroon)">FRI</span><br>CW #2 Safety</div>
+                    <div class="card-menu" onclick="goToSlide(9)"><span style="color:var(--sws-gold)">THU</span><br>HW #1 Review</div>
+                    <div class="card-menu" onclick="goToSlide(13)"><span style="color:var(--sws-maroon)">FRI</span><br>Safety (CW#2)</div>
                 </div>
             </div>
 
-            <div class="slide" data-day="MON | 01/19" data-part="INITIAL PHASE">
-                <h1 class="sketch">The Electron Highway</h1>
+            <div class="slide" data-day="MONDAY | 01/19 | 3.2.1" data-part="OBJECTIVE">
+                <h1>Day 1: Theory</h1>
+                <div class="box-concept">
+                    <p><strong>Specific Objective (SO):</strong> Define Conductors vs. Insulators and explain electron flow.</p>
+                </div>
+                <div class="teacher-only">
+                    <p><span class="tag">MMVP</span> Voice: 0. Materials: Notebooks ready. Eyes: On board.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="MONDAY | 01/19 | 3.2.1" data-part="INITIAL">
+                <h1 class="sketch">Recap: Week 3.1</h1>
+                <h2>The 3 Components</h2>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="card-menu" style="width:100%">Source (Battery)</div>
+                    <div class="card-menu" style="width:100%">Receiver (Bulb)</div>
+                    <div class="card-menu" style="width:100%">Path (Wire)</div>
+                </div>
+                <div class="teacher-only">
+                    <p><span class="tag">COLD CALL</span> "What happens if the path is broken?" (Open Circuit)</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="MONDAY | 01/19 | 3.2.1" data-part="DURING">
+                <h1>The Electron Highway</h1>
                 <div class="box-concept">
                     <p><strong>Conductors:</strong> Materials that let electrons flow easily. (e.g., Copper, Gold, Water).</p>
                     <p><strong>Insulators:</strong> Materials that STOP electron flow. (e.g., Rubber, Plastic, Glass).</p>
                 </div>
-                <div class="teacher-only">
-                    <p><span class="tag">HOOK</span> "Why are wires covered in plastic? Why aren't they just bare metal?"</p>
-                    <p><span class="tag">MMVP</span> Voice: 0. Materials: Notebooks open to definitions page.</p>
-                </div>
             </div>
 
-            <div class="slide" data-day="MON | 01/19" data-part="DURING PHASE">
+            <div class="slide" data-day="MONDAY | 01/19 | 3.2.1" data-part="FINAL">
                 <h1>Which is it?</h1>
                 <div class="mc-grid">
                     <button class="btn-mc" onclick="check(this, true)">Copper Penny (Conductor)</button>
@@ -187,12 +199,16 @@
                     <button class="btn-mc" onclick="check(this, true)">Paper Clip (Conductor)</button>
                     <button class="btn-mc" onclick="check(this, false)">Wooden Pencil (Insulator)</button>
                 </div>
-                <div class="teacher-only">
-                    <p><span class="tag">ACMO</span> Watch for students guessing. Ask "Why?" for each answer. "Does it have free electrons?"</p>
+            </div>
+
+            <div class="slide" data-day="TUESDAY | 01/20 | 3.2.2" data-part="OBJECTIVE">
+                <h1>Day 2: Testing Lab</h1>
+                <div class="box-concept">
+                    <p><strong>Specific Objective (SO):</strong> Test materials experimentally to determine conductivity.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="TUE | 01/20" data-part="INITIAL PHASE">
+            <div class="slide" data-day="TUESDAY | 01/20 | 3.2.2" data-part="INITIAL">
                 <h1 class="sketch">Activity: The Tester</h1>
                 <div class="box-concept">
                     <p><strong>Task:</strong> Build a circuit with a gap.</p>
@@ -204,7 +220,18 @@
                 </div>
             </div>
 
-            <div class="slide" data-day="TUE | 01/20" data-part="FINAL PHASE">
+            <div class="slide" data-day="TUESDAY | 01/20 | 3.2.2" data-part="DURING">
+                <h1>Prediction Time</h1>
+                <p>Will it light up?</p>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, true)">Aluminum Foil</button>
+                    <button class="btn-mc" onclick="check(this, false)">Plastic Spoon</button>
+                    <button class="btn-mc" onclick="check(this, true)">Wet String (Maybe?)</button>
+                    <button class="btn-mc" onclick="check(this, false)">Dry String</button>
+                </div>
+            </div>
+
+            <div class="slide" data-day="TUESDAY | 01/20 | 3.2.2" data-part="FINAL">
                 <h1>Lab Results</h1>
                 <div class="box-concept">
                     <p><strong>Surprise Finding:</strong> Did the graphite (pencil lead) light the bulb?</p>
@@ -212,21 +239,50 @@
                 </div>
             </div>
 
-            <div class="slide" data-day="THU | 01/22" data-part="HW REVIEW">
-                <h1 class="sketch">Schematic Review</h1>
-                <p>Checking Homework #1 (5 pts)</p>
+            <div class="slide" data-day="THURSDAY | 01/22 | 3.2.4" data-part="OBJECTIVE">
+                <h1>Day 4: Review</h1>
+                <div class="box-concept">
+                    <p><strong>Specific Objective (SO):</strong> Reinforce schematic diagram logic and review Homework #1.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="THURSDAY | 01/22 | 3.2.4" data-part="INITIAL">
+                <h1 class="sketch">Homework Check</h1>
+                <p>Reviewing Classwork #1 Concepts</p>
                 <div class="schematic-box">
-                    [ Diagram: Battery - Switch - Bulb ]
+                    [ Diagram: Battery - OPEN Switch - Bulb ]
                 </div>
                 <p>Is this circuit Open or Closed? Why?</p>
                 <div class="teacher-only">
                     <p><span class="tag">ROUTINE</span> "Turn and Talk" to your neighbor. Compare your diagrams. 30 seconds.</p>
-                    <p><span class="tag">COLLECT</span> Pass HW to the left.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="FRI | 01/23" data-part="CW #2 SAFETY">
-                <h1 class="sketch" style="color:var(--sws-maroon)">Electrical Safety</h1>
+            <div class="slide" data-day="THURSDAY | 01/22 | 3.2.4" data-part="DURING">
+                <h1>Symbols Recap</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card-menu" style="width:100%">Battery: <strong>Long/Short Lines</strong></div>
+                    <div class="card-menu" style="width:100%">Wire: <strong>Straight Line</strong></div>
+                    <div class="card-menu" style="width:100%">Bulb: <strong>Circle with X</strong></div>
+                    <div class="card-menu" style="width:100%">Switch: <strong>Gate</strong></div>
+                </div>
+            </div>
+
+            <div class="slide" data-day="THURSDAY | 01/22 | 3.2.4" data-part="FINAL">
+                <h1 class="sketch">Short Circuit Check</h1>
+                <p>Why is a path with NO receiver dangerous?</p>
+                <button class="btn-ui" onclick="alert('Heat/Fire due to unlimited flow.')">Reveal Answer</button>
+            </div>
+
+            <div class="slide" data-day="FRIDAY | 01/23 | 3.2.5" data-part="OBJECTIVE">
+                <h1>Day 5: Safety</h1>
+                <div class="box-concept">
+                    <p><strong>Specific Objective (SO):</strong> Analyze electrical safety hazards and protocols.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="FRIDAY | 01/23 | 3.2.5" data-part="INITIAL">
+                <h1 class="sketch" style="color:var(--sws-maroon)">CW #2: Safety</h1>
                 <div class="box-concept">
                     <p><strong>Rule 1:</strong> Water + Electricity = Danger.</p>
                     <p><strong>Rule 2:</strong> Never touch a bare wire.</p>
@@ -237,7 +293,7 @@
                 </div>
             </div>
 
-            <div class="slide" data-day="FRI | 01/23" data-part="DISCUSSION">
+            <div class="slide" data-day="FRIDAY | 01/23 | 3.2.5" data-part="DURING">
                 <h1>Class Discussion</h1>
                 <p>"Why do birds sit on power lines without getting shocked?"</p>
                 <div class="box-concept" style="border-color:var(--sws-gold)">
@@ -248,6 +304,14 @@
                 <div class="teacher-only">
                     <p><span class="tag">ANSWER</span> They are not touching the ground (Path to ground). No potential difference across their body.</p>
                 </div>
+            </div>
+
+            <div class="slide" data-day="BONUS" data-part="CHALLENGE">
+                <h1 class="sketch">Elite Challenge</h1>
+                <div class="schematic-box">
+                    Design a circuit with: 2 Batteries, 1 Switch, and a "Safety Fuse" (Use a thin strip of foil).
+                </div>
+                <p>What happens to the foil if you create a short circuit?</p>
             </div>
 
             <div class="slide" data-day="END" data-part="WEEK 3.2 DONE">
@@ -283,7 +347,7 @@
             }
         })();
 
-        // --- NAVIGATION & UI ---
+        // --- NAVIGATION ---
         let current = 0;
         const slides = document.querySelectorAll('.slide');
         const pBar = document.getElementById('p-bar');
