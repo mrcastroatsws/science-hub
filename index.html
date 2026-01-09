@@ -1,207 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Science at Southwest</title>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Science Portal</title>
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
-    <link rel="apple-touch-icon" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-180x180.png">
-
-    <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-      :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
-      body { font-family: "Rubik", sans-serif; overflow-x: hidden; }
-      .sketch { font-family: "Cabin Sketch", cursive; }
-      
-      .hero-gradient {
-        background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
-          url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
-        background-size: cover; background-position: center;
-      }
+        :root {
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --sws-teal: #29c4a9;
+            --slate-text: #334155;
+            
+            /* Grade Colors */
+            --g7: #dcfce7; --g7-t: #166534;
+            --g8: #dbeafe; --g8-t: #1e40af;
+            --g9: #f3e8ff; --g9-t: #6b21a8;
+            --g10: #fef9c3; --g10-t: #854d0e;
+            --g11: #fee2e2; --g11-t: #991b1b;
+        }
 
-      /* Navigation scrollbar hide */
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: "Rubik", sans-serif; background-color: #f8fafc; color: var(--slate-text); }
+        .sketch { font-family: "Cabin Sketch", cursive; }
+        .mono { font-family: "JetBrains Mono", monospace; }
+
+        /* Card Hover Effects */
+        .hub-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
+        .hub-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
+
+        /* Live Status Bar */
+        .live-status {
+            background: #0f172a; color: white;
+            border-left: 5px solid var(--sws-gold);
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { border-left-color: var(--sws-gold); }
+            50% { border-left-color: var(--sws-maroon); }
+            100% { border-left-color: var(--sws-gold); }
+        }
+
+        /* Schedule Table Styling */
+        .schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+        .schedule-table td { border: 1px solid #e2e8f0; padding: 12px; font-size: 0.85rem; vertical-align: middle; text-align: center; }
+        
+        .g7 { background-color: var(--g7); color: var(--g7-t); font-weight: 700; }
+        .g8 { background-color: var(--g8); color: var(--g8-t); font-weight: 700; }
+        .g9 { background-color: var(--g9); color: var(--g9-t); font-weight: 700; }
+        .g10 { background-color: var(--g10); color: var(--g10-t); font-weight: 700; }
+        .g11 { background-color: var(--g11); color: var(--g11-t); font-weight: 700; }
+        .break { background-color: #475569; color: white; letter-spacing: 2px; font-weight: 700; font-size: 0.7rem; }
+        .vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.75rem; }
+
+        .sub-name { display: block; font-size: 1rem; line-height: 1.2; }
+        .grade-tag { display: block; font-size: 0.65rem; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
     </style>
-  </head>
+</head>
+<body class="pb-20">
 
-  <body class="bg-slate-50">
-    
-    <div class="sticky top-0 z-[60] w-full shadow-lg">
-      
-      <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest relative z-20">
-        <div class="flex items-center space-x-2">
-          <span class="opacity-50 hidden sm:inline text-[#29c4a9]">Science at Southwest</span>
-          <span class="admin-only hidden text-[#29c4a9] font-bold">● Admin Session: Mr. Castro</span>
+    <nav class="bg-[#ac2e55] sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🧬</span>
+                <div>
+                    <h1 class="sketch text-2xl text-white leading-none">SCIENCE AT SOUTHWEST</h1>
+                    <p class="text-[10px] text-white/60 uppercase font-bold tracking-widest">Mr. Castro | 2025 - 2026</p>
+                </div>
+            </div>
+            <button onclick="login()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase transition border border-white/20">Teacher Login</button>
         </div>
-        <div class="flex space-x-4">
-          <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Teacher Login</button>
-          <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
-        </div>
-      </div>
+    </nav>
 
-      <nav class="bg-[#ac2e55] text-white p-4 relative z-10 border-t border-white/10">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-          <div class="flex items-center space-x-3">
-            <span class="sketch text-xl sm:text-2xl font-bold tracking-tight">SCIENCE AT SOUTHWEST</span>
-          </div>
-          <div class="flex space-x-4 sm:space-x-8 font-medium text-[10px] sm:text-sm uppercase overflow-x-auto no-scrollbar whitespace-nowrap ml-4">
-            <a href="index.html" class="border-b-2 border-[#f9db66] pb-1">Dashboard</a>
-            <a href="science-fair.html" class="hover:text-[#f9db66] transition">Science Fair</a>
-            <a href="safety.html" class="hover:text-[#f9db66] transition">Safety</a>
-            <a href="#curriculum-section" class="hover:text-[#f9db66] transition">Curriculum</a>
-          </div>
-        </div>
-      </nav>
-      
-    </div>
-    <header class="hero-gradient py-12 sm:py-24 px-6 text-center shadow-inner">
-      <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 leading-tight">Mr. Castro</h1>
-      <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.3em]">2025 - 2026</p>
-    </header>
+    <main class="max-w-7xl mx-auto p-6 space-y-12">
 
-    <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-8 sm:space-y-12">
-      
-      <section id="curriculum-section" class="pt-6">
-        <div class="flex flex-col sm:flex-row justify-between items-end mb-8 border-b-2 border-[#ac2e55]/20 pb-4">
-            <div><br></div>
-        </div>
+        <section>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <a href="7th-hub.html" class="hub-card bg-white p-6 rounded-2xl cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase">7th Grade</span>
+                        <span class="text-2xl group-hover:scale-110 transition">🪐</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">Planetary Science</h2>
+                    <p class="text-xs text-slate-500 mt-2">Space, Earth Systems, and Maps.</p>
+                    <div class="mt-4 text-xs font-bold text-green-600 uppercase tracking-wider flex items-center gap-1">
+                        View Quarter Plan <span>→</span>
+                    </div>
+                </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">7th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Planetary Science</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="7th-hub.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="7th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+                <a href="8th-hub.html" class="hub-card bg-white p-6 rounded-2xl cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded uppercase">8th Grade</span>
+                        <span class="text-2xl group-hover:scale-110 transition">⚡</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">Electronics</h2>
+                    <p class="text-xs text-slate-500 mt-2">Circuits, Arduino, and Logic.</p>
+                    <div class="mt-4 text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1">
+                        View Quarter Plan <span>→</span>
+                    </div>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">8th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Electronics</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="8th-portal.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="8th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+                <a href="9th-hub.html" class="hub-card bg-white p-6 rounded-2xl cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-1 rounded uppercase">9th Grade</span>
+                        <span class="text-2xl group-hover:scale-110 transition">🧪</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">Chemistry</h2>
+                    <p class="text-xs text-slate-500 mt-2">Matter, Atoms, and Reactions.</p>
+                    <div class="mt-4 text-xs font-bold text-purple-600 uppercase tracking-wider flex items-center gap-1">
+                        View Quarter Plan <span>→</span>
+                    </div>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-maroon flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-maroon p-4 flex justify-between items-center text-white" style="background-color: var(--sws-maroon);">
-              <span class="sketch text-2xl text-gold" style="color: var(--sws-gold);">9th Grade</span>
-              <span class="bg-white/20 text-[9px] px-2 py-1 rounded font-bold uppercase">Chemistry</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="9th-portal.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="9th-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+                <a href="10thbio-slides.html" class="hub-card bg-white p-6 rounded-2xl cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-2 py-1 rounded uppercase">10th Grade</span>
+                        <span class="text-2xl group-hover:scale-110 transition">🧬</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">Biology</h2>
+                    <p class="text-xs text-slate-500 mt-2">Cells, Genetics, and Energy.</p>
+                    <div class="mt-4 text-xs font-bold text-yellow-600 uppercase tracking-wider flex items-center gap-1">
+                        View Quarter Plan <span>→</span>
+                    </div>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">10th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Biology</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="10thbio-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+                <a href="dthink.html" class="hub-card bg-slate-800 p-6 rounded-2xl cursor-pointer group col-span-1 border-slate-700">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-white/10 text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Universal</span>
+                        <span class="text-2xl group-hover:scale-110 transition">💡</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-white">Design Thinking</h2>
+                    <p class="text-xs text-slate-400 mt-2">Protocol & Activity Framework.</p>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-[#f15a24] flex flex-col transform transition hover:scale-[1.05] relative">
-            <div class="absolute top-0 right-0 bg-[#f15a24] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg">UNIVERSAL</div>
-            <div class="bg-slate-900 p-4 flex flex-col items-center justify-center text-white h-24" style="background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);">
-              <span class="sketch text-3xl text-[#f15a24]" style="text-shadow: 0 2px 10px rgba(241,90,36,0.3);">Design Thinking</span>
-              <span class="text-[10px] uppercase tracking-widest opacity-70 mt-1">Design Protocol</span>
-            </div>
-            <div class="p-5 flex-grow flex flex-col justify-center space-y-3 bg-slate-50">
-              <p class="text-xs text-center text-slate-500 italic mb-2">Activity</p>
-              <div class="admin-only hidden w-full">
-                <a href="dthink.html" class="block w-full text-center py-4 bg-[#f15a24] text-white rounded-xl text-sm font-bold shadow-lg hover:bg-[#d1400e] transition">Design Protocol</a>
-              </div>
-              <div class="public-only text-[10px] text-center text-slate-400">Teacher Access Only</div>
-            </div>
-          </div>
+                <a href="safety.html" class="hub-card bg-white p-6 rounded-2xl cursor-pointer group border-red-100">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-1 rounded uppercase">Culture</span>
+                        <span class="text-2xl group-hover:scale-110 transition">⚠️</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800">Safety & Rules</h2>
+                    <p class="text-xs text-slate-500 mt-2">Lab protocols and expectations.</p>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">10th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Chemistry</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="10thchem-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+                <a href="science-fair.html" class="hub-card bg-teal-50 p-6 rounded-2xl cursor-pointer group border-teal-200 col-span-1 md:col-span-2">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-teal-100 text-teal-700 text-[10px] font-bold px-2 py-1 rounded uppercase">Project 2026</span>
+                        <span class="text-2xl group-hover:scale-110 transition">🏆</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-teal-900">Science Fair Portal</h2>
+                    <p class="text-xs text-teal-700 mt-2">9th & 11th Grade Guidelines, Rubrics, and Bitácora Checks.</p>
+                </a>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">11th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Biology</span>
             </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Quarter Plan</a>
-              <div class="admin-only hidden">
-                <a href="11thbio-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides Week 3.1</a>
-              </div>
-              <div class="admin-only hidden">
-                <a href="11thbio-week2.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides Week 3.2</a>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-slate-800 p-4 flex justify-between items-center text-white">
-              <span class="sketch text-2xl">11th Grade</span>
-              <span class="bg-[#29c4a9] text-[9px] px-2 py-1 rounded font-bold uppercase">Economics</span>
-            </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="#" class="block w-full text-center py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-600">Annual Plan</a>
-              <div class="admin-only hidden">
-                <a href="11thecon-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides</a>
-              </div>
-            </div>
-          </div>
+        </section>
 
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-maroon flex flex-col transform transition hover:scale-[1.02]">
-            <div class="bg-maroon p-4 flex justify-between items-center text-white" style="background-color: var(--sws-maroon);">
-              <span class="sketch text-2xl text-gold" style="color: var(--sws-gold);">11th Grade</span>
-              <span class="bg-white/20 text-[9px] px-2 py-1 rounded font-bold uppercase">Chemistry</span>
+        <section class="admin-only hidden bg-slate-50 border-2 border-dashed border-slate-300 rounded-3xl p-8">
+            <h3 class="font-bold text-slate-400 uppercase tracking-widest text-xs mb-6">Restricted Access: Teacher Curriculum</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="10thchem-slides.html" class="bg-white p-4 rounded-lg border border-slate-200 hover:border-sws-gold text-center">
+                    <span class="block text-xs font-bold text-slate-400">10th</span>
+                    <span class="font-bold text-slate-800">Chemistry</span>
+                </a>
+                <a href="11thbio-slides.html" class="bg-white p-4 rounded-lg border border-slate-200 hover:border-sws-gold text-center">
+                    <span class="block text-xs font-bold text-slate-400">11th</span>
+                    <span class="font-bold text-slate-800">Biology</span>
+                </a>
+                <a href="11thecon-slides.html" class="bg-white p-4 rounded-lg border border-slate-200 hover:border-sws-gold text-center">
+                    <span class="block text-xs font-bold text-slate-400">11th</span>
+                    <span class="font-bold text-slate-800">Economics</span>
+                </a>
+                <a href="11thchem-week2.html" class="bg-white p-4 rounded-lg border border-slate-200 hover:border-sws-gold text-center">
+                    <span class="block text-xs font-bold text-slate-400">11th</span>
+                    <span class="font-bold text-slate-800">Chemistry</span>
+                </a>
             </div>
-            <div class="p-5 flex-grow space-y-3">
-              <a href="moles.html" class="block w-full text-center py-3 border border-slate-200 rounded-xl hover:bg-slate-50 text-sm font-bold transition text-slate-600">Molar Mass Tools</a>
-              <div class="admin-only hidden">
-                <a href="11thchem-slides.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides Week 3.1</a>
-                <br>
-                <a href="11thchem-week2.html" class="block w-full text-center py-4 bg-[#ac2e55] text-white rounded-xl text-sm font-bold font-bold shadow-md">Slides Week 3.2</a>
-              </div>
-            </div>
-          </div>
+        </section>
 
-        </div>
-        <br>
-      </section>
+        <section id="schedule-anchor">
+            
+            <div class="live-status rounded-xl p-6 mb-6 flex flex-col md:flex-row justify-between items-center shadow-lg">
+                <div>
+                    <h3 class="sketch text-3xl text-white">Current Status</h3>
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-widest" id="live-clock">--:-- --</p>
+                </div>
+                <div class="text-center md:text-right mt-4 md:mt-0">
+                    <div class="mb-2">
+                        <span class="text-[10px] font-bold text-sws-gold uppercase tracking-wider bg-white/10 px-2 py-1 rounded">Happening Now</span>
+                        <p class="text-xl font-bold text-white mt-1" id="status-now">Loading...</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Up Next</span>
+                        <p class="text-sm font-bold text-slate-300" id="status-next">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="sketch text-3xl text-slate-800">Weekly Schedule</h2>
+                <button onclick="window.print()" class="text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                <table class="w-full schedule-table bg-white">
+                    <thead>
+                        <tr>
+                            <th class="w-16">#</th>
+                            <th class="w-24">Time</th>
+                            <th class="w-1/6">Monday</th>
+                            <th class="w-1/6">Tuesday</th>
+                            <th class="w-1/6">Wednesday</th>
+                            <th class="w-1/6">Thursday</th>
+                            <th class="w-1/6">Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td><td>8:00 - 8:40</td>
+                            <td class="vacant">PREP</td>
+                            <td class="g8"><span class="sub-name">Science</span><span class="grade-tag">8th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Economics</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                            <td class="g8"><span class="sub-name">Science</span><span class="grade-tag">8th Grade</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td><td>8:40 - 9:20</td>
+                            <td class="vacant">VACANT</td>
+                            <td class="g8"><span class="sub-name">Science</span><span class="grade-tag">8th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Economics</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                            <td class="g8"><span class="sub-name">Science</span><span class="grade-tag">8th Grade</span></td>
+                        </tr>
+                        <tr class="break"><td colspan="7">RECESS (9:20 - 9:45)</td></tr>
+                        <tr>
+                            <td>3</td><td>9:45 - 10:25</td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                            <td class="g10"><span class="sub-name">Chemistry</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="g10"><span class="sub-name">Biology</span><span class="grade-tag">10th Grade</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td><td>10:25 - 11:05</td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                            <td class="g10"><span class="sub-name">Chemistry</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="g10"><span class="sub-name">Biology</span><span class="grade-tag">10th Grade</span></td>
+                        </tr>
+                        <tr>
+                            <td>5</td><td>11:05 - 11:45</td>
+                            <td class="vacant">PREP</td>
+                            <td class="g10"><span class="sub-name">Biology</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Chemistry</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="vacant">PREP</td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                        </tr>
+                        <tr>
+                            <td>6</td><td>11:45 - 12:20</td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                            <td class="g10"><span class="sub-name">Biology</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Chemistry</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                            <td class="g9"><span class="sub-name">Science</span><span class="grade-tag">9th Grade</span></td>
+                        </tr>
+                        <tr class="break"><td colspan="7">LUNCH (12:20 - 12:55)</td></tr>
+                        <tr>
+                            <td>7</td><td>12:55 - 1:35</td>
+                            <td class="vacant">PREP</td>
+                            <td class="g11"><span class="sub-name">Biology</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="vacant">PREP</td>
+                            <td class="g11"><span class="sub-name">Chemistry</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g7"><span class="sub-name">Science</span><span class="grade-tag">7th Grade</span></td>
+                        </tr>
+                        <tr>
+                            <td>8</td><td>1:35 - 2:15</td>
+                            <td class="g10"><span class="sub-name">Chemistry</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Biology</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Biology</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="g11"><span class="sub-name">Chemistry</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="vacant">PREP</td>
+                        </tr>
+                        <tr>
+                            <td>9</td><td>2:15 - 2:55</td>
+                            <td class="g10"><span class="sub-name">Chemistry</span><span class="grade-tag">10th Grade</span></td>
+                            <td class="vacant">PREP</td>
+                            <td class="g11"><span class="sub-name">Biology</span><span class="grade-tag">11th Grade</span></td>
+                            <td class="vacant">PREP</td>
+                            <td class="g8"><span class="sub-name">Science</span><span class="grade-tag">8th Grade</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
     </main>
 
-    <script src="scripts.js"></script>
-  </body>
+    <script>
+        // --- AUTHENTICATION ---
+        const STORAGE_KEY = "sws_layout_config_v2";
+        const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+        const SALT = "_SWS_SECURE";
+
+        function checkAuth() {
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            const adminDivs = document.querySelectorAll('.admin-only');
+            if (candidate && btoa(atob(candidate) + SALT) === LOCK_VALUE) {
+                adminDivs.forEach(el => el.classList.remove('hidden'));
+            } else {
+                adminDivs.forEach(el => el.classList.add('hidden'));
+            }
+        }
+
+        function login() {
+            const input = prompt("Teacher Access Code:");
+            if(input && btoa(input + SALT) === LOCK_VALUE) {
+                localStorage.setItem(STORAGE_KEY, btoa(input));
+                location.reload();
+            } else { alert("Access Denied"); }
+        }
+
+        // --- LIVE SCHEDULE LOGIC ---
+        const schedule = {
+            1: [ // Mon
+                {s: "08:00", e: "08:40", c: "Prep / Vacant"},
+                {s: "08:40", e: "09:20", c: "Vacant"},
+                {s: "09:20", e: "09:45", c: "RECESS", type: "break"},
+                {s: "09:45", e: "11:05", c: "Science 9 (P3/4)"}, // Combined block
+                {s: "11:05", e: "11:45", c: "Prep / Vacant"},
+                {s: "11:45", e: "12:20", c: "Science 7"},
+                {s: "12:20", e: "12:55", c: "LUNCH", type: "break"},
+                {s: "12:55", e: "13:35", c: "Prep / Vacant"},
+                {s: "13:35", e: "14:55", c: "Chemistry 10 (P8/9)"}
+            ],
+            2: [ // Tue
+                {s: "08:00", e: "09:20", c: "Science 8 (P1/2)"},
+                {s: "09:20", e: "09:45", c: "RECESS", type: "break"},
+                {s: "09:45", e: "11:05", c: "Science 9 (P3/4)"},
+                {s: "11:05", e: "12:20", c: "Biology 10 (P5/6)"},
+                {s: "12:20", e: "12:55", c: "LUNCH", type: "break"},
+                {s: "12:55", e: "14:15", c: "Biology 11 (P7/8)"},
+                {s: "14:15", e: "14:55", c: "Prep / Vacant"}
+            ],
+            3: [ // Wed
+                {s: "08:00", e: "09:20", c: "Economics 11 (P1/2)"},
+                {s: "09:20", e: "09:45", c: "RECESS", type: "break"},
+                {s: "09:45", e: "11:05", c: "Science 7 (P3/4)"},
+                {s: "11:05", e: "11:45", c: "Chemistry 11"},
+                {s: "11:45", e: "12:20", c: "Chemistry 11"},
+                {s: "12:20", e: "12:55", c: "LUNCH", type: "break"},
+                {s: "12:55", e: "13:35", c: "Prep / Vacant"},
+                {s: "13:35", e: "14:55", c: "Biology 11 (P8/9)"}
+            ],
+            4: [ // Thu
+                {s: "08:00", e: "08:40", c: "Science 7"},
+                {s: "08:40", e: "09:20", c: "Science 7"},
+                {s: "09:20", e: "09:45", c: "RECESS", type: "break"},
+                {s: "09:45", e: "11:05", c: "Chemistry 10 (P3/4)"},
+                {s: "11:05", e: "11:45", c: "Prep / Vacant"},
+                {s: "11:45", e: "12:20", c: "Science 9"},
+                {s: "12:20", e: "12:55", c: "LUNCH", type: "break"},
+                {s: "12:55", e: "14:15", c: "Chemistry 11 (P7/8)"},
+                {s: "14:15", e: "14:55", c: "Prep / Vacant"}
+            ],
+            5: [ // Fri
+                {s: "08:00", e: "09:20", c: "Science 8 (P1/2)"},
+                {s: "09:20", e: "09:45", c: "RECESS", type: "break"},
+                {s: "09:45", e: "11:05", c: "Biology 10 (P3/4)"},
+                {s: "11:05", e: "12:20", c: "Science 9 (P5/6)"},
+                {s: "12:20", e: "12:55", c: "LUNCH", type: "break"},
+                {s: "12:55", e: "13:35", c: "Science 7"},
+                {s: "13:35", e: "14:15", c: "Prep / Vacant"},
+                {s: "14:15", e: "14:55", c: "Science 8"}
+            ]
+        };
+
+        function updateLiveStatus() {
+            const now = new Date();
+            const day = now.getDay();
+            const timeVal = now.getHours() * 60 + now.getMinutes(); // Minutes from midnight
+            
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', weekday:'long'});
+
+            const nowEl = document.getElementById('status-now');
+            const nextEl = document.getElementById('status-next');
+
+            if (day === 0 || day === 6) {
+                nowEl.innerText = "Weekend";
+                nextEl.innerText = "See you Monday!";
+                return;
+            }
+
+            const todaySched = schedule[day];
+            let currentClass = null;
+            let nextClass = null;
+
+            for (let i = 0; i < todaySched.length; i++) {
+                const block = todaySched[i];
+                const startMin = parseInt(block.s.split(':')[0])*60 + parseInt(block.s.split(':')[1]);
+                const endMin = parseInt(block.e.split(':')[0])*60 + parseInt(block.e.split(':')[1]);
+
+                if (timeVal >= startMin && timeVal < endMin) {
+                    currentClass = block;
+                    nextClass = todaySched[i+1] || null;
+                    break;
+                }
+                if (timeVal < startMin) {
+                    nextClass = block;
+                    break;
+                }
+            }
+
+            if (currentClass) {
+                nowEl.innerText = currentClass.c;
+                nowEl.style.color = currentClass.type === 'break' ? '#f9db66' : 'white';
+                nextEl.innerText = nextClass ? `${nextClass.s} - ${nextClass.c}` : "End of Day";
+            } else if (nextClass) {
+                nowEl.innerText = "Before School / Break";
+                nextEl.innerText = `${nextClass.s} - ${nextClass.c}`;
+            } else {
+                nowEl.innerText = "Done for the Day";
+                nextEl.innerText = "Rest well.";
+            }
+        }
+
+        setInterval(updateLiveStatus, 1000);
+        updateLiveStatus();
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
 </html>
