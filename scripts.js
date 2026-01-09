@@ -1,37 +1,47 @@
-const ADMIN_HASH = "b039d915442f9dfdb34316d5528b33534a70cb6da52523277c15437877209772";
+const ADMIN_TOKEN = "U1dTMjAyNg=="; 
 
 const AUTH_KEY = "sws_layout_config_v2"; 
 const AUTH_VAL = "active_user_mode";
 
+// --- ADMIN GATEKEEPER LOGIC ---
 function checkAuth() {
     const currentSession = localStorage.getItem(AUTH_KEY);
     const adminSections = document.querySelectorAll('.admin-only');
     const publicSections = document.querySelectorAll('.public-only');
+    const teacherBtns = document.querySelectorAll('.btn-teacher');
 
     if (currentSession === AUTH_VAL) {
+        // User is Logged In
         adminSections.forEach(el => el.classList.remove('hidden'));
         publicSections.forEach(el => el.classList.add('hidden'));
+        // If we are on a slide deck, show the Teacher Mode button
+        teacherBtns.forEach(el => el.style.display = 'block');
     } else {
+        // User is Logged Out
         adminSections.forEach(el => el.classList.add('hidden'));
         publicSections.forEach(el => el.classList.remove('hidden'));
+        // Hide Teacher Mode button on slides if not logged in
+        teacherBtns.forEach(el => el.style.display = 'none');
     }
 }
 
-async function login() {
+function login() {
     const input = prompt("Enter Teacher Access Code:");
     
     if (!input) return;
 
-    // Hash the input and compare it to the stored hash
-    const hash = await sha256(input);
+    // Simple obfuscation (Base64) that works offline/locally
+    // This turns "SWS2026" into "U1dTMjAyNg=="
+    const encoded = btoa(input);
 
-    if (hash === ADMIN_HASH) {
+    if (encoded === ADMIN_TOKEN) {
         localStorage.setItem(AUTH_KEY, AUTH_VAL);
         checkAuth();
         alert("Access Granted. Welcome, Mr. Castro.");
-        location.reload(); // Refresh to update UI state immediately
+        location.reload(); 
     } else {
         alert("Access Denied.");
+        console.log("Debug Info:", encoded); // Check console if you can't login
     }
 }
 
@@ -41,36 +51,27 @@ function logout() {
     location.reload();
 }
 
-// --- HELPER: HASHING FUNCTION ---
-async function sha256(message) {
-    const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-}
-
 // --- NAVIGATION & VIEW LOGIC ---
 function switchView(viewName, btn) {
-    // 1. Security Check for Teacher Script using the obscured key
     if (viewName === 'script' && localStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
         alert("Teacher Login Required for Annotated Scripts.");
         return;
     }
+    // ... existing navigation logic if needed ...
+}
 
-    // 2. Switch the Content Views
-    const views = document.querySelectorAll('.view');
-    if (views.length > 0) {
-        views.forEach(v => v.classList.remove('active'));
-        const targetView = document.getElementById('view-' + viewName);
-        if (targetView) targetView.classList.add('active');
+// --- SLIDE DECK LOGIC (Shared) ---
+// This handles the Teacher Mode toggle inside the slide files
+function toggleTeacherMode() {
+    if (localStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
+        alert("Teacher Login Required.");
+        return;
     }
-    
-    // 3. Update the Button/Tab styling
-    const tabs = document.querySelectorAll('.tab-btn');
-    if (tabs.length > 0 && btn) {
-        tabs.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    document.body.classList.toggle('teacher-mode');
+    const btn = document.getElementById('teacher-toggle');
+    if(btn) {
+        btn.classList.toggle('active');
+        btn.textContent = document.body.classList.contains('teacher-mode') ? "Teacher Mode: ON" : "Teacher Mode";
     }
 }
 
@@ -92,18 +93,9 @@ function startTimer(duration, displayId) {
         if (--timer < 0) {
             clearInterval(timerInterval);
             display.textContent = "DONE";
-            display.classList.add("text-red-500", "animate-pulse");
+            display.style.color = "var(--sws-maroon)";
         }
     }, 1000);
-}
-
-function resetTimer(displayId) {
-    clearInterval(timerInterval);
-    const display = document.getElementById(displayId);
-    if (display) {
-        display.textContent = "05:00";
-        display.classList.remove("text-red-500", "animate-pulse");
-    }
 }
 
 // Run auth check as soon as the DOM is ready
