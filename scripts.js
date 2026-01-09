@@ -1,4 +1,4 @@
-const CHALLENGE = "AAAAAAUPBgEHFQAGBwUBBAcBCQ=="; 
+const CHALLENGE = "AAAAByMjDQYFEgcTIx0ADgQc"; 
 const STORAGE_KEY = "sws_session_cipher_v5";
 
 function processCipher(text, key) {
