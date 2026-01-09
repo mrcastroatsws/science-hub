@@ -7,9 +7,24 @@
 
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
     
     <style>
+        
+/* ANTI-FLASH HIDDEN STATE */
+html {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* VISIBLE STATE (Applied by JS) */
+html.loaded {
+    opacity: 1;
+    visibility: visible;
+}
         :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
         body { font-family: "Rubik", sans-serif; overflow-x: hidden; background-color: #f8fafc; }
         .sketch { font-family: "Cabin Sketch", cursive; }
@@ -308,6 +323,11 @@
     </main>
 
     <script>
+
+        // --- PRELOADER ---
+        window.onload = function() {
+        document.documentElement.classList.add('loaded');
+        }
         // --- AUTH ---
         const STORAGE_KEY = "sws_layout_config_v2";
         const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; const SALT = "_SWS_SECURE";
