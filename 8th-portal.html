@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Portal | Electronics 8</title>
+
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --sws-maroon: #ac2e55; 
+            --sws-maroon-faded: #fdf2f5;
+            --sws-maroon-soft: #c86b85; 
+            --sws-gold: #f9db66; 
+            --sws-teal: #29c4a9; 
+            --slate-text: #334155;
+        }
+
+        body { font-family: "Rubik", sans-serif; background-color: #f8fafc; color: var(--slate-text); }
+        .sketch { font-family: "Cabin Sketch", cursive; }
+        
+        /* Navigation */
+        nav { background-color: var(--sws-maroon); box-shadow: 0 4px 12px rgba(172, 46, 85, 0.15); }
+        .tab-btn { color: #ffffffa0; transition: all 0.3s ease; border-bottom: 3px solid transparent; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; }
+        .tab-btn.active { color: white; border-bottom-color: var(--sws-gold); }
+
+        /* VIEW TRANSITIONS */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CARDS */
+        .week-card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 2rem; }
+        .week-header { background: linear-gradient(135deg, var(--sws-maroon-faded) 0%, #ffffff 100%); border-bottom: 1px solid #fce7eb; padding: 1rem 1.5rem; }
+        
+        .day-box { background: #ffffff; border: 1px solid #f1f5f9; border-radius: 0.5rem; padding: 0.75rem; transition: transform 0.2s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .day-box:hover { border-color: var(--sws-maroon-soft); transform: translateY(-2px); }
+
+        .no-class-box { background: #f8fafc; opacity: 0.7; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; border: 1px dashed #cbd5e1; }
+
+        /* TABLE */
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 0.75rem; border: 1px solid #e2e8f0; }
+        .j-table { min-width: 800px; background: white; border-collapse: collapse; width: 100%; }
+        .j-table th { background: #f8fafc; color: var(--sws-maroon); font-size: 0.7rem; padding: 12px; border: 1px solid #e2e8f0; text-transform: uppercase; }
+        .j-table td { border: 1px solid #f1f5f9; padding: 10px; font-size: 0.8rem; vertical-align: top; }
+
+        @media print { nav, .btn-print-hide { display: none !important; } body { background: white; } }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="sketch text-xl text-white tracking-widest">SCIENCE PORTAL</a>
+                <span class="opacity-40 text-[10px] uppercase font-bold border-l pl-3 border-white/40 text-white">Electronics 8</span>
+            </div>
+            <div class="flex space-x-4">
+                <button onclick="switchView('quarter', this)" class="tab-btn active pb-1">Quarter Plan</button>
+                <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly Plan</button>
+                <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Notes</button>
+                <a href="8th-slides.html" class="bg-white/10 hover:bg-white/20 px-3 py-1 rounded text-[10px] text-white font-bold border border-white/20 transition uppercase">Slides</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-8">
+
+        <section id="view-quarter" class="view active">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="sketch text-3xl text-slate-800">Parcial III Jornalización</h2>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Electronics | 2025-2026</p>
+                </div>
+                <button onclick="window.print()" class="text-[10px] font-bold border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 transition btn-print-hide uppercase tracking-tighter text-slate-500">Print</button>
+            </div>
+
+            <div class="table-responsive bg-white shadow-sm">
+                <table class="j-table">
+                    <thead>
+                        <tr>
+                            <th class="w-12">Date</th><th>Weeks 3.1 - 3.3</th>
+                            <th class="w-12">Date</th><th>Weeks 3.4 - 3.6</th>
+                            <th class="w-12">Date</th><th>Weeks 3.7 - 3.10</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold text-center text-slate-400">01/12</td>
+                            <td><strong>3.1:</strong> Circuits Intro & Components</td>
+                            <td class="font-bold text-center text-slate-400">02/02</td>
+                            <td><strong>3.4:</strong> Flow & Voltage / Study Guide</td>
+                            <td class="font-bold text-center text-slate-400">02/23</td>
+                            <td><strong>3.7:</strong> Electronic Dissection</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center text-slate-400">01/19</td>
+                            <td><strong>3.2:</strong> Conductors vs Insulators</td>
+                            <td class="font-bold text-center text-slate-400">02/09</td>
+                            <td class="text-sws-maroon font-bold"><strong>3.5:</strong> Midterm Exams (20 pts)</td>
+                            <td class="font-bold text-center text-slate-400">03/02</td>
+                            <td><strong>3.8:</strong> TV History & Logic</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-center text-slate-400">01/26</td>
+                            <td><strong>3.3:</strong> Voltage & Series/Parallel</td>
+                            <td class="font-bold text-center text-slate-400">02/16</td>
+                            <td><strong>3.6:</strong> Resistors & Color Code</td>
+                            <td class="font-bold text-center text-slate-400">03/09</td>
+                            <td><strong>3.9:</strong> Digital Logic & Breadboards</td>
+                        </tr>
+                        <tr class="bg-slate-50/50">
+                            <td colspan="4" class="text-right py-4 pr-4 text-[10px] font-bold text-slate-300 uppercase italic">End of Regular Instruction</td>
+                            <td class="font-bold text-center text-slate-400">03/16</td>
+                            <td class="text-sws-maroon font-bold"><strong>3.10:</strong> Quarter Exams (20 pts)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3 btn-print-hide">
+                <div class="p-3 bg-white border border-slate-200 rounded-lg text-center">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">Classwork</span>
+                    <span class="text-lg font-bold text-slate-700">25 pts</span>
+                </div>
+                <div class="p-3 bg-white border border-slate-200 rounded-lg text-center">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">Homework</span>
+                    <span class="text-lg font-bold text-slate-700">10 pts</span>
+                </div>
+                <div class="p-3 bg-white border border-slate-200 rounded-lg text-center">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">Activity</span>
+                    <span class="text-lg font-bold text-slate-700">10 pts</span>
+                </div>
+                <div class="p-3 bg-white border border-slate-200 rounded-lg text-center">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">Attitude/Art</span>
+                    <span class="text-lg font-bold text-slate-700">15 pts</span>
+                </div>
+                <div class="p-3 bg-white border border-slate-200 rounded-lg text-center">
+                    <span class="block text-[9px] font-bold text-slate-400 uppercase">Exams</span>
+                    <span class="text-lg font-bold text-slate-700">50 pts</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-weekly" class="view">
+            <div id="weekly-container" class="space-y-8">
+                
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.1</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 12 - 16</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Circuits Intro</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Circuits (Intro)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Source, Receiver, Path</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Concept</h4><p class="text-[10px] text-slate-500 mt-1 italic">Define components</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">CW #1 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Review Circuit Symbols</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Lighting the Bulb (Inv 1)</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.2</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 19 - 23</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Materials</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Conductors</h4><p class="text-[10px] text-slate-500 mt-1 italic">Vs Insulators</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Testing Materials</h4><p class="text-[10px] text-slate-500 mt-1 italic">Lab Activity</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-teal"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">HW #1 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Schematic Diagrams</p></div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">CW #2 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Electrical Safety</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.3</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 26 - 30</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Voltage</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Intro Voltage</h4><p class="text-[10px] text-slate-500 mt-1 italic">"The Push"</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Circuits</h4><p class="text-[10px] text-slate-500 mt-1 italic">Series vs Parallel</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Building Circuits (Inv 2)</p></div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">CW #3 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Series/Parallel Logic</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.4</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 02 - 06</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Review</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Concepts</h4><p class="text-[10px] text-slate-500 mt-1 italic">Flow & Voltage</p></div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">CW #4 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Study Guide</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">Presentations</h4><p class="text-[10px] text-slate-500 mt-1 italic">Oral Group Activity</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Measuring Voltage</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card border-sws-maroon">
+                    <div class="week-header bg-slate-50">
+                        <div><h2 class="sketch text-3xl text-sws-maroon">Week 3.5</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 09 - 13</p></div>
+                        <span class="text-[10px] font-bold text-sws-maroon uppercase">MIDTERMS</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-slate-700">MIDTERM EXAMS (20 pts)</h3>
+                        <p class="text-sm text-slate-500 mt-2">Study Guide & Review all week.</p>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.6</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 16 - 20</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Resistors</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Resistors I</h4><p class="text-[10px] text-slate-500 mt-1 italic">Limiting Flow</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Color Code</h4><p class="text-[10px] text-slate-500 mt-1 italic">Concept Intro</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-teal"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">HW #2 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Decoding Resistors</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Reading</h4><p class="text-[10px] text-slate-500 mt-1 italic">History of Electronics</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.7</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 23 - 27</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Dissection</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Dissection</h4><p class="text-[10px] text-slate-500 mt-1 italic">Intro to E-Waste</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Inside a Device</h4><p class="text-[10px] text-slate-500 mt-1 italic">What are components?</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">CW #5 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Component ID</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Lab</h4><p class="text-[10px] text-slate-500 mt-1 italic">Dissection Activity</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.8</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Mar 02 - 06</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">History</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">TV History</h4><p class="text-[10px] text-slate-500 mt-1 italic">Analog to Digital</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Discussion</h4><p class="text-[10px] text-slate-500 mt-1 italic">Consumer Electronics</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-maroon"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">Activity (10 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Glossary Presentations</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Quiz</h4><p class="text-[10px] text-slate-500 mt-1 italic">Pop Quiz</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.9</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Mar 09 - 13</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Logic</span>
+                    </div>
+                    <div class="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">MON</span><h4 class="text-xs font-bold text-slate-800 mt-1">Digital Logic</h4><p class="text-[10px] text-slate-500 mt-1 italic">0s and 1s</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">TUE</span><h4 class="text-xs font-bold text-slate-800 mt-1">Careers</h4><p class="text-[10px] text-slate-500 mt-1 italic">Electrical Engineering</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">THU</span><h4 class="text-xs font-bold text-slate-800 mt-1">Breadboards</h4><p class="text-[10px] text-slate-500 mt-1 italic">Flow of Electricity</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400">FRI</span><h4 class="text-xs font-bold text-slate-800 mt-1">Math</h4><p class="text-[10px] text-slate-500 mt-1 italic">Ohm's Law Triangle</p></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="view-script" class="view">
+            <div class="admin-only hidden bg-white rounded-3xl shadow-sm p-10 border border-slate-200">
+                <h2 class="sketch text-3xl mb-6 text-slate-800">Teacher Notes</h2>
+                <div class="space-y-4 text-slate-600">
+                    <p class="text-sm bg-slate-50 p-4 rounded-xl border-l-4 border-sws-gold"><strong>Week 3.1:</strong> Emphasize the "Path" concept. Students forget the return loop.</p>
+                    <p class="text-sm bg-slate-50 p-4 rounded-xl border-l-4 border-sws-teal"><strong>Week 3.6:</strong> Resistor Color Code is a key skill. Use the mnemonic "Big Boys Race Our Young Girls..."</p>
+                </div>
+            </div>
+            <div class="public-only text-center py-20 bg-slate-100 rounded-3xl border border-dashed border-slate-300">
+                 <p class="text-slate-400 font-bold uppercase text-xs tracking-widest">Restricted Area</p>
+                 <button onclick="login()" class="mt-4 bg-slate-800 text-white px-8 py-2 rounded-full font-bold shadow-md hover:bg-black transition text-xs uppercase">Teacher Login</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // AUTHENTICATION LOGIC (Salted)
+        const STORAGE_KEY = "sws_layout_config_v2";
+        const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+        const SALT = "_SWS_SECURE";
+
+        function checkAuth() {
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            if (!candidate) { setAdminState(false); return; }
+            try {
+                if (btoa(atob(candidate) + SALT) === LOCK_VALUE) { setAdminState(true); } 
+                else { setAdminState(false); }
+            } catch (e) { setAdminState(false); }
+        }
+
+        function setAdminState(isAdmin) {
+            const admin = document.querySelectorAll('.admin-only');
+            const public = document.querySelectorAll('.public-only');
+            if (isAdmin) {
+                admin.forEach(el => el.classList.remove('hidden'));
+                public.forEach(el => el.classList.add('hidden'));
+            } else {
+                admin.forEach(el => el.classList.add('hidden'));
+                public.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        function login() {
+            const input = prompt("Enter Access Code:");
+            if (!input) return;
+            if (btoa(input + SALT) === LOCK_VALUE) {
+                localStorage.setItem(STORAGE_KEY, btoa(input));
+                location.reload();
+            } else { alert("Access Denied"); }
+        }
+
+        function switchView(viewName, btn) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
