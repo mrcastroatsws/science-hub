@@ -12,7 +12,7 @@
             --sws-maroon: #ac2e55;
             --sws-gold: #f9db66;
             --sws-teal: #29c4a9;
-            --chem-purple: #8e44ad; /* Chemistry Identity Color */
+            --chem-purple: #8e44ad; 
             --bg-color: #0f172a; 
             --text-color: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.05);
@@ -38,7 +38,12 @@
             align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
         }
 
-        #slide-vault { display: none; flex: 1; position: relative; width: 100%; height: 100%; }
+        #slide-vault { 
+            display: none; 
+            flex-direction: column; 
+            height: 100vh; 
+            width: 100%; 
+        }
 
         /* --- NAVIGATION --- */
         .nav-master {
@@ -47,21 +52,18 @@
         }
 
         .btn-nav {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: white; padding: 10px 15px;
-            font-size: 0.8rem; cursor: pointer;
-            border-radius: 6px; font-weight: 700;
-            transition: 0.3s; text-transform: uppercase;
+            background: var(--glass); border: 1px solid var(--border);
+            color: white; padding: 10px 15px; font-size: 0.8rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700; transition: 0.3s; text-transform: uppercase;
         }
-
         .btn-nav:hover { background: var(--chem-purple); border-color: var(--chem-purple); transform: translateY(-2px); }
 
-        /* --- SLIDE ARCHITECTURE --- */
+        /* --- STAGE & SLIDE CENTERING --- */
         .stage {
-            height: 100%; width: 100%;
+            flex: 1;
             display: flex; justify-content: center; align-items: center;
             padding: 60px;
+            position: relative;
         }
 
         .slide {
@@ -86,12 +88,9 @@
         h2 { font-size: 2.2rem; color: var(--chem-purple); margin-top: 10px; font-weight: 400; }
         
         .box-concept {
-            background: var(--glass);
-            border-left: 6px solid var(--chem-purple);
-            padding: 30px; text-align: left;
-            border-radius: 0 20px 20px 0;
-            margin: 30px 0; width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--glass); border-left: 6px solid var(--chem-purple);
+            padding: 30px; text-align: left; border-radius: 0 20px 20px 0;
+            margin: 30px 0; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .grid-menu {
@@ -101,8 +100,7 @@
 
         .card-menu {
             background: var(--glass); border: 1px solid var(--border);
-            padding: 20px; border-radius: 12px;
-            cursor: pointer; transition: 0.3s; text-align: left;
+            padding: 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; text-align: left;
         }
         .card-menu:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
 
@@ -132,7 +130,7 @@
         .sf-check {
             border: 2px dashed var(--sws-teal); background: rgba(41, 196, 169, 0.05);
             padding: 20px; border-radius: 15px; margin-top: 20px; width: 100%;
-            display: flex; align-items: center; gap: 15px;
+            display: flex; align-items: center; gap: 15px; text-align: left;
         }
     </style>
 </head>
@@ -141,6 +139,7 @@
     <div id="gotcha-screen">
         <h1 class="mono">CHEMICAL HAZARD</h1>
         <p>ACCESS DENIED. AUTHORIZED PERSONNEL ONLY.</p>
+        <div style="margin-top: 20px; opacity: 0.5;">RE-ROUTING TO HUB...</div>
     </div>
 
     <div id="slide-vault">
@@ -152,7 +151,6 @@
         </nav>
 
         <div class="stage">
-
             <div class="slide active">
                 <h1 class="sketch">Chemistry 9</h1>
                 <h2>Week 3.1: The Central Science</h2>
@@ -215,7 +213,6 @@
             <div class="slide">
                 <div class="day-badge">MON | MISCONCEPTIONS</div>
                 <h1 class="sketch">Mass vs. Weight</h1>
-                <h2>Are they the same?</h2>
                 <div class="mc-grid">
                     <button class="btn-mc" style="border-color: var(--sws-teal)">
                         <strong>MASS</strong><br>
@@ -251,7 +248,6 @@
                     <p><strong>Safety Shower:</strong> Used for large spills on body.</p>
                     <p><strong>Goggles:</strong> Must be worn at all times.</p>
                 </div>
-                
             </div>
 
             <div class="slide">
@@ -283,7 +279,7 @@
                 <h1 class="sketch">Classwork #1</h1>
                 <h2 style="color:white">Assessment Prep</h2>
                 <div class="box-concept" style="padding:10px; margin:10px;">
-                    <p>We will review the exact questions for today's 5-point evaluation.</p>
+                    <p>Reviewing the 5-point evaluation for today.</p>
                 </div>
             </div>
 
@@ -300,7 +296,7 @@
 
             <div class="slide">
                 <div class="day-badge">CW#1 | Q2</div>
-                <h2>Any substance that has a definite composition is called a:</h2>
+                <h2>Any substance that has a definite composition is a:</h2>
                 <div class="mc-grid">
                     <button class="btn-mc" onclick="check(this, false)">A) Mixture</button>
                     <button class="btn-mc" onclick="check(this, true)">B) Chemical</button>
@@ -311,23 +307,12 @@
 
             <div class="slide">
                 <div class="day-badge">CW#1 | Q3</div>
-                <h2>Which safety item is used if a chemical splashes into your eyes?</h2>
+                <h2>Which safety item is used for chemicals in the eyes?</h2>
                 <div class="mc-grid">
                     <button class="btn-mc" onclick="check(this, false)">A) Fire Blanket</button>
                     <button class="btn-mc" onclick="check(this, false)">B) Shower</button>
                     <button class="btn-mc" onclick="check(this, true)">C) Eye Wash Station</button>
                     <button class="btn-mc" onclick="check(this, false)">D) Fume Hood</button>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="day-badge">CW#1 | Q4</div>
-                <h2>In a reaction, the starting substances are called:</h2>
-                <div class="mc-grid">
-                    <button class="btn-mc" onclick="check(this, false)">A) Products</button>
-                    <button class="btn-mc" onclick="check(this, false)">B) Results</button>
-                    <button class="btn-mc" onclick="check(this, true)">C) Reactants</button>
-                    <button class="btn-mc" onclick="check(this, false)">D) Catalysts</button>
                 </div>
             </div>
 
@@ -341,7 +326,6 @@
                     <button class="btn-mc" onclick="check(this, false)">TRUE</button>
                     <button class="btn-mc" onclick="check(this, true)">FALSE</button>
                 </div>
-                <p class="hidden-content" style="display:block; margin-top:10px; font-size:1rem;">Correction: Mass is constant; only Weight changes with gravity.</p>
             </div>
 
             <div class="slide">
@@ -354,7 +338,6 @@
             <div class="slide">
                 <div class="day-badge">FRI | DEMO</div>
                 <h1 class="sketch">Chemical Reaction</h1>
-                <h2>Reactants & Products</h2>
                 <div class="box-concept">
                     <p><strong>Reactants:</strong> The substances you start with (Left side).</p>
                     <p><strong>Products:</strong> The new substances formed (Right side).</p>
@@ -380,17 +363,6 @@
             </div>
 
             <div class="slide">
-                <div class="day-badge" style="background:var(--sws-teal); color:black;">BONUS</div>
-                <h1 class="sketch">Design Thinking: The Project</h1>
-                <h2>Empathize & Define</h2>
-                <div class="box-concept">
-                    <p><strong>Empathize:</strong> Why does your Science Fair project matter? Who does it help?</p>
-                    <p><strong>Define:</strong> Write your problem statement clearly.</p>
-                    <p><em>"Farmers need a better fertilizer because soil is degrading."</em></p>
-                </div>
-            </div>
-
-            <div class="slide">
                 <div class="day-badge">WEEK 3.1</div>
                 <h1 class="sketch">Module Complete</h1>
                 <p>Next Week: Scientific Method & Variables</p>
@@ -400,19 +372,32 @@
         </div> <div class="progress-bar">
             <div class="progress-fill" id="p-bar"></div>
         </div>
-    </div>
-
-    <script>
-        // --- SECURITY ---
+    </div> <script>
+        // --- SECURITY (v2 Salted) ---
         (function() {
-            const auth = localStorage.getItem("sws_admin_auth");
-            if (auth !== "true") { 
-                document.getElementById('gotcha-screen').style.display = 'flex'; 
-                setTimeout(() => { window.location.href = "index.html"; }, 3000); 
-            } else { document.getElementById('slide-vault').style.display = 'block'; }
+            const STORAGE_KEY = "sws_layout_config_v2";
+            const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+            const SALT = "_SWS_SECURE";
+
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            const vault = document.getElementById('slide-vault');
+            const gotcha = document.getElementById('gotcha-screen');
+
+            try {
+                const isValid = candidate && btoa(atob(candidate) + SALT) === LOCK_VALUE;
+                if (isValid) {
+                    vault.style.display = 'flex'; 
+                } else {
+                    gotcha.style.display = 'flex';
+                    setTimeout(() => { window.location.href = "index.html"; }, 3000);
+                }
+            } catch (e) {
+                gotcha.style.display = 'flex';
+                setTimeout(() => { window.location.href = "index.html"; }, 3000);
+            }
         })();
 
-        // --- CORE ENGINE ---
+        // --- CORE SLIDE ENGINE ---
         let current = 0;
         const slides = document.querySelectorAll('.slide');
         const pBar = document.getElementById('p-bar');
@@ -434,8 +419,8 @@
         function check(btn, isCorrect) {
             const siblings = btn.parentElement.children;
             for (let s of siblings) { s.classList.remove('correct', 'wrong'); }
-            if (isCorrect) { btn.classList.add('correct'); } 
-            else { btn.classList.add('wrong'); }
+            if (isCorrect) btn.classList.add('correct');
+            else btn.classList.add('wrong');
         }
 
         // --- TIMER ---
