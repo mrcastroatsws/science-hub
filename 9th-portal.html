@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Portal | Chemistry 9</title>
+
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --sws-maroon: #ac2e55; 
+            --sws-maroon-light: #fdf2f5;
+            --sws-gold: #f9db66; 
+            --sws-teal: #29c4a9; 
+            --chem-purple: #8e44ad;
+            --slate-text: #334155;
+        }
+
+        body { font-family: "Rubik", sans-serif; background-color: #f8fafc; color: var(--slate-text); }
+        .sketch { font-family: "Cabin Sketch", cursive; }
+        
+        /* Navigation */
+        nav { background-color: var(--sws-maroon); box-shadow: 0 4px 12px rgba(172, 46, 85, 0.15); }
+        .tab-btn { color: #ffffffa0; transition: all 0.3s ease; border-bottom: 3px solid transparent; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; font-weight: 700; }
+        .tab-btn.active { color: white; border-bottom-color: var(--sws-gold); }
+
+        /* View Transitions */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Weekly Cards */
+        .week-card { background: white; border: 1px solid #e2e8f0; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 2.5rem; }
+        .week-header { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); border-bottom: 1px solid #e2e8f0; padding: 1.25rem 2rem; }
+        
+        .day-box { 
+            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.75rem; 
+            padding: 1rem; transition: transform 0.2s ease; height: 100%; 
+            display: flex; flex-direction: column; 
+        }
+        .day-box:hover { border-color: var(--chem-purple); transform: translateY(-2px); }
+
+        .no-class-box { background: #f1f5f9; opacity: 0.6; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; border: 1px dashed #cbd5e1; }
+
+        /* Full Grid Table for Quarter Plan */
+        .grid-table { display: grid; grid-template-columns: 50px 1fr 50px 1fr 50px 1fr; gap: 1px; background: #e2e8f0; border: 1px solid #e2e8f0; border-radius: 0.5rem; overflow: hidden; }
+        .grid-header { background: #f1f5f9; padding: 12px; font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--sws-maroon); text-align: center; }
+        .grid-cell { background: white; padding: 10px; font-size: 0.75rem; display: flex; align-items: center; }
+        .grid-date { background: #f8fafc; color: #64748b; font-weight: 700; text-align: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
+        
+        .section-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--sws-teal); margin-bottom: 10px; display: block; margin-top: 20px;}
+
+        @media print { nav, .btn-print-hide { display: none !important; } body { background: white; } }
+    </style>
+</head>
+<body>
+
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="sketch text-2xl text-white tracking-widest">SCIENCE PORTAL</a>
+                <span class="opacity-40 text-xs uppercase font-bold border-l pl-4 border-white/40 text-white tracking-wider">Chemistry 9</span>
+            </div>
+            <div class="flex space-x-6">
+                <button onclick="switchView('quarter', this)" class="tab-btn active pb-1">Quarter Plan</button>
+                <button onclick="switchView('weekly', this)" class="tab-btn pb-1">Weekly Plan</button>
+                <button onclick="switchView('script', this)" class="tab-btn pb-1">Teacher Notes</button>
+                <a href="9th-slides.html" class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded text-[10px] text-white font-bold border border-white/20 transition uppercase tracking-wider">Slides</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-10">
+
+        <section id="view-quarter" class="view active">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="sketch text-4xl text-slate-800">Parcial III Jornalización</h2>
+                    <p class="text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-1">Chemistry | 2025-2026</p>
+                </div>
+                <button onclick="window.print()" class="text-[10px] font-bold border border-slate-300 px-5 py-2 rounded-lg hover:bg-slate-50 transition btn-print-hide uppercase tracking-tighter text-slate-500">Print Document</button>
+            </div>
+
+            <span class="section-title">Block 1: Foundations & Matter</span>
+            <div class="grid-table mb-8">
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.1</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.2</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.3</div>
+
+                <div class="grid-cell grid-date">01/12</div><div class="grid-cell">The Science of Chemistry (Intro)</div>
+                <div class="grid-cell grid-date">01/19</div><div class="grid-cell">Concept: Scientific Method</div>
+                <div class="grid-cell grid-date">01/26</div><div class="grid-cell">Classifying Matter: Elements/Compounds</div>
+
+                <div class="grid-cell grid-date">01/13</div><div class="grid-cell">Concept: Lab Safety & Equipment</div>
+                <div class="grid-cell grid-date">01/20</div><div class="grid-cell">Activity: Observation vs Inference</div>
+                <div class="grid-cell grid-date">01/27</div><div class="grid-cell">Activity: Mixture Separation Lab</div>
+
+                <div class="grid-cell grid-date">01/14</div><div class="grid-cell text-slate-400 italic">No Class</div>
+                <div class="grid-cell grid-date">01/21</div><div class="grid-cell text-slate-400 italic">No Class</div>
+                <div class="grid-cell grid-date">01/28</div><div class="grid-cell text-slate-400 italic">No Class</div>
+
+                <div class="grid-cell grid-date">01/15</div><div class="grid-cell font-bold text-sws-maroon">Review concepts: R (C.W. #1 5 pts)</div>
+                <div class="grid-cell grid-date">01/22</div><div class="grid-cell font-bold text-sws-maroon">Safety Poster R (H.W. #1 5pts)</div>
+                <div class="grid-cell grid-date">01/29</div><div class="grid-cell font-bold text-sws-maroon">Phys. vs Chem Changes R (CW #2 5pts)</div>
+
+                <div class="grid-cell grid-date">01/16</div><div class="grid-cell">Activity: Chemical Reactions Demo</div>
+                <div class="grid-cell grid-date">01/23</div><div class="grid-cell">Class Discussion: Daily Life</div>
+                <div class="grid-cell grid-date">01/30</div><div class="grid-cell">Quiz: Matter Classification (5 pts)</div>
+            </div>
+
+            <span class="section-title">Block 2: Energy & Changes</span>
+            <div class="grid-table mb-8">
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.4</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.5</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.6</div>
+
+                <div class="grid-cell grid-date">02/02</div><div class="grid-cell">Matter and Energy (Intro)</div>
+                <div class="grid-cell grid-date">02/09</div><div class="grid-cell font-bold text-sws-maroon">MIDTERM EXAMS (20 pts)</div>
+                <div class="grid-cell grid-date">02/16</div><div class="grid-cell">Kinetic Theory / Endo vs Exo</div>
+
+                <div class="grid-cell grid-date">02/03</div><div class="grid-cell">States of Matter (Solid/Liq/Gas)</div>
+                <div class="grid-cell grid-date">02/10</div><div class="grid-cell font-bold text-sws-maroon">MIDTERM EXAMS</div>
+                <div class="grid-cell grid-date">02/17</div><div class="grid-cell font-bold text-sws-maroon">Scientific Method R (CW #4 5 pts)</div>
+
+                <div class="grid-cell grid-date">02/04</div><div class="grid-cell text-slate-400 italic">No Class</div>
+                <div class="grid-cell grid-date">02/11</div><div class="grid-cell font-bold text-sws-maroon">MIDTERM EXAMS</div>
+                <div class="grid-cell grid-date">02/18</div><div class="grid-cell text-slate-400 italic">No Class</div>
+
+                <div class="grid-cell grid-date">02/05</div><div class="grid-cell font-bold text-sws-maroon">Study Guide R (CW #3 5 pts)</div>
+                <div class="grid-cell grid-date">02/12</div><div class="grid-cell font-bold text-sws-maroon">MIDTERM EXAMS</div>
+                <div class="grid-cell grid-date">02/19</div><div class="grid-cell">Energy Transfer / Conservation</div>
+
+                <div class="grid-cell grid-date">02/06</div><div class="grid-cell">Activity: Phase Change Graphing</div>
+                <div class="grid-cell grid-date">02/13</div><div class="grid-cell">Discussion: Midterms</div>
+                <div class="grid-cell grid-date">02/20</div><div class="grid-cell font-bold text-sws-teal">Science Fair: Hypothesis (HW #2 5pts)</div>
+            </div>
+
+            <span class="section-title">Block 3: Atoms, Moles & Project</span>
+            <div class="grid-table mb-8">
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.7</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.8</div>
+                <div class="grid-header">Date</div><div class="grid-header text-left">Week 3.9</div>
+
+                <div class="grid-cell grid-date">02/23</div><div class="grid-cell">Atoms and Moles (Intro)</div>
+                <div class="grid-cell grid-date">03/02</div><div class="grid-cell">Intro to Moles: Avogadro's #</div>
+                <div class="grid-cell grid-date">03/09</div><div class="grid-cell">Science Fair Prep</div>
+
+                <div class="grid-cell grid-date">02/24</div><div class="grid-cell">Atomic Structure / Models</div>
+                <div class="grid-cell grid-date">03/03</div><div class="grid-cell">Molar Mass / Counting Atoms</div>
+                <div class="grid-cell grid-date">03/10</div><div class="grid-cell">Science Fair Prep</div>
+
+                <div class="grid-cell grid-date">02/25</div><div class="grid-cell text-slate-400 italic">No Class</div>
+                <div class="grid-cell grid-date">03/04</div><div class="grid-cell text-slate-400 italic">No Class</div>
+                <div class="grid-cell grid-date">03/11</div><div class="grid-cell text-slate-400 italic">No Class</div>
+
+                <div class="grid-cell grid-date">02/26</div><div class="grid-cell font-bold text-sws-teal">Science Fair: Final Draft (Act 10 pts)</div>
+                <div class="grid-cell grid-date">03/05</div><div class="grid-cell font-bold text-sws-teal">SF Oral Presentation (CW #5 5 pts)</div>
+                <div class="grid-cell grid-date">03/12</div><div class="grid-cell font-bold text-sws-teal">Science Fair</div>
+
+                <div class="grid-cell grid-date">02/27</div><div class="grid-cell">The Periodic Table Trends</div>
+                <div class="grid-cell grid-date">03/06</div><div class="grid-cell">Science Fair Prep</div>
+                <div class="grid-cell grid-date">03/13</div><div class="grid-cell font-bold text-sws-teal">Science Fair</div>
+            </div>
+
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 btn-print-hide">
+                <div class="p-4 bg-white border border-slate-200 rounded-xl text-center">
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Classwork</span>
+                    <span class="text-xl font-bold text-slate-700">25 pts</span>
+                </div>
+                <div class="p-4 bg-white border border-slate-200 rounded-xl text-center">
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Homework</span>
+                    <span class="text-xl font-bold text-slate-700">10 pts</span>
+                </div>
+                <div class="p-4 bg-white border border-slate-200 rounded-xl text-center">
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Attitude/Art</span>
+                    <span class="text-xl font-bold text-slate-700">15 pts</span>
+                </div>
+                <div class="p-4 bg-white border border-sws-teal rounded-xl text-center shadow-sm">
+                    <span class="block text-[10px] font-bold text-sws-teal uppercase tracking-widest">Science Fair</span>
+                    <span class="text-xl font-bold text-slate-700">25 pts*</span>
+                    <span class="block text-[9px] text-slate-400 mt-1">*Integrated</span>
+                </div>
+                <div class="p-4 bg-white border border-slate-200 rounded-xl text-center">
+                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Exams</span>
+                    <span class="text-xl font-bold text-slate-700">50 pts</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-weekly" class="view">
+            <div id="weekly-container" class="space-y-8">
+                
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.1</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 12 - 16</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Intro</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">The Science of Chemistry</h4><p class="text-[10px] text-slate-500 mt-1 italic">Intro: What is it?</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Concept</h4><p class="text-[10px] text-slate-500 mt-1 italic">Lab Safety & Equipment</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">CW #1 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Review Concepts</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Chemical Reactions Demo</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.2</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 19 - 23</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Method</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Scientific Method</h4><p class="text-[10px] text-slate-500 mt-1 italic">Concept Intro</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Observation vs Inference</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-teal"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">HW #1 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Safety Poster / Parents</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Discussion</h4><p class="text-[10px] text-slate-500 mt-1 italic">Chemistry in Daily Life</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.3</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Jan 26 - 30</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Matter</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Classifying Matter</h4><p class="text-[10px] text-slate-500 mt-1 italic">Elements/Compounds</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Lab Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Mixture Separation</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">CW #2 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Phys. vs Chem Changes</p></div>
+                        <div class="day-box border-b-4 border-sws-maroon"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Quiz (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Matter Classification</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.4</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 02 - 06</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">States</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Matter & Energy</h4><p class="text-[10px] text-slate-500 mt-1 italic">Intro Concepts</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">States of Matter</h4><p class="text-[10px] text-slate-500 mt-1 italic">Solid / Liquid / Gas</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">CW #3 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Study Guide</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Activity</h4><p class="text-[10px] text-slate-500 mt-1 italic">Phase Change Graphing</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card border-sws-maroon">
+                    <div class="week-header bg-slate-50">
+                        <div><h2 class="sketch text-3xl text-sws-maroon">Week 3.5</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 09 - 13</p></div>
+                        <span class="text-[10px] font-bold text-sws-maroon uppercase">MIDTERMS</span>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-slate-700">MIDTERM EXAMS (20 pts)</h3>
+                        <p class="text-sm text-slate-500 mt-2">Study Guide & Review all week.</p>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.6</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 16 - 20</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Kinetic</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Kinetic Theory</h4><p class="text-[10px] text-slate-500 mt-1 italic">Endo vs Exothermic</p></div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">CW #4 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">Scientific Method Review</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Energy</h4><p class="text-[10px] text-slate-500 mt-1 italic">Transfer & Conservation</p></div>
+                        <div class="day-box border-b-4 border-sws-teal"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">HW #2 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">SF Hypothesis</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.7</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Feb 23 - 27</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Atoms</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Atoms & Moles</h4><p class="text-[10px] text-slate-500 mt-1 italic">Introduction</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Atomic Structure</h4><p class="text-[10px] text-slate-500 mt-1 italic">p+, n0, e- / Models</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-teal"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Activity (10 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">SF Final Draft</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Periodic Table</h4><p class="text-[10px] text-slate-500 mt-1 italic">Trends</p></div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-header flex justify-between items-end">
+                        <div><h2 class="sketch text-3xl text-slate-800">Week 3.8</h2><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Mar 02 - 06</p></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase">Moles</span>
+                    </div>
+                    <div class="p-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Monday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Moles</h4><p class="text-[10px] text-slate-500 mt-1 italic">Avogadro's Number</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Tuesday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Molar Mass</h4><p class="text-[10px] text-slate-500 mt-1 italic">Counting Atoms</p></div>
+                        <div class="day-box no-class-box">No Class</div>
+                        <div class="day-box border-b-4 border-sws-gold"><span class="text-[9px] font-bold text-slate-400 uppercase">Thursday</span><h4 class="text-xs font-bold text-slate-800 mt-2">CW #5 (5 pts)</h4><p class="text-[10px] text-slate-500 mt-1 italic">SF Oral Presentation</p></div>
+                        <div class="day-box"><span class="text-[9px] font-bold text-slate-400 uppercase">Friday</span><h4 class="text-xs font-bold text-slate-800 mt-2">Science Fair</h4><p class="text-[10px] text-slate-500 mt-1 italic">Prep</p></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="view-script" class="view">
+            <div class="admin-only hidden bg-white rounded-3xl shadow-sm p-10 border border-slate-200">
+                <h2 class="sketch text-3xl mb-6 text-slate-800">Teacher Notes</h2>
+                <div class="space-y-4 text-slate-600">
+                    <p class="text-sm bg-slate-50 p-4 rounded-xl border-l-4 border-sws-gold"><strong>Week 3.2:</strong> Ensure students differentiate between Observation (Senses) and Inference (Logic).</p>
+                    <p class="text-sm bg-slate-50 p-4 rounded-xl border-l-4 border-sws-teal"><strong>Science Fair:</strong> Milestone at Week 3.7 is crucial. Draft must include variables.</p>
+                </div>
+            </div>
+            <div class="public-only text-center py-20 bg-slate-100 rounded-3xl border border-dashed border-slate-300">
+                 <p class="text-slate-400 font-bold uppercase text-xs tracking-widest">Restricted Area</p>
+                 <button onclick="login()" class="mt-4 bg-slate-800 text-white px-8 py-2 rounded-full font-bold shadow-md hover:bg-black transition text-xs uppercase">Teacher Login</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // AUTH LOGIC
+        const STORAGE_KEY = "sws_layout_config_v2";
+        const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
+        const SALT = "_SWS_SECURE";
+
+        function checkAuth() {
+            const candidate = localStorage.getItem(STORAGE_KEY);
+            if (!candidate) { setAdminState(false); return; }
+            try {
+                if (btoa(atob(candidate) + SALT) === LOCK_VALUE) { setAdminState(true); } 
+                else { setAdminState(false); }
+            } catch (e) { setAdminState(false); }
+        }
+
+        function setAdminState(isAdmin) {
+            const admin = document.querySelectorAll('.admin-only');
+            const public = document.querySelectorAll('.public-only');
+            if (isAdmin) {
+                admin.forEach(el => el.classList.remove('hidden'));
+                public.forEach(el => el.classList.add('hidden'));
+            } else {
+                admin.forEach(el => el.classList.add('hidden'));
+                public.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        function login() {
+            const input = prompt("Enter Access Code:");
+            if (!input) return;
+            if (btoa(input + SALT) === LOCK_VALUE) {
+                localStorage.setItem(STORAGE_KEY, btoa(input));
+                location.reload();
+            } else { alert("Access Denied"); }
+        }
+
+        function switchView(viewName, btn) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
