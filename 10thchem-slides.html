@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Chemistry Master Deck 3.1</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --chem-purple: #9b59b6;
+            --chem-dark: #8e44ad;
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --bg-color: #0f172a; 
+            --text-color: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --teacher-note-bg: rgba(243, 156, 18, 0.1);
+            --teacher-note-border: #f39c12;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9)),
+                url('https://www.transparenttextures.com/patterns/cubes.png');
+        }
+
+        /* --- VAULT SECURITY --- */
+        #gotcha-screen {
+            display: none; position: fixed; inset: 0; background: #000; color: #f00;
+            z-index: 99999; flex-direction: column; justify-content: center;
+            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
+        }
+
+        #slide-vault { display: none; flex: 1; position: relative; width: 100%; height: 100%; }
+
+        /* --- NAVIGATION --- */
+        .nav-master {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 10px; z-index: 9000;
+        }
+
+        .btn-nav {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white; padding: 10px 15px;
+            font-size: 0.8rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700;
+            transition: 0.3s; text-transform: uppercase;
+        }
+
+        .btn-nav:hover { background: var(--chem-purple); border-color: var(--chem-purple); transform: translateY(-2px); }
+
+        .btn-teacher {
+            border-color: var(--teacher-note-border);
+            color: var(--teacher-note-border);
+        }
+        .btn-teacher.active {
+            background: var(--teacher-note-border);
+            color: black;
+        }
+
+        /* --- SLIDE ARCHITECTURE --- */
+        .stage {
+            height: 100%; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            padding: 40px 60px;
+            position: relative;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 1200px;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            animation: slideIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .slide.active { display: flex; }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .sketch { font-family: 'Cabin Sketch', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        h1 { font-size: 4rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
+        h2 { font-size: 2.2rem; color: var(--chem-purple); margin-top: 10px; font-weight: 400; }
+        
+        .box-concept {
+            background: var(--glass);
+            border-left: 6px solid var(--chem-purple);
+            padding: 30px; text-align: left;
+            border-radius: 0 20px 20px 0;
+            margin: 20px 0; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- WEEKLY GRID SYSTEM --- */
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 15px; width: 100%; margin-top: 40px;
+        }
+
+        .day-card {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 20px; border-radius: 12px; min-height: 120px;
+            cursor: pointer; transition: 0.3s; text-align: left;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .day-card:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); transform: translateY(-5px); }
+        .day-card.disabled { opacity: 0.3; cursor: default; }
+        .day-card.disabled:hover { transform: none; border-color: var(--border); }
+
+        .day-date { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--chem-purple); font-weight: 700; margin-bottom: 5px; }
+        .day-title { font-family: 'Cabin Sketch'; font-size: 1.4rem; line-height: 1.1; }
+
+        .extra-toggles {
+            display: flex; gap: 20px; width: 100%; justify-content: center; margin-top: 30px;
+        }
+        .btn-extra {
+            padding: 15px 30px; border-radius: 30px; border: 2px solid;
+            font-weight: 700; cursor: pointer; background: transparent; color: white;
+            transition: 0.3s;
+        }
+        .btn-extra:hover { transform: scale(1.05); }
+
+        .day-badge {
+            position: absolute; top: 40px; left: 50px;
+            font-family: 'JetBrains Mono'; font-size: 0.9rem;
+            color: var(--bg-color); background: var(--sws-gold);
+            padding: 5px 15px; border-radius: 4px; font-weight: 700;
+        }
+
+        /* --- TEACHER MODE STYLES --- */
+        .teacher-only {
+            display: none; width: 100%; margin-top: 20px;
+            border: 2px dashed var(--teacher-note-border);
+            background: var(--teacher-note-bg);
+            padding: 20px; border-radius: 10px;
+            text-align: left; font-family: 'Rubik', sans-serif; color: #f39c12;
+        }
+        body.teacher-mode .teacher-only { display: block; animation: fadeIn 0.3s ease; }
+        .script-tag { font-weight: bold; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; opacity: 0.8; display: block; margin-bottom: 5px; }
+
+        /* --- INTERACTIVE TABLES & INPUTS --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; }
+        th, td { border: 1px solid var(--border); padding: 12px; text-align: center; }
+        th { background: var(--chem-purple); color: black; }
+        
+        .reveal-box {
+            background: #222; border-radius: 5px; cursor: pointer;
+            padding: 5px; color: transparent; user-select: none; transition: 0.3s;
+        }
+        .reveal-box:hover { background: #333; }
+        .reveal-box.revealed { background: transparent; color: var(--sws-gold); cursor: default; }
+
+        .timer-display { font-size: 6rem; font-family: 'JetBrains Mono'; color: var(--sws-gold); margin: 20px 0; }
+        
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: var(--chem-purple); width: 0%; transition: width 0.3s ease; }
+    </style>
+</head>
+<body>
+
+    <div id="gotcha-screen">
+        <h1 class="mono">CHEMICAL HAZARD</h1>
+        <p>UNAUTHORIZED ACCESS DETECTED.</p>
+    </div>
+
+    <div id="slide-vault">
+        <nav class="nav-master">
+            <button class="btn-nav" onclick="goToSlide(0)">Menu</button>
+            <button class="btn-nav" onclick="changeSlide(-1)">Prev</button>
+            <button class="btn-nav" onclick="changeSlide(1)">Next</button>
+            <button class="btn-nav btn-teacher" id="teacher-toggle" onclick="toggleTeacherMode()">Teacher Mode</button>
+            <button class="btn-nav" style="border-color:var(--sws-gold); color:var(--sws-gold)" onclick="location.href='index.html'">Hub</button>
+        </nav>
+
+        <div class="stage">
+
+            <div class="slide active">
+                <h1 class="sketch">Chemistry 10</h1>
+                <h2>Week 3.1: Formulas & Moles</h2>
+                <div class="box-concept">
+                    <p><strong>Objective:</strong> Interpret chemical formulas, count atoms, understand Molar Mass (g/mol), and complete Classwork #1.</p>
+                </div>
+                
+                <div class="calendar-grid">
+                    <div class="day-card" onclick="goToSlide(1)">
+                        <div class="day-date">MON 01/12</div>
+                        <div class="day-title">Intro: Chemical Formulas</div>
+                    </div>
+                    <div class="day-card disabled">
+                        <div class="day-date">TUE 01/13</div>
+                        <div class="day-title">NO CLASS</div>
+                    </div>
+                    <div class="day-card disabled">
+                        <div class="day-date">WED 01/14</div>
+                        <div class="day-title">NO CLASS</div>
+                    </div>
+                    <div class="day-card" onclick="goToSlide(4)">
+                        <div class="day-date">THU 01/15</div>
+                        <div class="day-title">Molar Mass (CW #1)</div>
+                    </div>
+                    <div class="day-card" style="opacity:0.5; cursor:default">
+                        <div class="day-date">FRI 01/16</div>
+                        <div class="day-title">See 9th Grade</div>
+                    </div>
+                </div>
+
+                <div class="extra-toggles">
+                    <button class="btn-extra" style="border-color: var(--sws-teal);" onclick="goToSlide(7)">CW #1 REVIEW 📝</button>
+                    <button class="btn-extra" style="border-color: var(--sws-maroon);" onclick="goToSlide(13)">BONUS CHALLENGE 🚀</button>
+                </div>
+
+                <div class="teacher-only">
+                    <span class="script-tag">ROUTINE: ENTRY</span>
+                    <p><strong>Volume 0.</strong> "Find your seats. Pencils out. We are calculating mass today."</p>
+                    <p><strong>Look For:</strong> Students with Periodic Tables ready.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | 3.1.1</div>
+                <h1 class="sketch">The Language of Chemistry</h1>
+                <p style="font-size: 2rem;">H<sub>2</sub>O vs. H<sub>2</sub>O<sub>2</sub></p>
+                <div class="box-concept">
+                    <p><strong>Chemical Formula:</strong> Indicates the relative number of atoms of each kind in a chemical compound.</p>
+                    <p><strong>Subscript:</strong> Small number to the right. Indicates quantity of the atom.</p>
+                </div>
+                
+                <div class="teacher-only">
+                    <span class="script-tag">TEACHER VOICE</span>
+                    <p>"One tiny number changes water (life) into hydrogen peroxide (poison). Precision matters."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">MON | PRACTICE</div>
+                <h1>Counting Atoms</h1>
+                <div class="card-menu" style="width: 60%; text-align:center; margin: 20px auto;">
+                    <h2 class="mono">(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub></h2>
+                    <p style="font-size:0.9rem; opacity:0.7">Ammonium Sulfate</p>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:10px; width:80%;">
+                    <div class="reveal-box" onclick="this.classList.add('revealed')">N = 2</div>
+                    <div class="reveal-box" onclick="this.classList.add('revealed')">H = 8</div>
+                    <div class="reveal-box" onclick="this.classList.add('revealed')">S = 1</div>
+                    <div class="reveal-box" onclick="this.classList.add('revealed')">O = 4</div>
+                </div>
+                
+                <div class="teacher-only">
+                    <span class="script-tag">MISCONCEPTION ALERT</span>
+                    <p>Students often forget to distribute the subscript outside the parenthesis. "The 2 belongs to the Nitrogen AND the Hydrogen."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | 3.1.4</div>
+                <h1 class="sketch">Molar Mass</h1>
+                <h2>The Weight of a Mole</h2>
+                <div class="box-concept">
+                    <p><strong>Definition:</strong> The mass in grams of 1 mole of a substance.</p>
+                    <p><strong>Unit:</strong> g/mol</p>
+                    <p><strong>Source:</strong> The Periodic Table (Atomic Mass).</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | CALCULATION</div>
+                <h1>Let's Calculate</h1>
+                <h2>CO<sub>2</sub></h2>
+                <table>
+                    <tr>
+                        <th>Element</th>
+                        <th>Qty</th>
+                        <th>Mass</th>
+                        <th>Total</th>
+                    </tr>
+                    <tr>
+                        <td>Carbon</td>
+                        <td>1</td>
+                        <td>12.01</td>
+                        <td class="reveal-box" onclick="this.classList.add('revealed')">12.01</td>
+                    </tr>
+                    <tr>
+                        <td>Oxygen</td>
+                        <td>2</td>
+                        <td>16.00</td>
+                        <td class="reveal-box" onclick="this.classList.add('revealed')">32.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align:right; font-weight:bold;">MOLAR MASS:</td>
+                        <td class="reveal-box" onclick="this.classList.add('revealed')" style="color:var(--sws-gold); font-weight:bold;">44.01 g/mol</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">THU | WORK TIME</div>
+                <h1>Classwork #1</h1>
+                <p>You have 20 minutes to complete the worksheet.</p>
+                <div class="timer-display" id="timer-cw">20:00</div>
+                <button class="btn-nav" onclick="startTimer(1200, 'timer-cw')">Start Timer</button>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW REVIEW | PART A</div>
+                <h1 class="sketch">Fill in the Blanks</h1>
+                <div class="box-concept">
+                    <p>1. An atom with a full outer shell follows the <span class="reveal-box" onclick="this.classList.add('revealed')">OCTET</span> rule.</p>
+                    <p>2. The share of electron pairs is a <span class="reveal-box" onclick="this.classList.add('revealed')">COVALENT</span> bond.</p>
+                    <p>3. C-14 is an <span class="reveal-box" onclick="this.classList.add('revealed')">ISOTOPE</span> (more neutrons).</p>
+                    <p>4. In a <span class="reveal-box" onclick="this.classList.add('revealed')">IONIC</span> bond, one atom "steals" electrons.</p>
+                    <p>5. Electrons used in bonding are in the <span class="reveal-box" onclick="this.classList.add('revealed')">VALENCE</span> shell.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW REVIEW | PART B</div>
+                <h1>Table Check</h1>
+                <p>Check your subatomic particles.</p>
+                <div style="overflow-x:auto; width:100%;">
+                    <table style="font-size:0.8rem;">
+                        <tr>
+                            <th>Sym</th><th>Name</th><th>Protons</th><th>Neutrons</th><th>Electrons</th>
+                        </tr>
+                        <tr>
+                            <td>Na</td><td>Sodium</td><td>11</td><td class="reveal-box" onclick="this.classList.add('revealed')">12</td><td>11</td>
+                        </tr>
+                        <tr>
+                            <td>O<sup>2-</sup></td><td>Oxide</td><td>8</td><td>8</td><td class="reveal-box" onclick="this.classList.add('revealed')">10</td>
+                        </tr>
+                        <tr>
+                            <td>Au</td><td>Gold</td><td>79</td><td class="reveal-box" onclick="this.classList.add('revealed')">118</td><td>79</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">QUICK CHECK</span>
+                    <p>Ask: "Why does Oxide have 10 electrons?" (Gained 2). "How do we get Neutrons?" (Mass - Atomic #).</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW REVIEW | PART C</div>
+                <h1>Lewis Structures</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="card-menu" style="text-align:center;">
+                        <h3>P</h3>
+                        <p class="reveal-box" onclick="this.classList.add('revealed')">5 Dots</p>
+                    </div>
+                    <div class="card-menu" style="text-align:center;">
+                        <h3>Al</h3>
+                        <p class="reveal-box" onclick="this.classList.add('revealed')">3 Dots</p>
+                    </div>
+                    <div class="card-menu" style="text-align:center;">
+                        <h3>H<sub>2</sub>O</h3>
+                        <p class="reveal-box" onclick="this.classList.add('revealed')">O in center<br>2 Lone Pairs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW REVIEW | PART D</div>
+                <h1>Analysis Questions</h1>
+                <div class="box-concept">
+                    <p><strong>Noble Gases?</strong> Non-reactive because they have full valence shells (8 e-).</p>
+                    <p><strong>Conservation of Mass?</strong> Wood burning: Mass is NOT lost, it turns into gas (CO2 + Water Vapor).</p>
+                    <p><strong>Mole Calculation:</strong> If 1 mole He = 4g.<br>16g / 4g = <strong>4 Moles</strong>.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW REVIEW | BONUS</div>
+                <h1 style="color:var(--sws-gold)">The Bonus</h1>
+                <p>Who is the scientist associated with the Mole?</p>
+                <div class="reveal-box" style="font-size:2rem; text-align:center; margin-top:20px;" onclick="this.classList.add('revealed')">AMEDEO AVOGADRO</div>
+                <p class="mono">6.022 x 10<sup>23</sup></p>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge" style="background:var(--sws-maroon)">BONUS CHALLENGE</div>
+                <h1 class="sketch">Design Thinking</h1>
+                <h2>The Avogadro Project</h2>
+                <div class="box-concept">
+                    <p><strong>Empathize:</strong> Why do students struggle to visualize atoms?</p>
+                    <p><strong>Ideate:</strong> Design a physical model or analogy to explain "The Mole" to a 5th grader.</p>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">EXTENSION</span>
+                    <p>"If you finish early, sketch an idea for a 'Mole Machine' that counts atoms for you."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">WEEK 3.1</div>
+                <h1 class="sketch">Module Complete</h1>
+                <p>Next Week: Ionic vs Covalent Bonds</p>
+                <button class="btn-nav" onclick="goToSlide(0)">Return to Menu</button>
+            </div>
+
+        </div> <div class="progress-bar">
+            <div class="progress-fill" id="p-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- SECURITY ---
+        (function() {
+            const auth = localStorage.getItem("sws_admin_auth");
+            if (auth !== "true") { 
+                document.getElementById('gotcha-screen').style.display = 'flex'; 
+                setTimeout(() => { window.location.href = "index.html"; }, 3000); 
+            } else { document.getElementById('slide-vault').style.display = 'block'; }
+        })();
+
+        // --- CORE ENGINE ---
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pBar = document.getElementById('p-bar');
+
+        function updateUI() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            const pc = (current / (slides.length - 1)) * 100;
+            pBar.style.width = pc + "%";
+        }
+
+        function changeSlide(n) {
+            current = Math.max(0, Math.min(slides.length - 1, current + n));
+            updateUI();
+        }
+
+        function goToSlide(n) { current = n; updateUI(); }
+
+        // --- TEACHER MODE ---
+        function toggleTeacherMode() {
+            document.body.classList.toggle('teacher-mode');
+            const btn = document.getElementById('teacher-toggle');
+            btn.classList.toggle('active');
+            btn.textContent = document.body.classList.contains('teacher-mode') ? "Teacher Mode: ON" : "Teacher Mode";
+        }
+
+        // --- TIMER ---
+        let clock;
+        function startTimer(sec, id) {
+            clearInterval(clock);
+            let t = sec;
+            const disp = document.getElementById(id);
+            clock = setInterval(() => {
+                let m = Math.floor(t / 60);
+                let s = t % 60;
+                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+                if (--t < 0) {
+                    clearInterval(clock);
+                    disp.textContent = "DONE";
+                    disp.style.color = "var(--sws-maroon)";
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if(e.key === 'ArrowLeft') changeSlide(-1);
+            if(e.key === 'Escape') goToSlide(0);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
