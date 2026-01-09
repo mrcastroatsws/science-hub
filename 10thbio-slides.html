@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWS | Biology Master Deck 3.1</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bio-green: #2ecc71;
+            --bio-dark: #27ae60;
+            --sws-maroon: #ac2e55;
+            --sws-gold: #f9db66;
+            --bg-color: #0f172a; 
+            --text-color: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --teacher-note-bg: rgba(241, 196, 15, 0.15);
+            --teacher-note-border: #f1c40f;
+        }
+
+        * { box-sizing: border-box; outline: none; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
+                url('https://www.transparenttextures.com/patterns/leaf.png');
+        }
+
+        /* --- VAULT SECURITY --- */
+        #gotcha-screen {
+            display: none; position: fixed; inset: 0; background: #000; color: #f00;
+            z-index: 99999; flex-direction: column; justify-content: center;
+            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
+        }
+
+        #slide-vault { display: none; flex: 1; position: relative; width: 100%; height: 100%; }
+
+        /* --- NAVIGATION --- */
+        .nav-master {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 10px; z-index: 9000;
+        }
+
+        .btn-nav {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white; padding: 10px 15px;
+            font-size: 0.8rem; cursor: pointer;
+            border-radius: 6px; font-weight: 700;
+            transition: 0.3s; text-transform: uppercase;
+        }
+
+        .btn-nav:hover { background: var(--bio-green); border-color: var(--bio-green); transform: translateY(-2px); }
+
+        .btn-teacher {
+            border-color: var(--teacher-note-border);
+            color: var(--teacher-note-border);
+        }
+        .btn-teacher.active {
+            background: var(--teacher-note-border);
+            color: black;
+        }
+
+        /* --- SLIDE ARCHITECTURE --- */
+        .stage {
+            height: 100%; width: 100%;
+            display: flex; justify-content: center; align-items: center;
+            padding: 60px;
+            position: relative;
+        }
+
+        .slide {
+            display: none; width: 100%; max-width: 1100px;
+            flex-direction: column; justify-content: center;
+            align-items: center; text-align: center;
+            animation: bioFade 0.5s ease-in-out;
+        }
+
+        .slide.active { display: flex; }
+
+        @keyframes bioFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CONTENT STYLING --- */
+        .sketch { font-family: 'Cabin Sketch', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        h1 { font-size: 4rem; margin: 0; color: var(--sws-gold); line-height: 1.1; }
+        h2 { font-size: 2.2rem; color: var(--bio-green); margin-top: 10px; font-weight: 400; }
+        
+        .box-concept {
+            background: var(--glass);
+            border-left: 6px solid var(--bio-green);
+            padding: 30px; text-align: left;
+            border-radius: 0 20px 20px 0;
+            margin: 20px 0; width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .grid-menu {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 15px; width: 100%; margin-top: 40px;
+        }
+
+        .card-menu {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 20px; border-radius: 12px;
+            cursor: pointer; transition: 0.3s; text-align: left;
+        }
+        .card-menu:hover { border-color: var(--sws-gold); background: rgba(255,255,255,0.08); }
+
+        .day-badge {
+            position: absolute; top: 40px; left: 50px;
+            font-family: 'JetBrains Mono'; font-size: 0.9rem;
+            color: var(--bg-color); background: var(--sws-gold);
+            padding: 5px 15px; border-radius: 4px; font-weight: 700;
+        }
+
+        /* --- TEACHER MODE STYLES --- */
+        .teacher-only {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+            border: 2px dashed var(--teacher-note-border);
+            background: var(--teacher-note-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'Rubik', sans-serif;
+            color: #f1c40f;
+        }
+
+        body.teacher-mode .teacher-only { display: block; animation: slideIn 0.3s ease; }
+        
+        .script-tag { font-weight: bold; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; opacity: 0.8; display: block; margin-bottom: 5px; }
+
+        /* --- INTERACTIVE ELEMENTS --- */
+        .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px; }
+        .btn-mc {
+            background: rgba(255,255,255,0.05); border: 2px solid var(--border);
+            color: white; padding: 20px; font-size: 1.2rem;
+            border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s;
+        }
+        .btn-mc:hover { border-color: var(--bio-green); }
+        .correct { background: rgba(46, 204, 113, 0.2) !important; border-color: var(--bio-green) !important; }
+        .wrong { background: rgba(172, 46, 85, 0.2) !important; border-color: var(--sws-maroon) !important; opacity: 0.6; }
+
+        .timer-display { font-size: 6rem; font-family: 'JetBrains Mono'; color: var(--sws-gold); margin: 20px 0; }
+        
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        .progress-fill { height: 100%; background: var(--bio-green); width: 0%; transition: width 0.3s ease; }
+    </style>
+</head>
+<body>
+
+    <div id="gotcha-screen">
+        <h1 class="mono">BIOHAZARD DETECTED</h1>
+        <p>UNAUTHORIZED ACCESS.</p>
+    </div>
+
+    <div id="slide-vault">
+        <nav class="nav-master">
+            <button class="btn-nav" onclick="goToSlide(0)">Index</button>
+            <button class="btn-nav" onclick="changeSlide(-1)">Prev</button>
+            <button class="btn-nav" onclick="changeSlide(1)">Next</button>
+            <button class="btn-nav btn-teacher" id="teacher-toggle" onclick="toggleTeacherMode()">Teacher Mode</button>
+            <button class="btn-nav" style="border-color:var(--sws-gold); color:var(--sws-gold)" onclick="location.href='index.html'">Hub</button>
+        </nav>
+
+        <div class="stage">
+
+            <div class="slide active">
+                <h1 class="sketch">Biology 10</h1>
+                <h2>Week 3.1: Energy & Respiration</h2>
+                <div class="box-concept">
+                    <p><strong>Objective:</strong> Analyze how organisms obtain energy (ATP), distinguish between Photosynthesis and Cellular Respiration, and calculate energy flow.</p>
+                </div>
+                <div class="grid-menu">
+                    <div class="card-menu" onclick="goToSlide(1)">
+                        <div class="mono" style="color:var(--bio-green)">TUE 01/13</div>
+                        <div class="sketch">Chemical Energy</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(5)">
+                        <div class="mono" style="color:var(--bio-green)">FRI 01/16</div>
+                        <div class="sketch">Respiration Overview</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(9)">
+                        <div class="mono" style="color:var(--sws-gold)">CW #1</div>
+                        <div class="sketch">Review & Assess</div>
+                    </div>
+                    <div class="card-menu" onclick="goToSlide(15)">
+                        <div class="mono" style="color:var(--sws-maroon)">BONUS</div>
+                        <div class="sketch">Design Thinking</div>
+                    </div>
+                </div>
+                
+                <div class="teacher-only">
+                    <span class="script-tag">ROUTINE: PASSING OUT PAPERS</span>
+                    <p><strong>Volume 1 Whisper.</strong> Take one, pass it down. Hands in snowball when done.</p>
+                    <p><strong>Stamp:</strong> "We are covering ATP and Respiration this week. This builds on our cell structure unit."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | INTRO</div>
+                <h1 class="sketch">What Runs You?</h1>
+                <p style="font-size: 2rem;">If your phone runs on electricity, what do your cells run on?</p>
+                <div class="box-concept">
+                    <p><strong>ATP (Adenosine Triphosphate):</strong> The universal energy currency of the cell.</p>
+                </div>
+                
+                <div class="teacher-only">
+                    <span class="script-tag">TEACHER VOICE</span>
+                    <p>"Class, track me. Think about a dead battery versus a charged battery. ATP is the charged battery. ADP is the dead one."</p>
+                    <span class="script-tag">CFU - TURN & TALK</span>
+                    <p>"Turn knee to knee. Explain to your partner why a cell needs to 'recharge' its ATP. Go." (Vol 1)</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | CONCEPT</div>
+                <h1>The ATP Cycle</h1>
+                
+                <div class="mc-grid">
+                    <div class="card-menu" style="text-align:center">
+                        <h3 style="color:var(--bio-green)">ATP (Charged)</h3>
+                        <p>3 Phosphates<br>High Energy</p>
+                    </div>
+                    <div class="card-menu" style="text-align:center">
+                        <h3 style="color:var(--sws-maroon)">ADP (Uncharged)</h3>
+                        <p>2 Phosphates<br>Low Energy</p>
+                    </div>
+                </div>
+
+                <div class="teacher-only">
+                    <span class="script-tag">LOOK FORS</span>
+                    <p>Students should be taking notes on the difference in Phosphate numbers (3 vs 2).</p>
+                    <p><strong>Misconception Alert:</strong> Students often think ATP is "created" from scratch. Remind them it is recycled from ADP.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | VOCAB</div>
+                <h1 class="sketch">Who Makes Food?</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card-menu">
+                        <h3>Autotrophs</h3>
+                        <p>Make their own food (Plants, Algae).</p>
+                    </div>
+                    <div class="card-menu">
+                        <h3>Heterotrophs</h3>
+                        <p>Consume others for food (Humans, Fungi).</p>
+                    </div>
+                </div>
+
+                <div class="teacher-only">
+                    <span class="script-tag">CHECK FOR UNDERSTANDING</span>
+                    <p>"Markers up. On your whiteboard, write 'A' if a Mushroom is an Autotroph, or 'H' if it is a Heterotroph. 3, 2, 1, Show me."</p>
+                    <p><strong>Answer:</strong> H (Fungi absorb nutrients, they don't photosynthesize).</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">ROUTINE</div>
+                <h1 style="color:var(--sws-gold)">Wiggle Break</h1>
+                <h2>Reset Your Brain</h2>
+                <div class="timer-display" id="timer-wiggle">02:00</div>
+                <button class="btn-nav" onclick="startTimer(120, 'timer-wiggle')">Start 2 Minutes</button>
+
+                <div class="teacher-only">
+                    <span class="script-tag">EXPECTATIONS</span>
+                    <p>1. Stand up.<br>2. Stretch silently.<br>3. Water allowed.<br>4. Only 2 students to bathroom max.<br>5. When timer hits 0:00, you are seated, Voice Level 0.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">FRI | OVERVIEW</div>
+                <h1 class="sketch">Cellular Respiration</h1>
+                <div class="box-concept">
+                    <p class="mono">6O₂ + C₆H₁₂O₆ → 6CO₂ + 6H₂O + Energy</p>
+                    <p>Oxygen + Glucose → Carbon Dioxide + Water + Energy</p>
+                </div>
+                
+
+[Image of Mitochondria diagram]
+
+
+                <div class="teacher-only">
+                    <span class="script-tag">TEACHER VOICE</span>
+                    <p>"Look at that equation. It is the exact opposite of Photosynthesis. Plants put the energy IN (glucose), we take the energy OUT (ATP)."</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">FRI | STAGES</div>
+                <h1>The 3 Stages</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="card-menu">
+                        <h3 style="color:var(--sws-teal)">1. Glycolysis</h3>
+                        <p>Anaerobic (No Air)<br>Cytoplasm<br>2 ATP</p>
+                    </div>
+                    <div class="card-menu">
+                        <h3 style="color:var(--sws-gold)">2. Krebs Cycle</h3>
+                        <p>Aerobic (Needs Air)<br>Mitochondria<br>2 ATP</p>
+                    </div>
+                    <div class="card-menu">
+                        <h3 style="color:var(--sws-maroon)">3. ETC</h3>
+                        <p>Aerobic (Needs Air)<br>Mitochondria<br>32 ATP</p>
+                    </div>
+                </div>
+
+                <div class="teacher-only">
+                    <span class="script-tag">NOTE TO SELF</span>
+                    <p>Emphasize that Glycolysis happens <strong>outside</strong> the mitochondria. It is the "lobby" before the main event.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | MC</div>
+                <h2>Which molecule is used by the cell to store and release energy?</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Glucose</button>
+                    <button class="btn-mc" onclick="check(this, true)">B) ATP</button>
+                    <button class="btn-mc" onclick="check(this, false)">C) NADP+</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) CO2</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | MC</div>
+                <h2>Energy is released from ATP when:</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Phosphate added</button>
+                    <button class="btn-mc" onclick="check(this, true)">B) Phosphate removed</button>
+                    <button class="btn-mc" onclick="check(this, false)">C) Molecule frozen</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Glucose added</button>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">EXPLANATION</span>
+                    <p>Breaking the bond releases energy. Like snapping a glow stick.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | MC</div>
+                <h2>Where does the Krebs Cycle take place?</h2>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, false)">A) Cytoplasm</button>
+                    <button class="btn-mc" onclick="check(this, false)">B) Thylakoid</button>
+                    <button class="btn-mc" onclick="check(this, true)">C) Mitochondria (Matrix)</button>
+                    <button class="btn-mc" onclick="check(this, false)">D) Nucleus</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | T/F</div>
+                <h1>True or False?</h1>
+                <p>"Glycolysis is an anaerobic process because it does not require oxygen."</p>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, true)">TRUE</button>
+                    <button class="btn-mc" onclick="check(this, false)">FALSE</button>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">EXTENSION</span>
+                    <p>Ask: "What happens if oxygen IS present after glycolysis?" -> Krebs Cycle.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | T/F</div>
+                <h1>True or False?</h1>
+                <p>"Pyruvic acid is the product of glycolysis that enters the mitochondria."</p>
+                <div class="mc-grid">
+                    <button class="btn-mc" onclick="check(this, true)">TRUE</button>
+                    <button class="btn-mc" onclick="check(this, false)">FALSE</button>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | DIAGRAM</div>
+                <h1 class="sketch">Draw the Mitochondrion</h1>
+                <div class="box-concept">
+                    <p><strong>INPUTS:</strong> Oxygen + Glucose</p>
+                    <p><strong>OUTPUTS:</strong> CO2 + Water + ATP</p>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">ACADEMIC MONITORING</span>
+                    <p>Walk the room. Look for students reversing the arrows. Ensure arrows point OUT for products.</p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CW #1 | MATH</div>
+                <h1 class="mono">Quantitative Analysis</h1>
+                <div class="card-menu" style="width: 100%; text-align: left;">
+                    <p><strong>Bicycling:</strong> Burns 330 cal/hour</p>
+                    <p><strong>Sandwich:</strong> 438 calories</p>
+                    <p><strong>Question:</strong> How many minutes of biking to burn the sandwich?</p>
+                </div>
+                <button class="btn-nav" style="margin-top:20px;" onclick="document.getElementById('math-sol').style.display='block'">Reveal Steps</button>
+                <div id="math-sol" style="display:none; margin-top:20px; font-family:'JetBrains Mono'">
+                    <p>1. 330 cal / 60 min = 5.5 cal/min</p>
+                    <p>2. 438 cal / 5.5 cal/min = <strong>79.6 minutes</strong></p>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge" style="background:var(--sws-maroon)">BONUS</div>
+                <h1 class="sketch">Bio-Mimicry</h1>
+                <h2>Design Thinking Challenge</h2>
+                <div class="box-concept">
+                    <p><strong>Observe:</strong> Plants capture solar energy with 99% efficiency.</p>
+                    <p><strong>Ideate:</strong> How can we design solar panels that act like leaves?</p>
+                </div>
+                <div class="teacher-only">
+                    <span class="script-tag">DISCUSSION STARTER</span>
+                    <p>"Solar panels are rigid. Leaves are flexible and follow the sun. Discuss specific design changes we could copy from a leaf."</p>
+                </div>
+            </div>
+
+        </div> <div class="progress-bar">
+            <div class="progress-fill" id="p-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- SECURITY ---
+        (function() {
+            const auth = localStorage.getItem("sws_admin_auth");
+            if (auth !== "true") { 
+                document.getElementById('gotcha-screen').style.display = 'flex'; 
+                setTimeout(() => { window.location.href = "index.html"; }, 3000); 
+            } else { document.getElementById('slide-vault').style.display = 'block'; }
+        })();
+
+        // --- CORE ENGINE ---
+        let current = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pBar = document.getElementById('p-bar');
+
+        function updateUI() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === current));
+            const pc = (current / (slides.length - 1)) * 100;
+            pBar.style.width = pc + "%";
+        }
+
+        function changeSlide(n) {
+            current = Math.max(0, Math.min(slides.length - 1, current + n));
+            updateUI();
+        }
+
+        function goToSlide(n) { current = n; updateUI(); }
+
+        // --- TEACHER MODE ---
+        function toggleTeacherMode() {
+            document.body.classList.toggle('teacher-mode');
+            const btn = document.getElementById('teacher-toggle');
+            btn.classList.toggle('active');
+            btn.textContent = document.body.classList.contains('teacher-mode') ? "Teacher Mode: ON" : "Teacher Mode";
+        }
+
+        // --- INTERACTIVE CHECK ---
+        function check(btn, isCorrect) {
+            const siblings = btn.parentElement.children;
+            for (let s of siblings) { s.classList.remove('correct', 'wrong'); }
+            if (isCorrect) { btn.classList.add('correct'); } 
+            else { btn.classList.add('wrong'); }
+        }
+
+        // --- TIMER ---
+        let clock;
+        function startTimer(sec, id) {
+            clearInterval(clock);
+            let t = sec;
+            const disp = document.getElementById(id);
+            clock = setInterval(() => {
+                let m = Math.floor(t / 60);
+                let s = t % 60;
+                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+                if (--t < 0) {
+                    clearInterval(clock);
+                    disp.textContent = "DONE";
+                    disp.style.color = "var(--sws-maroon)";
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('keydown', e => {
+            if(e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if(e.key === 'ArrowLeft') changeSlide(-1);
+            if(e.key === 'Escape') goToSlide(0);
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
