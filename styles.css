@@ -118,21 +118,25 @@ body {
 }
 /* Add this to the bottom of styles.css */
 
-/* iPhone Notch/Home-Bar area coverage */
+/* Ensure the body has exactly enough space for the 80px high bar */
 @media (max-width: 767px) {
     body {
-        /* Ensure the body ends where the tab bar starts */
-        padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+        padding-bottom: 80px !important; 
     }
 }
 
-/* Force the tab bar to the absolute bottom edge */
+/* Force the tab bar to the edge and handle iPhone Home Bar */
 .fixed.bottom-0 {
     bottom: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 15px); /* Native space for real phones */
+    height: auto !important; /* Let content + safe area define height */
+    min-height: 70px;
 }
-/* App-like feedback when tapping buttons */
-.md\:hidden.fixed.bottom-0 a:active, 
-.md\:hidden.fixed.bottom-0 button:active {
-    transform: scale(0.92);
-    transition: transform 0.1s ease;
+
+/* Make icons look crisp and centered */
+.fixed.bottom-0 a, .fixed.bottom-0 button {
+    flex: 1; /* Distributes space equally */
+    height: 100%;
+    display: flex;
+    justify-content: center;
 }
