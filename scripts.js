@@ -111,3 +111,12 @@ function startTimer(duration, displayId) {
         }
     }, 1000);
 }
+
+function resetTimer(displayId) {
+    clearInterval(timerInterval);
+    const display = document.getElementById(displayId);
+    if (display) {
+        display.textContent = "05:00";
+        display.classList.remove("text-red-500", "animate-pulse");
+    }
+}
