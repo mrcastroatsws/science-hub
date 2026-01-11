@@ -8,8 +8,16 @@ async function loadData() {
         hubData = await response.json();
         
         renderCurriculum(hubData.courses);
-        renderScheduleTable('schedule-container', 'main-schedule-table'); // Main Dashboard View
         renderUtilityCards();
+        
+        // Render Responsive Schedule for Screen
+        renderScheduleTable('schedule-container', 'main-schedule-table'); 
+        
+        // Render Full Grid for Printer (Invisible ghost table)
+        if (document.getElementById('print-only-schedule')) {
+            renderFullGrid('print-only-schedule'); 
+        }
+
         updateLiveStatus(); 
     } catch (e) {
         console.error("Master Binder Error: Content failed to load.", e);
@@ -57,21 +65,21 @@ function renderCurriculum(courses) {
     }).join('');
 }
 
-// 3. SCHEDULE RENDERER (Smart Switch: Table for Laptop, Stack for Phone)
+// 3. RESPONSIVE SCHEDULE ENGINE
 function renderScheduleTable(containerId, tableId) {
     const container = document.getElementById(containerId);
     if (!container || !hubData.tableRows) return;
 
     const isMobile = window.innerWidth < 768;
-    const now = getHondurasTime();
-    let todayIdx = now.getDay(); // 1=Mon, 5=Fri
-    if (todayIdx === 0 || todayIdx === 6) todayIdx = 1; // Default to Mon on weekends
     
-    const nextDayIdx = todayIdx < 5 ? todayIdx + 1 : 1;
-    const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
     if (isMobile) {
-        // MOBILE VIEW: Today & Upcoming Stack (Zero-Scroll Design)
+        const now = getHondurasTime();
+        let todayIdx = now.getDay(); 
+        if (todayIdx === 0 || todayIdx === 6) todayIdx = 1; 
+        
+        const nextDayIdx = todayIdx < 5 ? todayIdx + 1 : 1;
+        const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
         let mobileHtml = `<div class="p-3 space-y-8">`;
         [todayIdx, nextDayIdx].forEach((dIdx, stackLoop) => {
             mobileHtml += `
@@ -88,9 +96,7 @@ function renderScheduleTable(containerId, tableId) {
                             return `
                                 <div class="schedule-card">
                                     <div class="w-14 bg-slate-50 text-[9px] font-mono flex items-center justify-center border-r h-full text-slate-400">${row.time.split(' ')[0]}</div>
-                                    <div class="flex-grow px-4 ${classColor} h-full flex items-center">
-                                        <span class="sub-name">${classLabel}</span>
-                                    </div>
+                                    <div class="flex-grow px-4 ${classColor} h-full flex items-center"><span class="sub-name">${classLabel}</span></div>
                                 </div>`;
                         }).join('')}
                     </div>
@@ -98,19 +104,25 @@ function renderScheduleTable(containerId, tableId) {
         });
         container.innerHTML = mobileHtml + `</div>`;
     } else {
-        // DESKTOP VIEW: High-density Grid
-        let html = `<table class="schedule-table w-full" id="${tableId}"><thead><tr><th class="w-24">Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody>`;
-        hubData.tableRows.forEach(row => {
-            if (row.type === 'break') html += `<tr class="break"><td colspan="6">${row.label}</td></tr>`;
-            else {
-                html += `<tr><td class="font-mono text-[10px] bg-slate-50 font-bold">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
-            }
-        });
-        container.innerHTML = html + `</tbody></table>`;
+        renderFullGrid(containerId);
     }
 }
 
-// 4. UTILITY CARDS (Safety/Science Fair)
+// 4. FULL GRID GENERATOR (For Laptop and Printing)
+function renderFullGrid(targetId) {
+    const container = document.getElementById(targetId);
+    if (!container) return;
+    let html = `<table class="schedule-table w-full"><thead><tr><th class="w-24">Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr></thead><tbody>`;
+    hubData.tableRows.forEach(row => {
+        if (row.type === 'break') html += `<tr class="break"><td colspan="6">${row.label}</td></tr>`;
+        else {
+            html += `<tr><td class="font-mono text-[10px] bg-slate-50 font-bold">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
+        }
+    });
+    container.innerHTML = html + `</tbody></table>`;
+}
+
+// 5. UTILITY CARDS
 function renderUtilityCards() {
     const grid = document.getElementById('utility-grid');
     if(!grid) return;
@@ -123,21 +135,18 @@ function renderUtilityCards() {
         </a>`;
 }
 
-// 5. TOGGLE FUNCTIONS
-function toggleMenu() {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
-}
+// 6. UI CONTROLS
+function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
 function toggleSchedule() {
     const modal = document.getElementById('schedule-modal');
     modal.classList.toggle('hidden');
-    const modalContainer = document.getElementById('modal-schedule-container');
     if (!modal.classList.contains('hidden')) {
         renderScheduleTable('modal-schedule-container', 'modal-table');
     }
 }
 
-// 6. LIVE STATUS ENGINE
+// 7. LIVE STATUS ENGINE
 function updateLiveStatus() {
     const now = getHondurasTime();
     const day = now.getDay();
@@ -166,12 +175,11 @@ function updateLiveStatus() {
     if (current) {
         document.getElementById('status-now').innerText = current.c;
         document.getElementById('status-next').innerText = next ? `Next: ${next.s} - ${next.c}` : "End of Day";
-
         const portalMap = { "Science 7": "7th-portal.html", "Science 8": "8th-portal.html", "Science 9": "9th-portal.html", "Bio 10": "10thbio-portal.html", "Chem 10": "10thchem-portal.html", "Bio 11": "11thbio-portal.html", "Chem 11": "11thchem-portal.html", "Econ 11": "11thecon-portal.html" };
         if (portalMap[current.c] && liveBtn) {
             liveBtn.href = portalMap[current.c];
             liveBtn.classList.replace('text-white/50', 'text-[#f9db66]');
-            liveIndicator.classList.remove('hidden');
+            if(liveIndicator) liveIndicator.classList.remove('hidden');
         }
     }
 }
@@ -182,7 +190,7 @@ function getHondurasTime() {
     return new Date(utc + (3600000 * -6));
 }
 
-// 7. INITIALIZATION
+// 8. INITIALIZATION
 window.onload = async function() {
     await loadData();
     document.documentElement.classList.add('loaded');
@@ -190,6 +198,4 @@ window.onload = async function() {
     if (typeof checkAuth === "function") checkAuth();
 };
 
-window.addEventListener('resize', () => {
-    renderScheduleTable('schedule-container', 'main-schedule-table');
-});
+window.addEventListener('resize', () => { renderScheduleTable('schedule-container', 'main-schedule-table'); });
