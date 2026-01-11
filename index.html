@@ -12,21 +12,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
     
     <style>
-        
-/* ANTI-FLASH HIDDEN STATE */
-html {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s ease-in-out;
-}
+        /* ANTI-FLASH HIDDEN STATE */
+        html {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out;
+        }
 
-/* VISIBLE STATE (Applied by JS) */
-html.loaded {
-    opacity: 1;
-    visibility: visible;
-}
+        html.loaded {
+            opacity: 1;
+            visibility: visible;
+        }
+
         :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
-        body { font-family: "Rubik", sans-serif; overflow-x: hidden; background-color: #f8fafc; }
+        
+        /* FIX: Changed background-color to #ffffff to remove blue tint */
+        body { 
+            font-family: "Rubik", sans-serif; 
+            overflow-x: hidden; 
+            background-color: #ffffff; 
+        }
+
         .sketch { font-family: "Cabin Sketch", cursive; }
         .mono { font-family: "JetBrains Mono", monospace; }
         
@@ -36,7 +42,6 @@ html.loaded {
             background-size: cover; background-position: center;
         }
 
-        /* Card Hover Effects */
         .hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
         .hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
 
@@ -56,20 +61,38 @@ html.loaded {
         .sub-name { display: block; font-size: 0.9rem; line-height: 1.2; }
         .grade-tag { display: block; font-size: 0.65rem; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
 
-        /* No Scrollbar for Nav */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Print Logic */
+        /* --- PRINT LOGIC UPDATE --- */
         @media print {
+            body { background-color: white !important; }
             body * { visibility: hidden; }
+            
+            /* Show only the schedule section */
             #schedule-section, #schedule-section * { visibility: visible; }
-            #schedule-section { position: absolute; left: 0; top: 0; width: 100%; }
-            .btn-print-hide { display: none; }
+            #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
+            
+            /* Hide the "Print" button and the section header title in PDF */
+            .btn-print-hide, .flex.justify-between.items-center.mb-4.btn-print-hide { display: none !important; }
+
+            /* Remove all rounding and force sharp borders */
+            .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { 
+                border-radius: 0 !important; 
+                border: 1px solid #000 !important;
+                box-shadow: none !important;
+            }
+
+            .schedule-table th, .schedule-table td {
+                border: 1px solid #000 !important;
+                border-radius: 0 !important;
+            }
+
+            /* Prevent blue-ish tints on print */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 </head>
-
 <body class="bg-slate-50">
     
     <div class="sticky top-0 z-[60] w-full shadow-lg btn-print-hide">
@@ -323,13 +346,12 @@ html.loaded {
         </section>
 
     </main>
-
     <script>
-
         // --- PRELOADER ---
         window.onload = function() {
-        document.documentElement.classList.add('loaded');
+            document.documentElement.classList.add('loaded');
         }
+
         // --- AUTH ---
         const STORAGE_KEY = "sws_layout_config_v2";
         const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; const SALT = "_SWS_SECURE";
@@ -351,14 +373,13 @@ html.loaded {
         }
         function logout() { localStorage.removeItem(STORAGE_KEY); location.reload(); }
 
-        // --- TIMEZONE LOGIC (UTC-6) ---
+        // --- TIMEZONE LOGIC ---
         function getHondurasTime() {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
             return new Date(utc + (3600000 * -6));
         }
 
-        // --- SCHEDULE DATA ---
         const schedule = {
             1: [{s:"08:00",e:"08:40",c:"Prep/Vacant"}, {s:"08:40",e:"09:20",c:"Science 8 (Electronics)"}, {s:"09:20",e:"09:45",c:"RECESS",t:"b"}, {s:"09:45",e:"11:05",c:"Science 9"}, {s:"11:05",e:"11:45",c:"Prep"}, {s:"11:45",e:"12:20",c:"Science 7"}, {s:"12:20",e:"12:55",c:"LUNCH",t:"b"}, {s:"12:55",e:"13:35",c:"Prep"}, {s:"13:35",e:"14:55",c:"Chem 10"}],
             2: [{s:"08:00",e:"09:20",c:"Science 8"}, {s:"09:20",e:"09:45",c:"RECESS",t:"b"}, {s:"09:45",e:"11:05",c:"Science 9"}, {s:"11:05",e:"12:20",c:"Bio 10"}, {s:"12:20",e:"12:55",c:"LUNCH",t:"b"}, {s:"12:55",e:"14:15",c:"Bio 11"}, {s:"14:15",e:"14:55",c:"Prep"}],
