@@ -27,13 +27,6 @@ body {
     overflow-x: hidden;
 }
 
-/* MOBILE FIX: Prevent bottom bar from covering content */
-@media (max-width: 767px) {
-    body {
-        padding-bottom: 100px !important; 
-    }
-}
-
 .sketch { 
     font-family: 'Cabin Sketch', cursive; 
     white-space: nowrap; 
@@ -71,7 +64,7 @@ body {
     text-align: center; 
 }
 
-/* Sticky Column for Laptop Horizontal Scroll if needed */
+/* Sticky Time Column for Laptop View */
 .schedule-table td:nth-child(1) {
     position: sticky;
     left: 0;
@@ -82,15 +75,48 @@ body {
 }
 
 /* --- SCHEDULE CELL COLORS --- */
-.g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
-.g8 { background-color: #dbeafe; color: #1e3a8a; font-weight: 700; }
-.g9 { background-color: #f3e8ff; color: #581c87; font-weight: 700; }
-.g10 { background-color: #fef9c3; color: #713f12; font-weight: 700; }
-.g11 { background-color: #fee2e2; color: #7f1d1d; font-weight: 700; }
-.vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.7rem; }
-.break { background-color: #475569 !important; color: white !important; font-weight: 700; }
+.g7 { background-color: #dcfce7 !important; color: #14532d !important; font-weight: 700; }
+.g8 { background-color: #dbeafe !important; color: #1e3a8a !important; font-weight: 700; }
+.g9 { background-color: #f3e8ff !important; color: #581c87 !important; font-weight: 700; }
+.g10 { background-color: #fef9c3 !important; color: #713f12 !important; font-weight: 700; }
+.g11 { background-color: #fee2e2 !important; color: #7f1d1d !important; font-weight: 700; }
+.vacant { background-color: #f1f5f9 !important; color: #94a3b8 !important; font-style: italic; }
+.break { background-color: #475569 !important; color: white !important; font-weight: 700; font-size: 0.7rem; }
 
 .sub-name { display: block; font-size: 0.85rem; line-height: 1.2; }
+
+/* --- MOBILE STACK STYLING --- */
+.schedule-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    height: 50px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* --- RESPONSIVE OVERRIDES (LAPTOP vs MOBILE) --- */
+
+/* LAPTOP / DESKTOP (Screen >= 768px) */
+@media (min-width: 768px) {
+    body {
+        padding-bottom: 0 !important;
+    }
+    /* Force hide the mobile bottom bar if Tailwind fails */
+    .md\:hidden {
+        display: none !important;
+    }
+}
+
+/* MOBILE (Screen < 768px) */
+@media (max-width: 767px) {
+    body {
+        padding-bottom: 100px !important; 
+    }
+}
 
 /* --- APP STYLE BOTTOM BAR --- */
 .fixed.bottom-0 {
