@@ -10,83 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
     
-    <style>
-        /* ANTI-FLASH HIDDEN STATE */
-        html {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease-in-out;
-        }
-
-        html.loaded {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
-        
-        body { 
-            font-family: "Rubik", sans-serif; 
-            overflow-x: hidden; 
-            background-color: #ffffff; 
-        }
-
-        .sketch { font-family: "Cabin Sketch", cursive; }
-        .mono { font-family: "JetBrains Mono", monospace; }
-        
-        .hero-gradient {
-            background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
-            url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
-            background-size: cover; background-position: center;
-        }
-
-        .hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
-        .hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
-
-        .schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 10px; border: 1px solid #334155; }
-        .schedule-table td { border: 1px solid #cbd5e1; padding: 10px; font-size: 0.8rem; text-align: center; vertical-align: middle; }
-        
-        .g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
-        .g8 { background-color: #dbeafe; color: #1e3a8a; font-weight: 700; }
-        .g9 { background-color: #f3e8ff; color: #581c87; font-weight: 700; }
-        .g10 { background-color: #fef9c3; color: #713f12; font-weight: 700; }
-        .g11 { background-color: #fee2e2; color: #7f1d1d; font-weight: 700; }
-        .vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.7rem; }
-        .break { background-color: #475569; color: white; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
-
-        .sub-name { display: block; font-size: 0.9rem; line-height: 1.2; }
-        .grade-tag { display: block; font-size: 0.65rem; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
-
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* --- PRINT LOGIC --- */
-        @media print {
-            body { background-color: white !important; }
-            body * { visibility: hidden; }
-            
-            #schedule-section, #schedule-section * { visibility: visible; }
-            #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
-            
-            /* Hide ONLY the button, keep the title */
-            .btn-print-hide, button { display: none !important; }
-
-            /* Remove all rounding and force sharp borders */
-            .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { 
-                border-radius: 0 !important; 
-                border: 1px solid #000 !important;
-                box-shadow: none !important;
-            }
-
-            .schedule-table th, .schedule-table td {
-                border: 1px solid #000 !important;
-                border-radius: 0 !important;
-            }
-
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        }
-    </style>
 </head>
 <body class="bg-white">
     
