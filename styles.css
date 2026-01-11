@@ -1,13 +1,13 @@
-/* --- SWS MASTER BINDER STYLES --- */
-
+/* --- SWS BRANDING VARIABLES --- */
 :root {
     --sws-maroon: #ac2e55;
+    --sws-maroon-dark: #8a2444;
     --sws-gold: #f9db66;
     --sws-teal: #29c4a9;
     --sws-bg: #ffffff; 
 }
 
-/* ANTI-FLASH: Smooth page entry */
+/* ANTI-FLASH HIDDEN STATE */
 html {
     opacity: 0;
     visibility: hidden;
@@ -27,10 +27,13 @@ body {
     overflow-x: hidden;
 }
 
-.sketch { font-family: 'Cabin Sketch', cursive; }
+.sketch { 
+    font-family: 'Cabin Sketch', cursive; 
+    white-space: nowrap; 
+}
 .mono { font-family: "JetBrains Mono", monospace; }
 
-/* --- HEADER & HERO --- */
+/* --- NAV & HEADER --- */
 .hero-gradient {
     background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
     url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
@@ -38,18 +41,17 @@ body {
 }
 
 /* --- DASHBOARD CARDS --- */
-.hub-card { 
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-    border: 1px solid #e2e8f0; 
-}
-.hub-card:hover { 
-    transform: translateY(-4px); 
-    border-color: var(--sws-gold); 
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+.hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
+.hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
+
+/* --- SCHEDULE GRID (Laptop/Desktop) --- */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Crucial: Forces columns to stay in a grid */
+    background: white;
 }
 
-/* --- SCHEDULE GRID (Laptop/Desktop View) --- */
-.schedule-table { width: 100%; border-collapse: collapse; }
 .schedule-table th { 
     background-color: #1e293b; 
     color: white; 
@@ -58,6 +60,7 @@ body {
     padding: 12px 8px; 
     border: 1px solid #334155; 
 }
+
 .schedule-table td { 
     border: 1px solid #cbd5e1; 
     padding: 10px; 
@@ -65,7 +68,7 @@ body {
     text-align: center; 
 }
 
-/* Sticky Time Column for Laptop View */
+/* Sticky Time Column for Laptop View scroll */
 .schedule-table td:nth-child(1) {
     position: sticky;
     left: 0;
@@ -75,7 +78,7 @@ body {
     border-right: 2px solid #cbd5e1;
 }
 
-/* --- MOBILE STACK (Zero-Scroll Card Design) --- */
+/* --- MOBILE STACK (The Card List View) --- */
 .schedule-card {
     display: flex;
     align-items: center;
@@ -87,7 +90,32 @@ body {
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-.sub-name { display: block; font-size: 0.85rem; line-height: 1.2; font-weight: 700; }
+
+.card-time {
+    width: 70px;
+    background-color: #f8fafc;
+    color: #94a3b8;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.card-content {
+    flex-grow: 1;
+    padding-left: 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.sub-name { display: block; line-height: 1.2; }
 
 /* --- SCHEDULE CELL COLORS --- */
 .g7 { background-color: #dcfce7 !important; color: #14532d !important; }
@@ -96,20 +124,17 @@ body {
 .g10 { background-color: #fef9c3 !important; color: #713f12 !important; }
 .g11 { background-color: #fee2e2 !important; color: #7f1d1d !important; }
 .vacant { background-color: #f1f5f9 !important; color: #94a3b8 !important; font-style: italic; }
-.break { background-color: #475569 !important; color: white !important; font-size: 0.7rem; }
-
-/* --- HIDDEN PRINT TABLE (Ghost Table) --- */
-#print-only-schedule { display: none; }
+.break { background-color: #475569 !important; color: white !important; font-weight: 700; font-size: 0.7rem; }
 
 /* --- RESPONSIVE OVERRIDES --- */
 
-/* LAPTOP VIEW (Screens >= 768px) */
+/* LAPTOP VIEW */
 @media (min-width: 768px) {
     body { padding-bottom: 0 !important; }
-    .md\:hidden { display: none !important; } /* Hard force hide for bottom bar */
+    .md\:hidden { display: none !important; } /* Force hide bottom bar */
 }
 
-/* MOBILE VIEW (Screens < 768px) */
+/* MOBILE VIEW */
 @media (max-width: 767px) {
     body { padding-bottom: 100px !important; }
 }
@@ -122,6 +147,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 .fixed.bottom-0 a, .fixed.bottom-0 button {
     flex: 1;
     display: flex;
@@ -130,16 +156,19 @@ body {
     justify-content: center;
     transition: transform 0.1s ease;
 }
+
 .fixed.bottom-0 a:active, .fixed.bottom-0 button:active {
     transform: scale(0.9);
 }
 
+/* --- HIDDEN PRINT AREA --- */
+#print-only-schedule { display: none; }
+
 /* --- PRINT MEDIA ENGINE --- */
 @media print {
     body { background-color: white !important; padding-bottom: 0 !important; }
-    body * { visibility: hidden; } /* Hide everything on page */
+    body * { visibility: hidden; }
     
-    /* Reveal ONLY the ghost table */
     #print-only-schedule, #print-only-schedule * { 
         visibility: visible; 
         display: block !important; 
@@ -151,7 +180,7 @@ body {
         top: 0;
         width: 100%;
     }
-    .schedule-table { border: 1px solid #000 !important; }
-    .schedule-table th, .schedule-table td { border: 1px solid #000 !important; color: black !important; }
+    .schedule-table { border: 1px solid #000 !important; width: 100% !important; }
+    .schedule-table th, .schedule-table td { border: 1px solid #000 !important; color: black !important; padding: 5px; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
