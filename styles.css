@@ -1,13 +1,13 @@
-/* --- SWS BRANDING VARIABLES --- */
+/* --- SWS MASTER BINDER STYLES --- */
+
 :root {
     --sws-maroon: #ac2e55;
-    --sws-maroon-dark: #8a2444;
     --sws-gold: #f9db66;
     --sws-teal: #29c4a9;
     --sws-bg: #ffffff; 
 }
 
-/* ANTI-FLASH HIDDEN STATE */
+/* ANTI-FLASH: Smooth page entry */
 html {
     opacity: 0;
     visibility: hidden;
@@ -27,17 +27,10 @@ body {
     overflow-x: hidden;
 }
 
-.sketch { 
-    font-family: 'Cabin Sketch', cursive; 
-    white-space: nowrap; 
-}
+.sketch { font-family: 'Cabin Sketch', cursive; }
 .mono { font-family: "JetBrains Mono", monospace; }
 
-/* --- NAV & HEADER --- */
-.bg-maroon { background-color: var(--sws-maroon) !important; }
-.text-maroon { color: var(--sws-maroon) !important; }
-.text-gold { color: var(--sws-gold) !important; }
-
+/* --- HEADER & HERO --- */
 .hero-gradient {
     background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
     url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
@@ -45,10 +38,18 @@ body {
 }
 
 /* --- DASHBOARD CARDS --- */
-.hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
-.hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
+.hub-card { 
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+    border: 1px solid #e2e8f0; 
+}
+.hub-card:hover { 
+    transform: translateY(-4px); 
+    border-color: var(--sws-gold); 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
 
-/* --- SCHEDULE GRID (Desktop Only) --- */
+/* --- SCHEDULE GRID (Laptop/Desktop View) --- */
+.schedule-table { width: 100%; border-collapse: collapse; }
 .schedule-table th { 
     background-color: #1e293b; 
     color: white; 
@@ -74,18 +75,7 @@ body {
     border-right: 2px solid #cbd5e1;
 }
 
-/* --- SCHEDULE CELL COLORS --- */
-.g7 { background-color: #dcfce7 !important; color: #14532d !important; font-weight: 700; }
-.g8 { background-color: #dbeafe !important; color: #1e3a8a !important; font-weight: 700; }
-.g9 { background-color: #f3e8ff !important; color: #581c87 !important; font-weight: 700; }
-.g10 { background-color: #fef9c3 !important; color: #713f12 !important; font-weight: 700; }
-.g11 { background-color: #fee2e2 !important; color: #7f1d1d !important; font-weight: 700; }
-.vacant { background-color: #f1f5f9 !important; color: #94a3b8 !important; font-style: italic; }
-.break { background-color: #475569 !important; color: white !important; font-weight: 700; font-size: 0.7rem; }
-
-.sub-name { display: block; font-size: 0.85rem; line-height: 1.2; }
-
-/* --- MOBILE STACK STYLING --- */
+/* --- MOBILE STACK (Zero-Scroll Card Design) --- */
 .schedule-card {
     display: flex;
     align-items: center;
@@ -97,25 +87,31 @@ body {
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+.sub-name { display: block; font-size: 0.85rem; line-height: 1.2; font-weight: 700; }
 
-/* --- RESPONSIVE OVERRIDES (LAPTOP vs MOBILE) --- */
+/* --- SCHEDULE CELL COLORS --- */
+.g7 { background-color: #dcfce7 !important; color: #14532d !important; }
+.g8 { background-color: #dbeafe !important; color: #1e3a8a !important; }
+.g9 { background-color: #f3e8ff !important; color: #581c87 !important; }
+.g10 { background-color: #fef9c3 !important; color: #713f12 !important; }
+.g11 { background-color: #fee2e2 !important; color: #7f1d1d !important; }
+.vacant { background-color: #f1f5f9 !important; color: #94a3b8 !important; font-style: italic; }
+.break { background-color: #475569 !important; color: white !important; font-size: 0.7rem; }
 
-/* LAPTOP / DESKTOP (Screen >= 768px) */
+/* --- HIDDEN PRINT TABLE (Ghost Table) --- */
+#print-only-schedule { display: none; }
+
+/* --- RESPONSIVE OVERRIDES --- */
+
+/* LAPTOP VIEW (Screens >= 768px) */
 @media (min-width: 768px) {
-    body {
-        padding-bottom: 0 !important;
-    }
-    /* Force hide the mobile bottom bar if Tailwind fails */
-    .md\:hidden {
-        display: none !important;
-    }
+    body { padding-bottom: 0 !important; }
+    .md\:hidden { display: none !important; } /* Hard force hide for bottom bar */
 }
 
-/* MOBILE (Screen < 768px) */
+/* MOBILE VIEW (Screens < 768px) */
 @media (max-width: 767px) {
-    body {
-        padding-bottom: 100px !important; 
-    }
+    body { padding-bottom: 100px !important; }
 }
 
 /* --- APP STYLE BOTTOM BAR --- */
@@ -126,7 +122,6 @@ body {
     display: flex;
     align-items: center;
 }
-
 .fixed.bottom-0 a, .fixed.bottom-0 button {
     flex: 1;
     display: flex;
@@ -135,31 +130,28 @@ body {
     justify-content: center;
     transition: transform 0.1s ease;
 }
-
 .fixed.bottom-0 a:active, .fixed.bottom-0 button:active {
     transform: scale(0.9);
 }
 
-/* --- UI COMPONENTS --- */
-.sws-button {
-    background-color: var(--sws-maroon);
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    font-weight: 700;
-}
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* --- PRINT MEDIA OVERRIDES --- */
+/* --- PRINT MEDIA ENGINE --- */
 @media print {
     body { background-color: white !important; padding-bottom: 0 !important; }
-    body * { visibility: hidden; }
-    #schedule-section, #schedule-section * { visibility: visible; }
-    #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
-    .btn-print-hide, button, .fixed.bottom-0 { display: none !important; }
-    .rounded-lg, .rounded-2xl, .schedule-table { border-radius: 0 !important; border: 1px solid #000 !important; }
-    .schedule-table th, .schedule-table td { position: static !important; border: 1px solid #000 !important; }
+    body * { visibility: hidden; } /* Hide everything on page */
+    
+    /* Reveal ONLY the ghost table */
+    #print-only-schedule, #print-only-schedule * { 
+        visibility: visible; 
+        display: block !important; 
+    }
+    
+    #print-only-schedule {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .schedule-table { border: 1px solid #000 !important; }
+    .schedule-table th, .schedule-table td { border: 1px solid #000 !important; color: black !important; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
