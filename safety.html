@@ -2,29 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Safety and Protocols</title>
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     
     <style>
-        :root {
-            --sws-maroon: #ac2e55;
-            --sws-gold: #f9db66;
-            --sws-teal: #29c4a9;
-            --slate-dark: #0f172a;
-            --slate-light: #f8fafc;
-        }
-
-        body { font-family: "Rubik", sans-serif; background-color: var(--slate-light); color: #334155; }
-        .sketch { font-family: "Cabin Sketch", cursive; }
-        .mono { font-family: "JetBrains Mono", monospace; }
-
-        /* HEADER */
-        nav { background-color: var(--sws-maroon); }
-        
-        /* CARDS */
         .protocol-card {
             background: white; border: 1px solid #e2e8f0; border-radius: 1rem;
             padding: 1.5rem; transition: all 0.2s ease;
@@ -35,87 +20,92 @@
             content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
             background: #cbd5e1;
         }
-        .protocol-card.safety::before { background: var(--sws-maroon); }
-        .protocol-card.routine::before { background: var(--sws-teal); }
-        .protocol-card.club::before { background: var(--sws-gold); }
-
-        /* GRID */
-        .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
-        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
+        .protocol-card.safety::before { background: #ac2e55; }
+        .protocol-card.routine::before { background: #29c4a9; }
+        .protocol-card.club::before { background: #f9db66; }
 
         .section-title {
-            font-family: 'Cabin Sketch'; font-size: 2.5rem; color: var(--slate-dark);
+            font-family: 'Cabin Sketch'; font-size: 2.5rem; 
             margin-bottom: 1.5rem; border-bottom: 2px dashed #e2e8f0; padding-bottom: 0.5rem;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50">
 
-    <nav class="sticky top-0 z-50 shadow-lg">
+    <nav class="sticky top-0 z-50 shadow-lg bg-[#ac2e55] btn-print-hide">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <a href="index.html" class="sketch text-2xl text-white tracking-widest hover:opacity-80 transition">HOME</a>
-                <span class="opacity-40 text-xs uppercase font-bold border-l pl-4 border-white/40 text-white tracking-wider">Safety and Protocols</span>
+                <span class="opacity-40 text-xs uppercase font-bold border-l pl-4 border-white/40 text-white tracking-wider hidden sm:inline">Safety and Protocols</span>
             </div>
-            <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition border border-white/20">|||</a>
+            <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition border border-white/20">Dashboard</a>
         </div>
     </nav>
+
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-white/10 z-[100] flex justify-around items-center py-3 pb-6 px-2 btn-print-hide">
+        <a href="index.html" class="flex flex-col items-center text-white/50">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Home</span>
+        </a>
+        <a id="live-class-btn" href="#" class="flex flex-col items-center text-white/50 transition-all duration-500">
+            <div class="relative">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span id="live-indicator" class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full hidden animate-ping"></span>
+            </div>
+            <span class="text-[8px] font-bold uppercase mt-1">Live Class</span>
+        </a>
+        <a href="safety.html" class="flex flex-col items-center text-[#f9db66]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Safety</span>
+        </a>
+        <button onclick="toggleSchedule()" class="flex flex-col items-center text-white/50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Sched</span>
+        </button>
+    </div>
 
     <main class="max-w-7xl mx-auto p-6 md:p-12 space-y-16">
 
         <section>
-            <h2 class="section-title text-sws-maroon">The Science Lab</h2>
-            
+            <h2 class="section-title text-[#ac2e55]">The Science Lab</h2>
             <div class="bg-red-50 border border-red-100 rounded-2xl p-8 mb-8">
-                <div class="flex items-start gap-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-red-900 uppercase tracking-wide">The Science Lab</h3>
-                        <p class="mt-2 text-red-800 leading-relaxed">
-                            Southwest School has a Science Lab. However, due to <strong>equipment constraints and supply limitations</strong>, going to the science lab will be difficult this year. 
-                        </p>
-                        <p class="mt-2 text-red-800 font-bold">
-                            Therefore, the classroom is the Lab.
-                        </p>
-                        <p class="mt-2 text-red-700 text-sm">
-                            Safety rules apply whether we are in the Lab room or at our desks. 
-                            <strong>Respect is non-negotiable.</strong>
-                        </p>
-                    </div>
-                </div>
+                <h3 class="text-xl font-bold text-red-900 uppercase tracking-wide">The Science Lab Status</h3>
+                <p class="mt-2 text-red-800 leading-relaxed">
+                    Southwest School has a Science Lab. However, due to <strong>equipment constraints and supply limitations</strong>, going to the science lab will be difficult this year. 
+                </p>
+                <p class="mt-2 text-red-800 font-bold">Therefore, the classroom is the Lab.</p>
+                <p class="mt-2 text-red-700 text-sm">Safety rules apply whether we are in the Lab room or at our desks. <strong>Respect is non-negotiable.</strong></p>
             </div>
 
-            <div class="bento-grid">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="protocol-card safety">
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Personal Protective Equipment</h4>
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">PPE</h4>
                     <p class="text-sm text-slate-600"><strong>Goggles</strong> and <strong>Aprons</strong> and other personal protective equipment must be worn in the lab. There are no exceptions.</p>
                 </div>
                 <div class="protocol-card safety">
                     <h4 class="font-bold text-lg text-slate-800 mb-2">Safe Zone</h4>
-                    <p class="text-sm text-slate-600">No food. No drinks. No water. No gum.</p>
+                    <p class="text-sm text-slate-600">No food. No drinks. No water. No gum. The lab environment must remain uncontaminated at all times.</p>
                 </div>
                 <div class="protocol-card safety">
-                    <h4 class="font-bold text-lg text-slate-800 mb-2">Safety Protocols</h4>
-                    <p class="text-sm text-slate-600">If glass breaks or liquid spills: <strong>Do not touch it.</strong> The teacher handles the cleanup.</p>
+                    <h4 class="font-bold text-lg text-slate-800 mb-2">Protocols</h4>
+                    <p class="text-sm text-slate-600">If glass breaks or liquid spills: <strong>Do not touch it.</strong> Inform the teacher immediately. The teacher handles all cleanup.</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title text-sws-teal">Routines and Expectations</h2>
-            <p class="mb-8 text-slate-500 italic">Building habits of excellence.</p>
-
+            <h2 class="section-title text-[#29c4a9]">Routines & Expectations</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
                 <div class="protocol-card routine">
                     <div class="flex justify-between items-center mb-3">
                         <h4 class="font-bold text-slate-800">MMVP</h4>
                         <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">BEHAVIOR</span>
                     </div>
                     <ul class="text-sm space-y-2 text-slate-600">
-                        <li><strong>M</strong>ovement: Are we seated or standing?</li>
-                        <li><strong>M</strong>aterials: Are hands empty or writing?</li>
-                        <li><strong>V</strong>oice: Level 0 (Silent) Level 3 (Presenting)</li>
-                        <li><strong>P</strong>articipation: How do you show engagement?</li>
+                        <li><strong>M</strong>ovement: Seated or standing?</li>
+                        <li><strong>M</strong>aterials: Hands empty or writing?</li>
+                        <li><strong>V</strong>oice: Level 0 (Silent) to 3 (Presenting)</li>
+                        <li><strong>P</strong>articipation: Active engagement only.</li>
                     </ul>
                 </div>
 
@@ -124,8 +114,7 @@
                         <h4 class="font-bold text-slate-800">At-Bats</h4>
                         <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">PRACTICE</span>
                     </div>
-                    <p class="text-sm text-slate-600 mb-2">Repetition is important.</p>
-                    <p class="text-sm text-slate-600">An "At-Bat," is an <strong>independent and silent practice</strong>. You are testing your own brain, not the brain of your classmates.</p>
+                    <p class="text-sm text-slate-600">An "At-Bat" is <strong>independent and silent practice</strong>. You are testing your own brain, not your classmates'.</p>
                 </div>
 
                 <div class="protocol-card routine">
@@ -133,8 +122,7 @@
                         <h4 class="font-bold text-slate-800">Turn & Talk</h4>
                         <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">DISCOURSE</span>
                     </div>
-                    <p class="text-sm text-slate-600"><strong>Eye Contact</strong></p>
-                    <p class="text-sm text-slate-600 mt-2">1. Turn body to partner.<br>2. Partner A speaks.<br>3. Partner B listens actively.<br>4. Switch.</p>
+                    <p class="text-sm text-slate-600">Eye contact is key. Turn your body, Partner A speaks, Partner B listens, then switch.</p>
                 </div>
 
                 <div class="protocol-card routine">
@@ -142,65 +130,64 @@
                         <h4 class="font-bold text-slate-800">Cold Call</h4>
                         <span class="text-[10px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-500">ACCOUNTABILITY</span>
                     </div>
-                    <p class="text-sm text-slate-600">Everyone gets a chance to participate, not just students with their hands up.</p>
-                    <p class="text-sm text-slate-600 mt-2"><strong>Every</strong> student must be ready to contribute.</p>
+                    <p class="text-sm text-slate-600">Everyone gets a chance. You must always be ready to contribute, even if your hand isn't up.</p>
                 </div>
-
             </div>
         </section>
 
         <section>
-            <h2 class="section-title text-sws-gold">Science Culture</h2>
-            
+            <h2 class="section-title text-[#f9db66]">Science Culture</h2>
             <div class="bg-slate-800 text-white rounded-2xl p-8 md:p-12 overflow-hidden relative">
                 <div class="absolute top-0 right-0 opacity-10 text-[10rem] select-none">🧪</div>
-                
                 <div class="relative z-10 grid md:grid-cols-2 gap-12">
                     <div>
-                        <h3 class="sketch text-3xl text-sws-gold mb-4">Student-Led Initiatives</h3>
-                        <p class="text-slate-300 leading-relaxed mb-6">
-                            Science doesn't end when school ends. You can lead a <strong>Science Club</strong>. If you have a passion.
-                        </p>
-                        <p class="text-slate-400 text-sm italic">
-                            *Requires a minimum of 5 committed students and a proposal.
-                        </p>
+                        <h3 class="sketch text-3xl text-[#f9db66] mb-4">Student Initiatives</h3>
+                        <p class="text-slate-300 leading-relaxed mb-6">Science doesn't end when school ends. You can lead a <strong>Science Club</strong> if you have a passion.</p>
+                        <p class="text-slate-400 text-sm italic">*Requires 5 committed students and a proposal.</p>
                     </div>
-
                     <div class="space-y-4">
-                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
-                            <h4 class="font-bold text-sws-teal uppercase tracking-widest text-xs mb-1">Potential Club #1</h4>
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition">
+                            <h4 class="font-bold text-[#29c4a9] text-xs mb-1 uppercase">Club #1</h4>
                             <p class="font-bold text-lg">Astronomy</p>
-                            <p class="text-xs text-slate-400">Using astronomy skills for night observation.</p>
+                            <p class="text-xs text-slate-400">Night observation skills and deep space study.</p>
                         </div>
-                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
-                            <h4 class="font-bold text-sws-maroon uppercase tracking-widest text-xs mb-1">Potential Club #2</h4>
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition">
+                            <h4 class="font-bold text-[#ac2e55] text-xs mb-1 uppercase">Club #2</h4>
                             <p class="font-bold text-lg">Robotics</p>
-                            <p class="text-xs text-slate-400">Working on circuit building and coding challenges.</p>
+                            <p class="text-xs text-slate-400">Circuit building and coding challenges.</p>
                         </div>
-                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition cursor-pointer">
-                            <h4 class="font-bold text-sws-gold uppercase tracking-widest text-xs mb-1">Potential Club #3</h4>
+                        <div class="bg-white/10 p-4 rounded-lg border border-white/10 hover:bg-white/20 transition">
+                            <h4 class="font-bold text-[#f9db66] text-xs mb-1 uppercase">Club #3</h4>
                             <p class="font-bold text-lg">Botany</p>
-                            <p class="text-xs text-slate-400">Managing a small plot for biology experiments.</p>
+                            <p class="text-xs text-slate-400">Biology experiments through plant management.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="border-t border-slate-200 pt-8 mt-12 text-center">
-            <p class="mono text-xs text-slate-400 uppercase tracking-widest">
-                System Status: Active | Last Updated: Jan 10th, 2026
-            </p>
-            <p class="text-slate-500 text-sm mt-2 max-w-xl mx-auto">
-                This page is a living document. Guidelines may evolve.
-            </p>
+        <footer class="border-t border-slate-200 pt-8 mt-12 text-center pb-20">
+            <p class="mono text-xs text-slate-400 uppercase tracking-widest">System Active | Jan 2026</p>
             <div class="mt-6">
-                <a href="index.html" class="text-sws-maroon font-bold text-sm hover:underline">Return Home</a>
+                <a href="index.html" class="text-[#ac2e55] font-bold text-sm hover:underline">Return Home</a>
             </div>
-            <br>
         </footer>
-
     </main>
 
+    <div id="schedule-modal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onclick="toggleSchedule()"></div>
+        <div class="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col">
+            <div class="p-6 border-b flex justify-between items-center bg-slate-50">
+                <h2 class="sketch text-2xl text-slate-800">Master Schedule</h2>
+                <button onclick="toggleSchedule()" class="text-slate-400 text-xl p-2">✕</button>
+            </div>
+            <div class="p-4 overflow-auto">
+                <table class="schedule-table w-full min-w-[700px]" id="modal-schedule-table"></table>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
