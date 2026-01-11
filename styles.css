@@ -4,13 +4,13 @@
     --sws-maroon-dark: #8a2444;
     --sws-gold: #f9db66;
     --sws-teal: #29c4a9;
-    --sws-bg: #ffffff; /* FIX: Changed to pure white to remove laptop blue tint */
+    --sws-bg: #ffffff; 
 }
 
 /* ANTI-FLASH HIDDEN STATE */
 html {
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     transition: opacity 0.4s ease-in-out;
 }
 html.loaded {
@@ -27,7 +27,17 @@ body {
     overflow-x: hidden;
 }
 
-.sketch { font-family: 'Cabin Sketch', cursive; }
+/* Ensure content isn't hidden behind the bottom tab bar on mobile */
+@media (max-width: 767px) {
+    body {
+        padding-bottom: 80px; 
+    }
+}
+
+.sketch { 
+    font-family: 'Cabin Sketch', cursive; 
+    white-space: nowrap; /* Prevents header from wrapping to 2 lines */
+}
 .mono { font-family: "JetBrains Mono", monospace; }
 
 /* --- NAV & HEADER --- */
@@ -76,24 +86,12 @@ body {
 
 /* --- PRINT MEDIA OVERRIDES --- */
 @media print {
-    body { background-color: white !important; }
+    body { background-color: white !important; padding-bottom: 0 !important; }
     body * { visibility: hidden; }
-    
     #schedule-section, #schedule-section * { visibility: visible; }
     #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
-    
     .btn-print-hide, button { display: none !important; }
-
-    .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { 
-        border-radius: 0 !important; 
-        border: 1px solid #000 !important;
-        box-shadow: none !important;
-    }
-
-    .schedule-table th, .schedule-table td {
-        border: 1px solid #000 !important;
-        border-radius: 0 !important;
-    }
-
+    .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { border-radius: 0 !important; border: 1px solid #000 !important; box-shadow: none !important; }
+    .schedule-table th, .schedule-table td { border: 1px solid #000 !important; border-radius: 0 !important; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
