@@ -3,19 +3,19 @@ let hubData = {};
 
 /**
  * 1. CORE DATA INITIALIZATION
- * Fetches JSON and triggers the layout builds.
  */
 async function loadData() {
     try {
         const response = await fetch('data.json');
         hubData = await response.json();
         
-        // Build UI Components
         renderCurriculum(hubData.courses);
         renderUtilityCards();
         
-        // Build Schedule views (Screen + Hidden Print Area)
+        // Render Schedule for Screen
         renderScheduleTable('schedule-container', 'main-schedule-table'); 
+        
+        // Render Full Grid for Printer (Ghost table)
         if (document.getElementById('print-only-schedule')) {
             renderFullGrid('print-only-schedule'); 
         }
@@ -27,42 +27,28 @@ async function loadData() {
 }
 
 /**
- * 2. CURRICULUM UI GENERATOR
+ * 2. CURRICULUM UI GENERATOR (Modal Enabled)
  */
 function renderCurriculum(courses) {
     const grid = document.getElementById('curriculum-grid');
     if (!grid) return;
     grid.innerHTML = courses.map(c => {
-        if (c.grade === "Universal") {
-            return `
-                <div class="hub-card bg-slate-900 rounded-2xl p-0 overflow-hidden flex flex-col border-2 border-[#f9db66]">
-                    <div class="bg-slate-950 p-3 flex justify-between items-center text-white">
-                        <span class="sketch text-xl text-[#f9db66]">${c.grade}</span>
-                        <span class="${c.color} text-[9px] px-2 py-1 rounded font-bold uppercase text-white">${c.topic}</span>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col justify-center text-center">
-                        <h3 class="font-bold text-white text-xl">${c.desc}</h3>
-                        <p class="text-xs text-slate-400 mt-1">Activity Framework</p>
-                        <div class="admin-only hidden mt-4"><a href="${c.special}" class="block w-full py-2 bg-[#f9db66] text-black rounded text-xs font-bold">Open Tool</a></div>
-                    </div>
-                </div>`;
-        }
+        const isSpecial = c.grade === '9th' || (c.grade === '11th' && c.topic === 'Chemistry');
+        const headerClass = isSpecial ? 'bg-[#ac2e55]' : 'bg-slate-800';
+        const titleColor = isSpecial ? 'text-[#f9db66]' : 'text-white';
+
         return `
-            <div class="hub-card bg-white rounded-2xl p-0 overflow-hidden flex flex-col">
-                <div class="${c.grade === '9th' || (c.grade === '11th' && c.topic === 'Chemistry') ? 'bg-[#ac2e55]' : 'bg-slate-800'} p-3 flex justify-between items-center text-white">
-                    <span class="sketch text-xl ${c.grade === '9th' || (c.grade === '11th' && c.topic === 'Chemistry') ? 'text-[#f9db66]' : ''}">${c.grade} Grade</span>
-                    <span class="${c.color} text-[9px] px-2 py-1 rounded font-bold uppercase text-black ${c.color.includes('purple') || c.color.includes('red') ? 'text-white' : ''}">${c.topic}</span>
+            <div class="hub-card bg-white rounded-2xl p-0 overflow-hidden flex flex-col cursor-pointer active:scale-95 transition-transform shadow-sm" 
+                 onclick="openCourseModal('${c.grade}', '${c.topic}')">
+                <div class="${headerClass} p-3 flex justify-between items-center text-white">
+                    <span class="sketch text-xl ${titleColor}">${c.grade} ${c.grade === "Universal" ? "" : "Grade"}</span>
+                    <span class="${c.color} text-[9px] px-2 py-1 rounded font-bold uppercase text-white tracking-widest">${c.topic}</span>
                 </div>
                 <div class="p-5 flex-grow">
                     <h3 class="font-bold text-slate-700 text-lg">${c.topic}</h3>
-                    <p class="text-xs text-slate-500 mt-1">${c.desc}</p>
-                    <a href="${c.portal}" class="mt-4 block w-full text-center py-2 border border-slate-200 rounded hover:bg-slate-50 text-xs font-bold uppercase text-slate-600">Quarter Plan</a>
-                    <div class="admin-only hidden mt-2 space-y-1">
-                        ${Array.isArray(c.slides) 
-                            ? c.slides.map((url, i) => `<a href="${url}" class="block w-full text-center py-1 bg-[#ac2e55] text-white rounded text-[10px] font-bold">${c.weekNames[i]}</a>`).join('')
-                            : `<a href="${c.slides}" class="block w-full text-center py-2 bg-[#ac2e55] text-white rounded text-xs font-bold">Slides</a>`
-                        }
-                        ${c.extra ? `<a href="${c.extra}" class="block w-full text-center py-1 border border-slate-200 text-slate-500 rounded text-[10px] font-bold">Tools</a>` : ''}
+                    <p class="text-xs text-slate-500 mt-1 line-clamp-2">${c.desc}</p>
+                    <div class="mt-4 flex items-center text-[#ac2e55] font-bold text-[10px] uppercase tracking-widest">
+                        Open Resources <span class="ml-2">→</span>
                     </div>
                 </div>
             </div>`;
@@ -70,20 +56,62 @@ function renderCurriculum(courses) {
 }
 
 /**
- * 3. RESPONSIVE SCHEDULE ENGINE
- * Smart-switches between Card Stack (Mobile) and Grid (Laptop)
+ * 3. COURSE MODAL LOGIC
+ */
+function openCourseModal(grade, topic) {
+    const course = hubData.courses.find(c => c.grade === grade && c.topic === topic);
+    if (!course) return;
+
+    const modal = document.getElementById('course-modal');
+    const header = document.getElementById('modal-header');
+    
+    document.getElementById('modal-grade').innerText = course.grade + (course.grade === "Universal" ? "" : " Grade");
+    document.getElementById('modal-title').innerText = course.topic;
+    document.getElementById('modal-desc').innerText = course.desc;
+    document.getElementById('modal-portal-link').href = course.portal;
+
+    // Thematic Coloring
+    header.className = `p-6 text-white flex justify-between items-center ${course.grade === '9th' || (course.grade === '11th' && course.topic === 'Chemistry') ? 'bg-[#ac2e55]' : 'bg-slate-800'}`;
+
+    // Slide Generation
+    const slidesBox = document.getElementById('modal-slides-container');
+    if (Array.isArray(course.slides)) {
+        slidesBox.innerHTML = `
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] block mb-2">Weekly Archive</span>
+            <div class="space-y-2">
+                ${course.slides.map((url, i) => `
+                    <a href="${url}" class="block w-full p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 transition flex justify-between items-center">
+                        <span>${course.weekNames[i]}</span>
+                        <span class="text-slate-300 text-lg">→</span>
+                    </a>
+                `).join('')}
+            </div>`;
+    } else {
+        slidesBox.innerHTML = `
+            <a href="${course.slides}" class="block w-full p-4 bg-slate-100 hover:bg-slate-200 rounded-xl text-sm font-bold text-slate-700 text-center transition">
+                Open Master Slide Deck
+            </a>`;
+    }
+
+    modal.classList.remove('hidden');
+}
+
+function closeCourseModal() {
+    document.getElementById('course-modal').classList.add('hidden');
+}
+
+/**
+ * 4. RESPONSIVE SCHEDULE ENGINE
  */
 function renderScheduleTable(containerId, tableId) {
     const container = document.getElementById(containerId);
     if (!container || !hubData.tableRows) return;
-
     const isMobile = window.innerWidth < 768;
     
     if (isMobile) {
         const now = getHondurasTime();
         let todayIdx = now.getDay(); 
         if (todayIdx === 0 || todayIdx === 6) todayIdx = 1; 
-        
         const nextDayIdx = todayIdx < 5 ? todayIdx + 1 : 1;
         const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -116,7 +144,7 @@ function renderScheduleTable(containerId, tableId) {
 }
 
 /**
- * 4. FULL GRID GENERATOR (Laptop & Printing)
+ * 5. FULL GRID GENERATOR (Laptop & Print)
  */
 function renderFullGrid(targetId) {
     const container = document.getElementById(targetId);
@@ -132,7 +160,7 @@ function renderFullGrid(targetId) {
 }
 
 /**
- * 5. UTILITY & NAVIGATION
+ * 6. UTILITY & NAVIGATION
  */
 function renderUtilityCards() {
     const grid = document.getElementById('utility-grid');
@@ -157,7 +185,7 @@ function toggleSchedule() {
 }
 
 /**
- * 6. LIVE STATUS ENGINE (Routing + Indicators)
+ * 7. LIVE STATUS ENGINE
  */
 function updateLiveStatus() {
     const now = getHondurasTime();
@@ -203,7 +231,7 @@ function getHondurasTime() {
     return new Date(utc + (3600000 * -6));
 }
 
-// 7. BOOTSTRAP
+// 8. BOOTSTRAP
 window.onload = async function() {
     await loadData();
     document.documentElement.classList.add('loaded');

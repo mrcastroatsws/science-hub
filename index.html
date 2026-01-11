@@ -40,17 +40,16 @@
                 <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
             </div>
         </div>
-
         <nav class="bg-[#ac2e55] text-white p-3 relative z-10 border-t border-white/10">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <span class="sketch text-lg sm:text-2xl font-bold tracking-tight whitespace-nowrap overflow-hidden">SCIENCE AT SOUTHWEST</span>
+                <span class="sketch text-lg sm:text-2xl font-bold tracking-tight whitespace-nowrap overflow-hidden text-white uppercase">Science at Southwest</span>
                 <div class="hidden md:flex space-x-8 font-medium text-sm uppercase">
                     <a href="#curriculum-section">Dashboard</a>
                     <a href="science-fair.html">Science Fair</a>
                     <a href="safety.html">Safety</a>
                     <a href="#schedule-section">Schedule</a>
                 </div>
-                <button class="md:hidden p-1" onclick="toggleMenu()">
+                <button class="md:hidden p-1 text-white" onclick="toggleMenu()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
@@ -58,24 +57,29 @@
     </div>
 
     <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-white/10 z-[100] flex justify-around items-center h-20 px-2 btn-print-hide shadow-[0_-4px_10px_rgba(0,0,0,0.3)]">
-        <a href="index.html" class="flex flex-col items-center text-[#f9db66]"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+        <a href="index.html" class="flex flex-col items-center text-[#f9db66]">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Home</span>
         </a>
-        <a id="live-class-btn" href="#" class="flex flex-col items-center text-white/50 transition-all duration-500">
+        <a id="live-class-btn" href="#" class="flex flex-col items-center text-white/50">
             <div class="relative">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 <span id="live-indicator" class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full hidden animate-ping"></span>
             </div>
+            <span class="text-[8px] font-bold uppercase mt-1">Live Class</span>
         </a>
         <a href="safety.html" class="flex flex-col items-center text-white/50">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Safety</span>
         </a>
         <button onclick="toggleSchedule()" class="flex flex-col items-center text-white/50">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Sched</span>
         </button>
     </div>
 
     <header class="hero-gradient py-12 sm:py-24 px-6 text-center shadow-inner btn-print-hide">
-        <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2">Mr. Castro</h1>
+        <h1 class="sketch text-5xl sm:text-7xl text-[#ac2e55] mb-2 uppercase">Mr. Castro</h1>
         <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.3em]">2025 - 2026</p>
     </header>
 
@@ -83,7 +87,7 @@
         <div class="bg-slate-800 text-white rounded-xl p-6 mb-6 flex flex-col md:flex-row justify-between items-center shadow-lg border-l-4 border-[#f9db66] btn-print-hide">
             <div>
                 <h3 class="sketch text-2xl text-[#f9db66]">Current Status</h3>
-                <p class="text-white/60 text-xs font-bold uppercase tracking-widest font-mono mt-1" id="live-clock">Loading</p>
+                <p class="text-white/60 text-xs font-bold uppercase tracking-widest font-mono mt-1" id="live-clock">Loading...</p>
             </div>
             <div class="text-center md:text-right mt-4 md:mt-0">
                 <div class="mb-1">
@@ -105,22 +109,68 @@
         <section id="schedule-section" class="btn-print-hide">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="sketch text-3xl text-slate-800">Weekly Schedule</h2>
-                <button onclick="window.print()" class="text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
+                <button onclick="window.print()" class="text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print Full Grid</button>
             </div>
             <div id="schedule-container" class="rounded-lg border border-slate-300 shadow-sm bg-white overflow-hidden">
                 </div>
         </section>
     </main>
 
+    <div id="course-modal" class="fixed inset-0 z-[160] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/90 backdrop-blur-sm" onclick="closeCourseModal()"></div>
+        <div class="relative bg-white w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl flex flex-col animate-fade-in">
+            <div id="modal-header" class="p-6 text-white flex justify-between items-center bg-slate-800">
+                <div>
+                    <span id="modal-grade" class="sketch text-xl uppercase tracking-widest"></span>
+                    <h2 id="modal-title" class="text-3xl font-bold uppercase tracking-tight"></h2>
+                </div>
+                <button onclick="closeCourseModal()" class="bg-white/20 hover:bg-white/30 rounded-full p-2 transition text-white">✕</button>
+            </div>
+            <div class="p-8 space-y-6 overflow-auto max-h-[70vh]">
+                <p id="modal-desc" class="text-slate-600 text-lg italic border-l-4 border-slate-200 pl-4"></p>
+                <div class="grid grid-cols-1 gap-4">
+                    <a id="modal-portal-link" href="#" class="flex items-center justify-between p-5 border-2 border-slate-100 rounded-2xl hover:border-[#ac2e55] hover:bg-red-50 transition group">
+                        <div>
+                            <span class="block font-bold text-slate-800 uppercase text-xs">Quarter Plan Portal</span>
+                            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Unit maps & Grading</span>
+                        </div>
+                        <span class="text-[#ac2e55] font-bold">OPEN →</span>
+                    </a>
+                    <div id="modal-slides-container" class="space-y-3 pt-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] block">Slide Library</span>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/95 backdrop-blur-md" onclick="toggleLoginModal()"></div>
+        <div class="relative w-full max-w-md bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 animate-fade-in">
+            <div class="bg-[#ac2e55] p-8 text-center border-b-4 border-[#f9db66]">
+                <h2 class="sketch text-4xl text-white font-bold m-0 uppercase tracking-tight">Teacher Access</h2>
+                <p class="text-white/70 text-[10px] uppercase tracking-[0.2em] mt-2 font-bold">Authorized Personnel Only</p>
+            </div>
+            <div class="p-8 space-y-6">
+                <div>
+                    <label class="block text-slate-400 text-[10px] font-black uppercase mb-2 tracking-widest">Master Passcode</label>
+                    <input type="password" id="admin-passcode" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#ac2e55] focus:outline-none transition-all font-mono text-center text-xl tracking-[0.5em]" placeholder="••••••">
+                </div>
+                <div id="login-error" class="hidden text-center text-red-500 text-xs font-bold animate-pulse">Invalid Code</div>
+                <button onclick="handleLoginSubmit()" class="w-full bg-[#29c4a9] hover:bg-teal-600 text-white font-black py-4 rounded-2xl uppercase tracking-widest transition-all active:scale-95 shadow-lg">Enter Portal</button>
+                <button onclick="toggleLoginModal()" class="w-full text-slate-400 text-[10px] font-bold uppercase tracking-widest">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <div id="schedule-modal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onclick="toggleSchedule()"></div>
         <div class="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col">
             <div class="p-6 border-b flex justify-between items-center bg-slate-50">
-                <h2 class="sketch text-2xl text-slate-800">Full Schedule</h2>
+                <h2 class="sketch text-2xl text-slate-800 uppercase tracking-widest">Full Schedule</h2>
                 <button onclick="toggleSchedule()" class="text-slate-400 hover:text-slate-600 text-xl p-2">✕</button>
             </div>
-            <div id="modal-schedule-container" class="p-4 overflow-auto bg-slate-50 flex-grow">
-                </div>
+            <div id="modal-schedule-container" class="p-4 overflow-auto bg-slate-50 flex-grow"></div>
             <div class="p-4 bg-white border-t text-center">
                 <button onclick="window.print()" class="text-[10px] text-slate-400 uppercase font-bold hover:text-[#ac2e55]">Print Master 5-Day Grid</button>
             </div>
@@ -131,4 +181,3 @@
     <script src="dashboard.js"></script>
 </body>
 </html>
-
