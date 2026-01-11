@@ -26,7 +26,6 @@
 
         :root { --sws-maroon: #ac2e55; --sws-gold: #f9db66; --sws-teal: #29c4a9; }
         
-        /* FIX: Changed background-color to #ffffff to remove blue tint */
         body { 
             font-family: "Rubik", sans-serif; 
             overflow-x: hidden; 
@@ -45,11 +44,9 @@
         .hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
         .hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
 
-        /* Schedule Table Styling */
         .schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 10px; border: 1px solid #334155; }
         .schedule-table td { border: 1px solid #cbd5e1; padding: 10px; font-size: 0.8rem; text-align: center; vertical-align: middle; }
         
-        /* Cell Colors */
         .g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
         .g8 { background-color: #dbeafe; color: #1e3a8a; font-weight: 700; }
         .g9 { background-color: #f3e8ff; color: #581c87; font-weight: 700; }
@@ -64,17 +61,16 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- PRINT LOGIC UPDATE --- */
+        /* --- PRINT LOGIC --- */
         @media print {
             body { background-color: white !important; }
             body * { visibility: hidden; }
             
-            /* Show only the schedule section */
             #schedule-section, #schedule-section * { visibility: visible; }
             #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
             
-            /* Hide the "Print" button and the section header title in PDF */
-            .btn-print-hide, .flex.justify-between.items-center.mb-4.btn-print-hide { display: none !important; }
+            /* Hide ONLY the button, keep the title */
+            .btn-print-hide, button { display: none !important; }
 
             /* Remove all rounding and force sharp borders */
             .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { 
@@ -88,12 +84,11 @@
                 border-radius: 0 !important;
             }
 
-            /* Prevent blue-ish tints on print */
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 </head>
-<body class="bg-slate-50">
+<body class="bg-white">
     
     <div class="sticky top-0 z-[60] w-full shadow-lg btn-print-hide">
         <div class="bg-slate-900 text-white py-2 px-4 flex justify-between items-center text-[10px] uppercase tracking-widest relative z-20">
@@ -129,27 +124,25 @@
 
     <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-12">
         
-            <div class="bg-slate-800 text-white rounded-xl p-6 mb-6 flex flex-col md:flex-row justify-between items-center shadow-lg border-l-4 border-[#f9db66] btn-print-hide">
-                <div>
-                    <h3 class="sketch text-2xl text-[#f9db66]">Current Status</h3>
-                    <p class="text-white/60 text-xs font-bold uppercase tracking-widest font-mono mt-1" id="live-clock">Loading Time...</p>
+        <div class="bg-slate-800 text-white rounded-xl p-6 mb-6 flex flex-col md:flex-row justify-between items-center shadow-lg border-l-4 border-[#f9db66] btn-print-hide">
+            <div>
+                <h3 class="sketch text-2xl text-[#f9db66]">Current Status</h3>
+                <p class="text-white/60 text-xs font-bold uppercase tracking-widest font-mono mt-1" id="live-clock">Loading Time...</p>
+            </div>
+            <div class="text-center md:text-right mt-4 md:mt-0">
+                <div class="mb-1">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Happening Now</span>
+                    <p class="text-lg font-bold text-white" id="status-now">--</p>
                 </div>
-                <div class="text-center md:text-right mt-4 md:mt-0">
-                    <div class="mb-1">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Happening Now</span>
-                        <p class="text-lg font-bold text-white" id="status-now">--</p>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Up Next</span>
-                        <p class="text-sm font-bold text-[#f9db66]" id="status-next">--</p>
-                    </div>
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Up Next</span>
+                    <p class="text-sm font-bold text-[#f9db66]" id="status-next">--</p>
                 </div>
             </div>
+        </div>
       
         <section id="curriculum-section" class="btn-print-hide">
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 <div class="hub-card bg-white rounded-2xl p-0 overflow-hidden flex flex-col">
                     <div class="bg-slate-800 p-3 flex justify-between items-center text-white">
                         <span class="sketch text-xl">7th Grade</span>
@@ -288,7 +281,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -305,14 +297,12 @@
                     </div>
                 </a>
             </div>
-
         </section>
 
         <section id="schedule-section">
-
-            <div class="flex justify-between items-center mb-4 btn-print-hide">
+            <div class="flex justify-between items-center mb-4">
                 <h2 class="sketch text-3xl text-slate-800">Weekly Schedule</h2>
-                <button onclick="window.print()" class="text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
+                <button onclick="window.print()" class="btn-print-hide text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
             </div>
 
             <div class="overflow-x-auto rounded-lg border border-slate-300 shadow-sm bg-white">
@@ -344,17 +334,16 @@
                 </table>
             </div>
         </section>
-
     </main>
+
     <script>
-        // --- PRELOADER ---
         window.onload = function() {
             document.documentElement.classList.add('loaded');
         }
 
-        // --- AUTH ---
         const STORAGE_KEY = "sws_layout_config_v2";
         const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; const SALT = "_SWS_SECURE";
+        
         function checkAuth() {
             const candidate = localStorage.getItem(STORAGE_KEY);
             const admin = document.querySelectorAll('.admin-only');
@@ -367,13 +356,20 @@
                 public.forEach(el => el.classList.remove('hidden'));
             }
         }
+
         function login() {
             const input = prompt("Access Code:");
-            if (input && btoa(input + SALT) === LOCK_VALUE) { localStorage.setItem(STORAGE_KEY, btoa(input)); location.reload(); }
+            if (input && btoa(input + SALT) === LOCK_VALUE) { 
+                localStorage.setItem(STORAGE_KEY, btoa(input)); 
+                location.reload(); 
+            }
         }
-        function logout() { localStorage.removeItem(STORAGE_KEY); location.reload(); }
 
-        // --- TIMEZONE LOGIC ---
+        function logout() { 
+            localStorage.removeItem(STORAGE_KEY); 
+            location.reload(); 
+        }
+
         function getHondurasTime() {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
@@ -392,7 +388,6 @@
             const now = getHondurasTime();
             let day = now.getDay();
             const timeVal = now.getHours() * 60 + now.getMinutes();
-
             document.getElementById('live-clock').innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', weekday:'long'});
             const nowEl = document.getElementById('status-now');
             const nextEl = document.getElementById('status-next');
@@ -412,7 +407,6 @@
                     const block = todaySched[i];
                     const startMin = parseInt(block.s.split(':')[0])*60 + parseInt(block.s.split(':')[1]);
                     const endMin = parseInt(block.e.split(':')[0])*60 + parseInt(block.e.split(':')[1]);
-
                     if (timeVal >= startMin && timeVal < endMin) {
                         currentClass = block;
                         nextClass = todaySched[i+1] || null;
