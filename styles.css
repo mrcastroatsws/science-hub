@@ -4,7 +4,18 @@
     --sws-maroon-dark: #8a2444;
     --sws-gold: #f9db66;
     --sws-teal: #29c4a9;
-    --sws-bg: #f8fafc;
+    --sws-bg: #ffffff; /* FIX: Changed to pure white to remove laptop blue tint */
+}
+
+/* ANTI-FLASH HIDDEN STATE */
+html {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out;
+}
+html.loaded {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* --- BASE STYLES --- */
@@ -12,11 +23,12 @@ body {
     background-color: var(--sws-bg);
     color: #1e293b;
     scroll-behavior: smooth;
+    font-family: "Rubik", sans-serif;
+    overflow-x: hidden;
 }
 
-.sketch {
-    font-family: 'Cabin Sketch', cursive;
-}
+.sketch { font-family: 'Cabin Sketch', cursive; }
+.mono { font-family: "JetBrains Mono", monospace; }
 
 /* --- NAV & HEADER --- */
 .bg-maroon { background-color: var(--sws-maroon) !important; }
@@ -24,39 +36,34 @@ body {
 .text-gold { color: var(--sws-gold) !important; }
 
 .hero-gradient {
-    background: linear-gradient(90deg, var(--sws-gold) 40%, rgba(249,219,102,0.55) 100%), 
-                url('https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg');
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(180deg, var(--sws-gold) 0%, rgba(249,219,102,0.8) 100%),
+    url("https://southwestschoolhn.com/wp-content/uploads/2021/08/Group-3-Copy-6.jpg");
+    background-size: cover; background-position: center;
 }
 
-/* --- ADMIN UI LOGIC --- */
-.admin-only.hidden {
-    display: none !important;
-}
+/* --- DASHBOARD CARDS & TABLES --- */
+.hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
+.hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
 
-/* Smooth fade-in for when you log in as Admin */
-.animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-}
+.schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 10px; border: 1px solid #334155; }
+.schedule-table td { border: 1px solid #cbd5e1; padding: 10px; font-size: 0.8rem; text-align: center; vertical-align: middle; }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* Cell Colors */
+.g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
+.g8 { background-color: #dbeafe; color: #1e3a8a; font-weight: 700; }
+.g9 { background-color: #f3e8ff; color: #581c87; font-weight: 700; }
+.g10 { background-color: #fef9c3; color: #713f12; font-weight: 700; }
+.g11 { background-color: #fee2e2; color: #7f1d1d; font-weight: 700; }
+.vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.7rem; }
+.break { background-color: #475569; color: white; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
 
-/* --- BUTTONS & LINKS --- */
-.nav-link {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-}
+.sub-name { display: block; font-size: 0.9rem; line-height: 1.2; }
+.grade-tag { display: block; font-size: 0.65rem; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
 
-.nav-link:hover {
-    color: var(--sws-gold);
-    border-bottom: 2px solid var(--sws-gold);
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* --- BUTTONS --- */
 .sws-button {
     background-color: var(--sws-maroon);
     color: white;
@@ -67,7 +74,26 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.sws-button:hover {
-    background-color: var(--sws-maroon-dark);
-    transform: scale(1.05);
+/* --- PRINT MEDIA OVERRIDES --- */
+@media print {
+    body { background-color: white !important; }
+    body * { visibility: hidden; }
+    
+    #schedule-section, #schedule-section * { visibility: visible; }
+    #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
+    
+    .btn-print-hide, button { display: none !important; }
+
+    .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { 
+        border-radius: 0 !important; 
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+    }
+
+    .schedule-table th, .schedule-table td {
+        border: 1px solid #000 !important;
+        border-radius: 0 !important;
+    }
+
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
