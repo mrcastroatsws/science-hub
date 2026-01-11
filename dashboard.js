@@ -59,10 +59,17 @@ function updateLiveStatus() {
     }
 }
 
-window.onload = function() {
-    document.documentElement.classList.add('loaded');
-}
-
 // Start the dashboard loops
 setInterval(updateLiveStatus, 1000);
 updateLiveStatus();
+
+// UPDATE the bottom of dashboard.js to this:
+setInterval(updateLiveStatus, 1000);
+updateLiveStatus();
+
+window.onload = function() {
+    document.documentElement.classList.add('loaded');
+    if (typeof checkAuth === "function") {
+        checkAuth(); // Call the auth function from scripts.js
+    }
+}
