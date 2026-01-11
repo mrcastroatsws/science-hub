@@ -1,21 +1,20 @@
-// dashboard.js - Modular Logic Engine
-let hubData = {}; // Global store for JSON data
+// dashboard.js - Logic Engine
+let hubData = {};
 
-// 1. DATA LOADING
 async function loadData() {
     try {
         const response = await fetch('data.json');
         hubData = await response.json();
         
         renderCurriculum(hubData.courses);
-        renderScheduleTable('main-schedule-table'); // Render on main dashboard
-        updateLiveStatus(); // Initial run for clock and buttons
+        renderScheduleTable('main-schedule-table');
+        renderUtilityCards();
+        updateLiveStatus();
     } catch (e) {
         console.error("Master Binder Error: Content failed to load.", e);
     }
 }
 
-// 2. CURRICULUM GRID GENERATOR
 function renderCurriculum(courses) {
     const grid = document.getElementById('curriculum-grid');
     if (!grid) return;
@@ -56,67 +55,64 @@ function renderCurriculum(courses) {
     }).join('');
 }
 
-// 3. SCHEDULE TABLE GENERATOR (Dynamic for Modal and Page)
 function renderScheduleTable(targetId) {
     const table = document.getElementById(targetId);
     const rows = hubData.tableRows;
     if (!table || !rows) return;
-
     let html = `<thead><tr><th class="w-12">#</th><th class="w-24">Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody>`;
     rows.forEach(row => {
-        if (row.type === 'break') {
-            html += `<tr class="break"><td colspan="7">${row.label}</td></tr>`;
-        } else {
-            html += `<tr>
-                <td>${row.id}</td>
-                <td>${row.time}</td>
-                ${row.lbls.map((l, i) => {
-                    const dayClasses = [row.mon, row.tue, row.wed, row.thu, row.fri];
-                    return `<td class="${dayClasses[i]}"><span class="sub-name">${l}</span></td>`;
-                }).join('')}
-            </tr>`;
+        if (row.type === 'break') html += `<tr class="break"><td colspan="7">${row.label}</td></tr>`;
+        else {
+            html += `<tr><td>${row.id}</td><td>${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
         }
     });
     table.innerHTML = html + `</tbody>`;
 }
 
-// 4. MODAL CONTROLLER
+function renderUtilityCards() {
+    const grid = document.getElementById('utility-grid');
+    if(!grid) return;
+    grid.innerHTML = `
+        <a href="safety.html" class="hub-card bg-red-50 border-red-100 p-6 rounded-2xl flex items-center gap-4">
+            <div><h3 class="font-bold text-red-900 text-lg">Safety and Rules</h3><p class="text-xs text-red-700">Safety protocols, rules, and expectations</p></div>
+        </a>
+        <a href="science-fair.html" class="hub-card bg-teal-50 border-teal-100 p-6 rounded-2xl flex items-center gap-4">
+            <div><h3 class="font-bold text-teal-900 text-lg">Science Fair</h3><p class="text-xs text-teal-700">Guidelines</p></div>
+        </a>`;
+}
+
+// TOGGLE FUNCTIONS
+function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+}
+
 function toggleSchedule() {
     const modal = document.getElementById('schedule-modal');
-    if (!modal) return;
-    
     modal.classList.toggle('hidden');
-    
-    // Inject data if the modal table is currently empty
     const modalTable = document.getElementById('modal-schedule-table');
-    if (!modal.classList.contains('hidden') && modalTable && modalTable.innerHTML === "") {
+    if (!modal.classList.contains('hidden') && modalTable.innerHTML === "") {
         renderScheduleTable('modal-schedule-table');
     }
 }
 
-// 5. CLOCK & CONTEXTUAL "LIVE" SHORTCUTS
 function updateLiveStatus() {
     const now = getHondurasTime();
     const day = now.getDay();
     const timeVal = now.getHours() * 60 + now.getMinutes();
-    
     const clockEl = document.getElementById('live-clock');
     const liveBtn = document.getElementById('live-class-btn');
     const liveIndicator = document.getElementById('live-indicator');
 
     if (clockEl) clockEl.innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', weekday:'long'});
 
-    // Weekend or After School
     if (!hubData.schedule || day === 0 || day === 6 || (day === 5 && timeVal > 900)) {
         document.getElementById('status-now').innerText = "Weekend Mode";
-        document.getElementById('status-next').innerText = "Next: Mon 8:00 AM - Prep / Science 8";
-        if(liveBtn) liveBtn.classList.add('opacity-30');
+        document.getElementById('status-next').innerText = "Next: Mon 8:00 AM";
         return;
     }
 
     const today = hubData.schedule[day];
     let current = null, next = null;
-
     for (let i = 0; i < today.length; i++) {
         const s = parseInt(today[i].s.split(':')[0])*60 + parseInt(today[i].s.split(':')[1]);
         const e = parseInt(today[i].e.split(':')[0])*60 + parseInt(today[i].e.split(':')[1]);
@@ -128,30 +124,11 @@ function updateLiveStatus() {
         document.getElementById('status-now').innerText = current.c;
         document.getElementById('status-next').innerText = next ? `Next: ${next.s} - ${next.c}` : "End of Day";
 
-        // Handle the "Live Class" Contextual Button
-        const portalMap = {
-            "Science 7": "7th-portal.html",
-            "Science 8": "8th-portal.html",
-            "Science 9": "9th-portal.html",
-            "Bio 10": "10thbio-portal.html",
-            "Chem 10": "10thchem-portal.html",
-            "Bio 11": "11thbio-portal.html",
-            "Chem 11": "11thchem-portal.html",
-            "Econ 11": "11thecon-portal.html"
-        };
-
-        const targetPortal = portalMap[current.c];
-        if (targetPortal && liveBtn) {
-            liveBtn.href = targetPortal;
-            liveBtn.classList.remove('text-white/50');
-            liveBtn.classList.add('text-[#f9db66]');
-            if(liveIndicator) liveIndicator.classList.remove('hidden');
-        }
-    } else {
-        if(liveBtn) {
-            liveBtn.href = "#";
-            liveBtn.classList.add('text-white/50');
-            if(liveIndicator) liveIndicator.classList.add('hidden');
+        const portalMap = { "Science 7": "7th-portal.html", "Science 8": "8th-portal.html", "Science 9": "9th-portal.html", "Bio 10": "10thbio-portal.html", "Chem 10": "10thchem-portal.html", "Bio 11": "11thbio-portal.html", "Chem 11": "11thchem-portal.html", "Econ 11": "11thecon-portal.html" };
+        if (portalMap[current.c] && liveBtn) {
+            liveBtn.href = portalMap[current.c];
+            liveBtn.classList.replace('text-white/50', 'text-[#f9db66]');
+            liveIndicator.classList.remove('hidden');
         }
     }
 }
@@ -162,7 +139,6 @@ function getHondurasTime() {
     return new Date(utc + (3600000 * -6));
 }
 
-// 6. INITIALIZATION
 window.onload = async function() {
     await loadData();
     document.documentElement.classList.add('loaded');
