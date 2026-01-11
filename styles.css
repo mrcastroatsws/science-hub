@@ -27,16 +27,16 @@ body {
     overflow-x: hidden;
 }
 
-/* Ensure content isn't hidden behind the bottom tab bar on mobile */
+/* MOBILE FIX: Prevent bottom bar from covering content */
 @media (max-width: 767px) {
     body {
-        padding-bottom: 80px; 
+        padding-bottom: 100px; 
     }
 }
 
 .sketch { 
     font-family: 'Cabin Sketch', cursive; 
-    white-space: nowrap; /* Prevents header from wrapping to 2 lines */
+    white-space: nowrap; 
 }
 .mono { font-family: "JetBrains Mono", monospace; }
 
@@ -51,38 +51,59 @@ body {
     background-size: cover; background-position: center;
 }
 
-/* --- DASHBOARD CARDS & TABLES --- */
+/* --- DASHBOARD CARDS --- */
 .hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
 .hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
 
-.schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 10px; border: 1px solid #334155; }
-.schedule-table td { border: 1px solid #cbd5e1; padding: 10px; font-size: 0.8rem; text-align: center; vertical-align: middle; }
+/* --- STICKY SCHEDULE LOGIC (Mobile Friendly) --- */
+.schedule-container {
+    position: relative;
+}
 
-/* Cell Colors */
+/* Makes Time/ID columns stay on the left while you scroll days */
+.schedule-table th:nth-child(1), .schedule-table td:nth-child(1),
+.schedule-table th:nth-child(2), .schedule-table td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: #ffffff;
+    border-right: 2px solid #cbd5e1;
+}
+
+.schedule-table th:nth-child(1), .schedule-table th:nth-child(2) {
+    background-color: #1e293b;
+    z-index: 20;
+}
+
+.schedule-table td:nth-child(1) { left: 0; width: 40px; }
+.schedule-table td:nth-child(2) { left: 40px; width: 100px; font-weight: bold; }
+
+/* --- SCHEDULE CELL COLORS --- */
 .g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
 .g8 { background-color: #dbeafe; color: #1e3a8a; font-weight: 700; }
 .g9 { background-color: #f3e8ff; color: #581c87; font-weight: 700; }
 .g10 { background-color: #fef9c3; color: #713f12; font-weight: 700; }
 .g11 { background-color: #fee2e2; color: #7f1d1d; font-weight: 700; }
 .vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.7rem; }
-.break { background-color: #475569; color: white; font-weight: 700; font-size: 0.7rem; letter-spacing: 1px; }
+.break { background-color: #475569 !important; color: white !important; font-weight: 700; }
+
+.schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 12px; border: 1px solid #334155; }
+.schedule-table td { border: 1px solid #cbd5e1; padding: 12px; font-size: 0.8rem; text-align: center; }
 
 .sub-name { display: block; font-size: 0.9rem; line-height: 1.2; }
-.grade-tag { display: block; font-size: 0.65rem; text-transform: uppercase; opacity: 0.8; margin-top: 2px; }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* --- BUTTONS --- */
+/* --- UI COMPONENTS --- */
 .sws-button {
     background-color: var(--sws-maroon);
     color: white;
     padding: 0.75rem 2rem;
     border-radius: 9999px;
     font-weight: 700;
-    transition: transform 0.2s, background-color 0.2s;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* --- PRINT MEDIA OVERRIDES --- */
 @media print {
@@ -91,7 +112,7 @@ body {
     #schedule-section, #schedule-section * { visibility: visible; }
     #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
     .btn-print-hide, button { display: none !important; }
-    .rounded-lg, .rounded-2xl, .overflow-x-auto, .schedule-table { border-radius: 0 !important; border: 1px solid #000 !important; box-shadow: none !important; }
-    .schedule-table th, .schedule-table td { border: 1px solid #000 !important; border-radius: 0 !important; }
+    .rounded-lg, .rounded-2xl, .schedule-table { border-radius: 0 !important; border: 1px solid #000 !important; }
+    .schedule-table th, .schedule-table td { position: static !important; border: 1px solid #000 !important; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
