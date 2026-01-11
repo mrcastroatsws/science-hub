@@ -11,6 +11,8 @@
 </head>
 <body class="bg-white">
     
+    <div id="print-only-schedule" class="hidden-on-screen"></div>
+
     <div id="mobile-menu" class="fixed inset-0 z-[150] hidden">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleMenu()"></div>
         <div class="absolute right-0 top-0 h-full w-64 bg-white shadow-2xl p-6 flex flex-col space-y-6">
@@ -81,7 +83,7 @@
         <p class="text-[#ac2e55] font-bold text-sm sm:text-xl uppercase tracking-[0.3em]">2025 - 2026</p>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-12">
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-12 pb-24">
         <div class="bg-slate-800 text-white rounded-xl p-6 mb-6 flex flex-col md:flex-row justify-between items-center shadow-lg border-l-4 border-[#f9db66] btn-print-hide">
             <div>
                 <h3 class="sketch text-2xl text-[#f9db66]">Current Status</h3>
@@ -104,10 +106,10 @@
             <div id="utility-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"></div>
         </section>
 
-        <section id="schedule-section">
+        <section id="schedule-section" class="btn-print-hide">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="sketch text-3xl text-slate-800">Weekly Schedule</h2>
-                <button onclick="window.print()" class="btn-print-hide text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
+                <button onclick="window.print()" class="text-xs font-bold border border-slate-300 px-4 py-2 rounded hover:bg-slate-100 uppercase">Print</button>
             </div>
             <div id="schedule-container" class="rounded-lg border border-slate-300 shadow-sm bg-white overflow-hidden">
                 </div>
@@ -124,7 +126,7 @@
             <div id="modal-schedule-container" class="p-4 overflow-auto bg-slate-50 flex-grow">
                 </div>
             <div class="p-4 bg-white border-t text-center">
-                <p class="text-[10px] text-slate-400 uppercase font-bold">Southwest School Science Dept</p>
+                <button onclick="window.print()" class="text-[10px] text-slate-400 uppercase font-bold hover:text-[#ac2e55]">Print Master 5-Day Grid</button>
             </div>
         </div>
     </div>
