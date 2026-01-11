@@ -1,19 +1,21 @@
-// dashboard.js - Modular Logic Engine
+// dashboard.js - Modular Logic Engine 2.0
 let hubData = {};
 
-// 1. DATA LOADING
+/**
+ * 1. CORE DATA INITIALIZATION
+ * Fetches JSON and triggers the layout builds.
+ */
 async function loadData() {
     try {
         const response = await fetch('data.json');
         hubData = await response.json();
         
+        // Build UI Components
         renderCurriculum(hubData.courses);
         renderUtilityCards();
         
-        // Render Responsive Schedule for Screen
+        // Build Schedule views (Screen + Hidden Print Area)
         renderScheduleTable('schedule-container', 'main-schedule-table'); 
-        
-        // Render Full Grid for Printer (Invisible ghost table)
         if (document.getElementById('print-only-schedule')) {
             renderFullGrid('print-only-schedule'); 
         }
@@ -24,7 +26,9 @@ async function loadData() {
     }
 }
 
-// 2. CURRICULUM GRID GENERATOR
+/**
+ * 2. CURRICULUM UI GENERATOR
+ */
 function renderCurriculum(courses) {
     const grid = document.getElementById('curriculum-grid');
     if (!grid) return;
@@ -65,7 +69,10 @@ function renderCurriculum(courses) {
     }).join('');
 }
 
-// 3. RESPONSIVE SCHEDULE ENGINE
+/**
+ * 3. RESPONSIVE SCHEDULE ENGINE
+ * Smart-switches between Card Stack (Mobile) and Grid (Laptop)
+ */
 function renderScheduleTable(containerId, tableId) {
     const container = document.getElementById(containerId);
     if (!container || !hubData.tableRows) return;
@@ -90,13 +97,13 @@ function renderScheduleTable(containerId, tableId) {
                     </h4>
                     <div class="space-y-2">
                         ${hubData.tableRows.map(row => {
-                            if (row.type === 'break') return `<div class="text-[9px] text-slate-400 font-bold uppercase text-center py-2">${row.label}</div>`;
+                            if (row.type === 'break') return `<div class="text-[9px] text-slate-400 font-bold uppercase text-center py-2 italic">${row.label}</div>`;
                             const classLabel = row.lbls[dIdx - 1];
                             const classColor = [row.mon, row.tue, row.wed, row.thu, row.fri][dIdx - 1];
                             return `
                                 <div class="schedule-card">
-                                    <div class="w-14 bg-slate-50 text-[9px] font-mono flex items-center justify-center border-r h-full text-slate-400">${row.time.split(' ')[0]}</div>
-                                    <div class="flex-grow px-4 ${classColor} h-full flex items-center"><span class="sub-name">${classLabel}</span></div>
+                                    <div class="card-time">${row.time.split(' ')[0]}</div>
+                                    <div class="card-content ${classColor}"><span class="sub-name">${classLabel}</span></div>
                                 </div>`;
                         }).join('')}
                     </div>
@@ -108,13 +115,15 @@ function renderScheduleTable(containerId, tableId) {
     }
 }
 
-// 4. FULL GRID GENERATOR (For Laptop and Printing)
+/**
+ * 4. FULL GRID GENERATOR (Laptop & Printing)
+ */
 function renderFullGrid(targetId) {
     const container = document.getElementById(targetId);
     if (!container) return;
     let html = `<table class="schedule-table w-full"><thead><tr><th class="w-24">Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr></thead><tbody>`;
     hubData.tableRows.forEach(row => {
-        if (row.type === 'break') html += `<tr class="break"><td colspan="6">${row.label}</td></tr>`;
+        if (row.type === 'break') html += `<tr class="break"><td colspan="6" style="background:#f1f5f9; color:#64748b; font-size:10px; font-weight:bold;">${row.label}</td></tr>`;
         else {
             html += `<tr><td class="font-mono text-[10px] bg-slate-50 font-bold">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
         }
@@ -122,20 +131,21 @@ function renderFullGrid(targetId) {
     container.innerHTML = html + `</tbody></table>`;
 }
 
-// 5. UTILITY CARDS
+/**
+ * 5. UTILITY & NAVIGATION
+ */
 function renderUtilityCards() {
     const grid = document.getElementById('utility-grid');
     if(!grid) return;
     grid.innerHTML = `
         <a href="safety.html" class="hub-card bg-red-50 border-red-100 p-6 rounded-2xl flex items-center gap-4">
-            <div><h3 class="font-bold text-red-900 text-lg">Safety and Rules</h3><p class="text-xs text-red-700">Safety protocols, rules, and expectations</p></div>
+            <div><h3 class="font-bold text-red-900 text-lg">Safety and Rules</h3><p class="text-xs text-red-700">Safety protocols and lab expectations</p></div>
         </a>
         <a href="science-fair.html" class="hub-card bg-teal-50 border-teal-100 p-6 rounded-2xl flex items-center gap-4">
-            <div><h3 class="font-bold text-teal-900 text-lg">Science Fair</h3><p class="text-xs text-teal-700">Guidelines</p></div>
+            <div><h3 class="font-bold text-teal-900 text-lg">Science Fair</h3><p class="text-xs text-teal-700">Progress tracking and rubric details</p></div>
         </a>`;
 }
 
-// 6. UI CONTROLS
 function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
 
 function toggleSchedule() {
@@ -146,7 +156,9 @@ function toggleSchedule() {
     }
 }
 
-// 7. LIVE STATUS ENGINE
+/**
+ * 6. LIVE STATUS ENGINE (Routing + Indicators)
+ */
 function updateLiveStatus() {
     const now = getHondurasTime();
     const day = now.getDay();
@@ -175,6 +187,7 @@ function updateLiveStatus() {
     if (current) {
         document.getElementById('status-now').innerText = current.c;
         document.getElementById('status-next').innerText = next ? `Next: ${next.s} - ${next.c}` : "End of Day";
+        
         const portalMap = { "Science 7": "7th-portal.html", "Science 8": "8th-portal.html", "Science 9": "9th-portal.html", "Bio 10": "10thbio-portal.html", "Chem 10": "10thchem-portal.html", "Bio 11": "11thbio-portal.html", "Chem 11": "11thchem-portal.html", "Econ 11": "11thecon-portal.html" };
         if (portalMap[current.c] && liveBtn) {
             liveBtn.href = portalMap[current.c];
@@ -190,7 +203,7 @@ function getHondurasTime() {
     return new Date(utc + (3600000 * -6));
 }
 
-// 8. INITIALIZATION
+// 7. BOOTSTRAP
 window.onload = async function() {
     await loadData();
     document.documentElement.classList.add('loaded');
@@ -198,4 +211,6 @@ window.onload = async function() {
     if (typeof checkAuth === "function") checkAuth();
 };
 
-window.addEventListener('resize', () => { renderScheduleTable('schedule-container', 'main-schedule-table'); });
+window.addEventListener('resize', () => { 
+    renderScheduleTable('schedule-container', 'main-schedule-table'); 
+});
