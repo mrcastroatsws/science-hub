@@ -2,81 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Fair</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Science Fair | Southwest</title>
+    <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Cabin+Sketch:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-slate-50 font-sans">
+<body class="bg-slate-50">
 
-    <div class="bg-slate-800 text-white py-2 px-6 flex justify-between items-center text-xs">
-        <div class="flex items-center space-x-4">
-            <span class="opacity-70 italic">Southwest School</span>
-            <span class="admin-only hidden bg-[#29c4a9] text-white px-2 py-0.5 rounded font-bold">ADMIN ACTIVE</span>
+    <div class="sticky top-0 z-[60] w-full shadow-lg btn-print-hide">
+        <div class="bg-slate-800 text-white py-2 px-6 flex justify-between items-center text-[10px] uppercase tracking-widest relative z-20">
+            <div class="flex items-center space-x-4">
+                <span class="opacity-70 italic">Science Fair 2026</span>
+                <span class="admin-only hidden bg-[#29c4a9] text-white px-2 py-0.5 rounded font-bold">ADMIN ACTIVE</span>
+            </div>
+            <div class="flex space-x-4">
+                <button onclick="login()" class="public-only hover:text-[#f9db66] transition">Login</button>
+                <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition">Logout</button>
+            </div>
         </div>
-        <div>
-            <button onclick="login()" class="public-only hover:text-[#f9db66] transition underline">Login</button>
-            <button onclick="logout()" class="admin-only hidden hover:text-[#f9db66] transition underline">Logout</button>
-        </div>
+        <nav class="bg-[#ac2e55] text-white p-3 relative z-10 border-t border-white/10">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="index.html" class="sketch text-lg sm:text-2xl font-bold tracking-tight">HOME</a>
+                <span class="opacity-40 text-xs uppercase font-bold border-l pl-4 border-white/40 tracking-wider">Progress Portal</span>
+            </div>
+        </nav>
     </div>
 
-    <header class="bg-[#ac2e55] text-white p-8 text-center shadow-lg relative">
-        <h1 class="text-4xl font-bold tracking-widest uppercase mb-2">Science Fair</h1>
-        <p class="text-[#f9db66] font-semibold italic">Progress Portal</p>
-        
-        <a href="index.html" class="absolute top-8 left-8 text-sm opacity-50 hover:opacity-100 transition">Home</a>
-    </header>
-
-    <main class="max-w-5xl mx-auto p-6 space-y-8">
-        
-        <section class="admin-only hidden bg-white rounded-xl shadow-2xl border-2 border-[#f9db66] p-6 animate-fade-in">
-            <div class="flex items-center space-x-3 mb-4">
-                <h2 class="text-xl font-bold text-slate-800">Teacher Notes</h2>
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-white/10 z-[100] flex justify-around items-center py-3 pb-6 px-2 btn-print-hide">
+        <a href="index.html" class="flex flex-col items-center text-white/50">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Home</span>
+        </a>
+        <a id="live-class-btn" href="#" class="flex flex-col items-center text-white/50 transition-all duration-500">
+            <div class="relative">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span id="live-indicator" class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full hidden animate-ping"></span>
             </div>
-            <div class="grid md:grid-cols-2 gap-4 text-sm">
-                <div class="p-4 bg-slate-50 rounded border">
-                    <h4 class="font-bold text-[#ac2e55] mb-2">Reminders: 9th Grade</h4>
-                    <ul class="list-disc ml-4 space-y-1 text-slate-600">
-                        <li>Atomic Structure diagrams.</li>
-                        <li>Energy Transformation review.</li>
-                    </ul>
-                </div>
-                <div class="p-4 bg-slate-50 rounded border">
-                    <h4 class="font-bold text-[#ac2e55] mb-2">Reminders: 11th Grade</h4>
-                    <ul class="list-disc ml-4 space-y-1 text-slate-600">
-                        <li>The mole and stoichiometry calculations.</li>
-                        <li>Ensure Lab Safety Rules.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            <span class="text-[8px] font-bold uppercase mt-1">Live Class</span>
+        </a>
+        <a href="science-fair.html" class="flex flex-col items-center text-[#f9db66]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Fair</span>
+        </a>
+        <button onclick="toggleSchedule()" class="flex flex-col items-center text-white/50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="text-[8px] font-bold uppercase mt-1">Sched</span>
+        </button>
+    </div>
 
+    <main class="max-w-5xl mx-auto p-6 space-y-8 pb-24">
+        
         <section class="bg-white rounded-xl shadow-md border-t-4 border-[#ac2e55] overflow-hidden">
             <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold text-slate-800">Science Fair Structure</h2>
-                    <button class="admin-only hidden text-[#ac2e55] text-xs font-bold border border-[#ac2e55] px-2 py-1 rounded">Edit Rubric</button>
-                </div>
+                <h2 class="text-2xl font-bold text-slate-800 mb-6">Grading Breakdown (25 pts)</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">Classwork</span>
-                        <span class="text-xl font-bold text-[#ac2e55]">Science Log</span>
-                        <span class="block text-xs font-bold text-slate-400">TBA</span>
+                    <div class="p-4 bg-slate-50 border rounded text-center">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase">CW #2</span>
+                        <span class="text-lg font-bold text-[#ac2e55]">Bitácora</span>
+                        <span class="block text-sm font-bold text-slate-600">5 pts</span>
                     </div>
-                    <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">Classwork</span>
-                        <span class="text-xl font-bold text-[#ac2e55]">Display Board</span>
-                        <span class="block text-xs font-bold text-slate-400">TBA</span>
+                    <div class="p-4 bg-slate-50 border rounded text-center">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase">CW #4</span>
+                        <span class="text-lg font-bold text-[#ac2e55]">Trifolio</span>
+                        <span class="block text-sm font-bold text-slate-600">5 pts</span>
                     </div>
-                    <div class="p-4 bg-slate-50 border rounded text-center hover:bg-white hover:shadow-inner transition">
-                        <span class="block text-sm text-slate-500">Homework</span>
-                        <span class="text-xl font-bold text-[#ac2e55]">Preparation</span>
-                        <span class="block text-xs font-bold text-slate-400">TBA</span>
+                    <div class="p-4 bg-slate-50 border rounded text-center">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase">HW #2</span>
+                        <span class="text-lg font-bold text-[#ac2e55]">Setup</span>
+                        <span class="block text-sm font-bold text-slate-600">5 pts</span>
                     </div>
-                    <div class="p-4 bg-[#f9db66] border rounded text-center hover:shadow-lg transition cursor-help">
-                        <span class="block text-sm text-[#ac2e55]">Activity</span>
-                        <span class="text-xl font-bold text-[#ac2e55]">Oral Presentation</span>
-                        <span class="block text-xs font-bold text-[#ac2e55]">10 pts</span>
+                    <div class="p-4 bg-[#f9db66] border border-[#f9db66] rounded text-center">
+                        <span class="block text-[10px] font-bold text-[#ac2e55] uppercase">Activity</span>
+                        <span class="text-lg font-bold text-[#ac2e55]">Oral Defense</span>
+                        <span class="block text-sm font-bold text-[#ac2e55]">10 pts</span>
                     </div>
                 </div>
             </div>
@@ -84,20 +84,28 @@
 
         <section class="bg-slate-900 text-white p-8 rounded-2xl shadow-xl flex flex-col items-center relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-[#ac2e55] opacity-20 rounded-full"></div>
-            
-            <h3 class="text-2xl font-bold text-[#f9db66] z-10">Check-in Timer</h3>
-            <p class="text-slate-400 italic mb-6 z-10">Open your science logs. We will work on updates.</p>
-            
+            <h3 class="text-2xl font-bold text-[#f9db66] z-10">Log Check-in</h3>
+            <p class="text-slate-400 italic mb-6 z-10">5-minute quick update on your Bitácora.</p>
             <div id="timerDisplay" class="text-7xl font-mono text-[#29c4a9] mb-6 z-10 tabular-nums">05:00</div>
-            
             <div class="flex space-x-4 z-10">
-                <button onclick="startTimer(300, 'timerDisplay')" class="bg-[#ac2e55] hover:bg-rose-700 px-8 py-3 rounded-full font-bold transition shadow-lg">Start Timer</button>
+                <button onclick="startTimer(300, 'timerDisplay')" class="bg-[#ac2e55] hover:bg-rose-700 px-8 py-3 rounded-full font-bold transition shadow-lg">Start</button>
                 <button onclick="resetTimer('timerDisplay')" class="admin-only hidden border border-slate-600 px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition">Reset</button>
             </div>
         </section>
-
     </main>
 
+    <div id="schedule-modal" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-md" onclick="toggleSchedule()"></div>
+        <div class="relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl shadow-2xl flex flex-col">
+            <div class="p-6 border-b flex justify-between items-center bg-slate-50">
+                <h2 class="sketch text-2xl text-slate-800">Schedule</h2>
+                <button onclick="toggleSchedule()" class="text-slate-400 text-xl p-2">✕</button>
+            </div>
+            <div class="p-4 overflow-auto"><table class="schedule-table w-full min-w-[700px]" id="modal-schedule-table"></table></div>
+        </div>
+    </div>
+
     <script src="scripts.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
