@@ -59,6 +59,10 @@ function updateLiveStatus() {
     }
 }
 
+window.onload = function() {
+    document.documentElement.classList.add('loaded');
+}
+
 // Start the dashboard loops
 setInterval(updateLiveStatus, 1000);
 updateLiveStatus();
