@@ -30,7 +30,7 @@ body {
 /* MOBILE FIX: Prevent bottom bar from covering content */
 @media (max-width: 767px) {
     body {
-        padding-bottom: 100px; 
+        padding-bottom: 100px !important; 
     }
 }
 
@@ -55,28 +55,31 @@ body {
 .hub-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
 .hub-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--sws-gold); }
 
-/* --- STICKY SCHEDULE LOGIC (Mobile Friendly) --- */
-.schedule-container {
-    position: relative;
+/* --- SCHEDULE GRID (Desktop Only) --- */
+.schedule-table th { 
+    background-color: #1e293b; 
+    color: white; 
+    text-transform: uppercase; 
+    font-size: 0.65rem; 
+    padding: 12px 8px; 
+    border: 1px solid #334155; 
+}
+.schedule-table td { 
+    border: 1px solid #cbd5e1; 
+    padding: 10px; 
+    font-size: 0.75rem; 
+    text-align: center; 
 }
 
-/* Makes Time/ID columns stay on the left while you scroll days */
-.schedule-table th:nth-child(1), .schedule-table td:nth-child(1),
-.schedule-table th:nth-child(2), .schedule-table td:nth-child(2) {
+/* Sticky Column for Laptop Horizontal Scroll if needed */
+.schedule-table td:nth-child(1) {
     position: sticky;
     left: 0;
     z-index: 10;
-    background-color: #ffffff;
+    background-color: #f8fafc;
+    font-weight: bold;
     border-right: 2px solid #cbd5e1;
 }
-
-.schedule-table th:nth-child(1), .schedule-table th:nth-child(2) {
-    background-color: #1e293b;
-    z-index: 20;
-}
-
-.schedule-table td:nth-child(1) { left: 0; width: 40px; }
-.schedule-table td:nth-child(2) { left: 40px; width: 100px; font-weight: bold; }
 
 /* --- SCHEDULE CELL COLORS --- */
 .g7 { background-color: #dcfce7; color: #14532d; font-weight: 700; }
@@ -87,10 +90,29 @@ body {
 .vacant { background-color: #f1f5f9; color: #94a3b8; font-style: italic; font-size: 0.7rem; }
 .break { background-color: #475569 !important; color: white !important; font-weight: 700; }
 
-.schedule-table th { background-color: #1e293b; color: white; text-transform: uppercase; font-size: 0.7rem; padding: 12px; border: 1px solid #334155; }
-.schedule-table td { border: 1px solid #cbd5e1; padding: 12px; font-size: 0.8rem; text-align: center; }
+.sub-name { display: block; font-size: 0.85rem; line-height: 1.2; }
 
-.sub-name { display: block; font-size: 0.9rem; line-height: 1.2; }
+/* --- APP STYLE BOTTOM BAR --- */
+.fixed.bottom-0 {
+    bottom: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 15px);
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+}
+
+.fixed.bottom-0 a, .fixed.bottom-0 button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease;
+}
+
+.fixed.bottom-0 a:active, .fixed.bottom-0 button:active {
+    transform: scale(0.9);
+}
 
 /* --- UI COMPONENTS --- */
 .sws-button {
@@ -99,7 +121,6 @@ body {
     padding: 0.75rem 2rem;
     border-radius: 9999px;
     font-weight: 700;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -111,32 +132,8 @@ body {
     body * { visibility: hidden; }
     #schedule-section, #schedule-section * { visibility: visible; }
     #schedule-section { position: absolute; left: 0; top: 0; width: 100%; border: none !important; }
-    .btn-print-hide, button { display: none !important; }
+    .btn-print-hide, button, .fixed.bottom-0 { display: none !important; }
     .rounded-lg, .rounded-2xl, .schedule-table { border-radius: 0 !important; border: 1px solid #000 !important; }
     .schedule-table th, .schedule-table td { position: static !important; border: 1px solid #000 !important; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-}
-/* Add this to the bottom of styles.css */
-
-/* Ensure the body has exactly enough space for the 80px high bar */
-@media (max-width: 767px) {
-    body {
-        padding-bottom: 80px !important; 
-    }
-}
-
-/* Force the tab bar to the edge and handle iPhone Home Bar */
-.fixed.bottom-0 {
-    bottom: 0 !important;
-    padding-bottom: env(safe-area-inset-bottom, 15px); /* Native space for real phones */
-    height: auto !important; /* Let content + safe area define height */
-    min-height: 70px;
-}
-
-/* Make icons look crisp and centered */
-.fixed.bottom-0 a, .fixed.bottom-0 button {
-    flex: 1; /* Distributes space equally */
-    height: 100%;
-    display: flex;
-    justify-content: center;
 }
