@@ -130,3 +130,9 @@ body {
 .fixed.bottom-0 {
     bottom: 0 !important;
 }
+/* App-like feedback when tapping buttons */
+.md\:hidden.fixed.bottom-0 a:active, 
+.md\:hidden.fixed.bottom-0 button:active {
+    transform: scale(0.92);
+    transition: transform 0.1s ease;
+}
