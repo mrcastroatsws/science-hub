@@ -1,20 +1,22 @@
 // dashboard.js - Logic Engine
 let hubData = {};
 
+// 1. DATA LOADING
 async function loadData() {
     try {
         const response = await fetch('data.json');
         hubData = await response.json();
         
         renderCurriculum(hubData.courses);
-        renderScheduleTable('main-schedule-table');
+        renderScheduleTable('schedule-container', 'main-schedule-table'); // Main Page
         renderUtilityCards();
-        updateLiveStatus();
+        updateLiveStatus(); 
     } catch (e) {
         console.error("Master Binder Error: Content failed to load.", e);
     }
 }
 
+// 2. CURRICULUM GRID GENERATOR
 function renderCurriculum(courses) {
     const grid = document.getElementById('curriculum-grid');
     if (!grid) return;
@@ -55,20 +57,55 @@ function renderCurriculum(courses) {
     }).join('');
 }
 
-function renderScheduleTable(targetId) {
-    const table = document.getElementById(targetId);
-    const rows = hubData.tableRows;
-    if (!table || !rows) return;
-    let html = `<thead><tr><th class="w-12">#</th><th class="w-24">Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody>`;
-    rows.forEach(row => {
-        if (row.type === 'break') html += `<tr class="break"><td colspan="7">${row.label}</td></tr>`;
-        else {
-            html += `<tr><td>${row.id}</td><td>${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
-        }
-    });
-    table.innerHTML = html + `</tbody>`;
+// 3. SCHEDULE RENDERER (Day/Next Day Logic for Mobile)
+function renderScheduleTable(containerId, tableId) {
+    const container = document.getElementById(containerId);
+    if (!container || !hubData.tableRows) return;
+
+    const isMobile = window.innerWidth < 768;
+    const now = getHondurasTime();
+    let todayIdx = now.getDay(); // 1=Mon, 5=Fri
+    if (todayIdx === 0 || todayIdx === 6) todayIdx = 1; // Default to Mon on weekends
+    
+    const nextDayIdx = todayIdx < 5 ? todayIdx + 1 : 1;
+    const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+    if (isMobile) {
+        // MOBILE: Show "Today" and "Tomorrow" stacks
+        let mobileHtml = `<div class="space-y-6 p-2">`;
+        [todayIdx, nextDayIdx].forEach((dIdx, i) => {
+            mobileHtml += `
+                <div>
+                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 px-2">${i === 0 ? 'Today' : 'Upcoming'}: ${dayNames[dIdx]}</h4>
+                    <div class="space-y-1">
+                        ${hubData.tableRows.map(row => {
+                            if (row.type === 'break') return `<div class="text-[9px] bg-slate-100 text-slate-500 py-1 px-3 rounded font-bold text-center">${row.label}</div>`;
+                            const classLabel = row.lbls[dIdx - 1];
+                            const classColor = [row.mon, row.tue, row.wed, row.thu, row.fri][dIdx - 1];
+                            return `
+                                <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden h-10 shadow-sm">
+                                    <div class="w-16 text-[9px] font-mono bg-slate-50 text-slate-400 flex items-center justify-center border-r h-full">${row.time.split(' ')[0]}</div>
+                                    <div class="flex-grow px-3 text-xs font-bold ${classColor}">${classLabel}</div>
+                                </div>`;
+                        }).join('')}
+                    </div>
+                </div>`;
+        });
+        container.innerHTML = mobileHtml + `</div>`;
+    } else {
+        // DESKTOP: Full Grid
+        let html = `<table class="schedule-table w-full" id="${tableId}"><thead><tr><th class="w-24">Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody>`;
+        hubData.tableRows.forEach(row => {
+            if (row.type === 'break') html += `<tr class="break"><td colspan="6">${row.label}</td></tr>`;
+            else {
+                html += `<tr><td class="font-mono text-[10px] bg-slate-50">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
+            }
+        });
+        container.innerHTML = html + `</tbody></table>`;
+    }
 }
 
+// 4. UTILITY CARDS (Safety/Science Fair)
 function renderUtilityCards() {
     const grid = document.getElementById('utility-grid');
     if(!grid) return;
@@ -81,7 +118,7 @@ function renderUtilityCards() {
         </a>`;
 }
 
-// TOGGLE FUNCTIONS
+// 5. TOGGLE FUNCTIONS
 function toggleMenu() {
     document.getElementById('mobile-menu').classList.toggle('hidden');
 }
@@ -89,12 +126,13 @@ function toggleMenu() {
 function toggleSchedule() {
     const modal = document.getElementById('schedule-modal');
     modal.classList.toggle('hidden');
-    const modalTable = document.getElementById('modal-schedule-table');
-    if (!modal.classList.contains('hidden') && modalTable.innerHTML === "") {
-        renderScheduleTable('modal-schedule-table');
+    const modalContainer = document.getElementById('modal-schedule-container');
+    if (!modal.classList.contains('hidden')) {
+        renderScheduleTable('modal-schedule-container', 'modal-table');
     }
 }
 
+// 6. LIVE STATUS & BUTTON LOGIC
 function updateLiveStatus() {
     const now = getHondurasTime();
     const day = now.getDay();
@@ -139,9 +177,15 @@ function getHondurasTime() {
     return new Date(utc + (3600000 * -6));
 }
 
+// 7. INITIALIZATION
 window.onload = async function() {
     await loadData();
     document.documentElement.classList.add('loaded');
     setInterval(updateLiveStatus, 1000);
     if (typeof checkAuth === "function") checkAuth();
 };
+
+// Handle window resizing (re-render schedule to switch between Table and Stack)
+window.addEventListener('resize', () => {
+    renderScheduleTable('schedule-container', 'main-schedule-table');
+});
