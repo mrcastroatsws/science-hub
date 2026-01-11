@@ -1,4 +1,4 @@
-// dashboard.js - Logic Engine
+// dashboard.js - Modular Logic Engine
 let hubData = {};
 
 // 1. DATA LOADING
@@ -8,7 +8,7 @@ async function loadData() {
         hubData = await response.json();
         
         renderCurriculum(hubData.courses);
-        renderScheduleTable('schedule-container', 'main-schedule-table'); // Main Page
+        renderScheduleTable('schedule-container', 'main-schedule-table'); // Main Dashboard View
         renderUtilityCards();
         updateLiveStatus(); 
     } catch (e) {
@@ -57,7 +57,7 @@ function renderCurriculum(courses) {
     }).join('');
 }
 
-// 3. SCHEDULE RENDERER (Day/Next Day Logic for Mobile)
+// 3. SCHEDULE RENDERER (Smart Switch: Table for Laptop, Stack for Phone)
 function renderScheduleTable(containerId, tableId) {
     const container = document.getElementById(containerId);
     if (!container || !hubData.tableRows) return;
@@ -71,21 +71,26 @@ function renderScheduleTable(containerId, tableId) {
     const dayNames = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
     if (isMobile) {
-        // MOBILE: Show "Today" and "Tomorrow" stacks
-        let mobileHtml = `<div class="space-y-6 p-2">`;
-        [todayIdx, nextDayIdx].forEach((dIdx, i) => {
+        // MOBILE VIEW: Today & Upcoming Stack (Zero-Scroll Design)
+        let mobileHtml = `<div class="p-3 space-y-8">`;
+        [todayIdx, nextDayIdx].forEach((dIdx, stackLoop) => {
             mobileHtml += `
                 <div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 px-2">${i === 0 ? 'Today' : 'Upcoming'}: ${dayNames[dIdx]}</h4>
-                    <div class="space-y-1">
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center">
+                        <span class="w-2 h-2 rounded-full ${stackLoop === 0 ? 'bg-green-500' : 'bg-blue-400'} mr-2"></span>
+                        ${stackLoop === 0 ? 'Today' : 'Upcoming'}: ${dayNames[dIdx]}
+                    </h4>
+                    <div class="space-y-2">
                         ${hubData.tableRows.map(row => {
-                            if (row.type === 'break') return `<div class="text-[9px] bg-slate-100 text-slate-500 py-1 px-3 rounded font-bold text-center">${row.label}</div>`;
+                            if (row.type === 'break') return `<div class="text-[9px] text-slate-400 font-bold uppercase text-center py-2">${row.label}</div>`;
                             const classLabel = row.lbls[dIdx - 1];
                             const classColor = [row.mon, row.tue, row.wed, row.thu, row.fri][dIdx - 1];
                             return `
-                                <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden h-10 shadow-sm">
-                                    <div class="w-16 text-[9px] font-mono bg-slate-50 text-slate-400 flex items-center justify-center border-r h-full">${row.time.split(' ')[0]}</div>
-                                    <div class="flex-grow px-3 text-xs font-bold ${classColor}">${classLabel}</div>
+                                <div class="schedule-card">
+                                    <div class="w-14 bg-slate-50 text-[9px] font-mono flex items-center justify-center border-r h-full text-slate-400">${row.time.split(' ')[0]}</div>
+                                    <div class="flex-grow px-4 ${classColor} h-full flex items-center">
+                                        <span class="sub-name">${classLabel}</span>
+                                    </div>
                                 </div>`;
                         }).join('')}
                     </div>
@@ -93,12 +98,12 @@ function renderScheduleTable(containerId, tableId) {
         });
         container.innerHTML = mobileHtml + `</div>`;
     } else {
-        // DESKTOP: Full Grid
+        // DESKTOP VIEW: High-density Grid
         let html = `<table class="schedule-table w-full" id="${tableId}"><thead><tr><th class="w-24">Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody>`;
         hubData.tableRows.forEach(row => {
             if (row.type === 'break') html += `<tr class="break"><td colspan="6">${row.label}</td></tr>`;
             else {
-                html += `<tr><td class="font-mono text-[10px] bg-slate-50">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
+                html += `<tr><td class="font-mono text-[10px] bg-slate-50 font-bold">${row.time}</td>${row.lbls.map((l, i) => `<td class="${[row.mon, row.tue, row.wed, row.thu, row.fri][i]}"><span class="sub-name">${l}</span></td>`).join('')}</tr>`;
             }
         });
         container.innerHTML = html + `</tbody></table>`;
@@ -132,7 +137,7 @@ function toggleSchedule() {
     }
 }
 
-// 6. LIVE STATUS & BUTTON LOGIC
+// 6. LIVE STATUS ENGINE
 function updateLiveStatus() {
     const now = getHondurasTime();
     const day = now.getDay();
@@ -185,7 +190,6 @@ window.onload = async function() {
     if (typeof checkAuth === "function") checkAuth();
 };
 
-// Handle window resizing (re-render schedule to switch between Table and Stack)
 window.addEventListener('resize', () => {
     renderScheduleTable('schedule-container', 'main-schedule-table');
 });
