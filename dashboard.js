@@ -23,6 +23,65 @@ const tableRows = [
     { id: 9, time: "1:35 - 2:15", mon: "g10", tue: "g11", wed: "g11", thu: "g11", fri: "vacant", lbls: ["Chem 10", "Bio 11", "Bio 11", "Chem 11", "PREP"] },
     { id: 10, time: "2:15 - 2:55", mon: "g10", tue: "vacant", wed: "g11", thu: "vacant", fri: "g8", lbls: ["Chem 10", "PREP", "Bio 11", "PREP", "Science 8"] }
 ];
+// 6. CURRICULUM DATA
+const courses = [
+    { grade: "7th", topic: "Planetary Science", color: "bg-green-500", desc: "Space, Earth Systems, Maps", portal: "7th-portal.html", slides: "7th-slides.html" },
+    { grade: "8th", topic: "Electronics", color: "bg-blue-500", desc: "Circuits, Arduino, Logic", portal: "8th-portal.html", slides: ["8th-slides.html", "8th-week2.html"], weekNames: ["Week 3.1", "Week 3.2"] },
+    { grade: "9th", topic: "Chemistry", color: "bg-purple-500", desc: "Matter, Atoms, Reactions", portal: "9th-portal.html", slides: "9th-slides.html" },
+    { grade: "10th", topic: "Biology", color: "bg-yellow-500", desc: "Cells, Genetics, Energy", portal: "10thbio-portal.html", slides: "10thbio-slides.html" },
+    { grade: "Universal", topic: "Protocol", color: "bg-white/20", desc: "Design Thinking", special: "dthink.html" },
+    { grade: "10th", topic: "Chemistry", color: "bg-yellow-500", desc: "Bonds, Stoichiometry", portal: "10thchem-portal.html", slides: "10thchem-slides.html" },
+    { grade: "11th", topic: "Biology", color: "bg-red-500", desc: "Evolution, Systems", portal: "11thbio-portal.html", slides: ["11thbio-slides.html", "11thbio-week2.html"], weekNames: ["Week 3.1", "Week 3.2"] },
+    { grade: "11th", topic: "Economics", color: "bg-red-500", desc: "Banking, Finance", portal: "11thecon-portal.html", slides: "11thecon-slides.html" },
+    { grade: "11th", topic: "Chemistry", color: "bg-red-500", desc: "Organic, Solutions", portal: "11thchem-portal.html", slides: ["11thchem-slides.html", "11thchem-week2.html"], extra: "moles.html", weekNames: ["Wk 3.1", "Wk 3.2"] }
+];
+
+// 7. CURRICULUM GENERATOR
+function renderCurriculum() {
+    const grid = document.getElementById('curriculum-grid');
+    if (!grid) return;
+
+    grid.innerHTML = courses.map(c => {
+        // Special logic for the Design Thinking card
+        if (c.grade === "Universal") {
+            return `
+                <div class="hub-card bg-slate-900 rounded-2xl p-0 overflow-hidden flex flex-col border-2 border-[#f9db66]">
+                    <div class="bg-slate-950 p-3 flex justify-between items-center text-white">
+                        <span class="sketch text-xl text-[#f9db66]">${c.grade}</span>
+                        <span class="${c.color} text-[9px] px-2 py-1 rounded font-bold uppercase text-white">${c.topic}</span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-center text-center">
+                        <h3 class="font-bold text-white text-xl">${c.desc}</h3>
+                        <p class="text-xs text-slate-400 mt-1">Activity Framework</p>
+                        <div class="admin-only hidden mt-4">
+                            <a href="${c.special}" class="block w-full py-2 bg-[#f9db66] text-black rounded text-xs font-bold">Open Tool</a>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        // Standard Grade Cards
+        return `
+            <div class="hub-card bg-white rounded-2xl p-0 overflow-hidden flex flex-col">
+                <div class="${c.grade === '9th' || c.grade === '11th' && c.topic === 'Chemistry' ? 'bg-[#ac2e55]' : 'bg-slate-800'} p-3 flex justify-between items-center text-white">
+                    <span class="sketch text-xl ${c.grade === '9th' || (c.grade === '11th' && c.topic === 'Chemistry') ? 'text-[#f9db66]' : ''}">${c.grade} Grade</span>
+                    <span class="${c.color} text-[9px] px-2 py-1 rounded font-bold uppercase text-black ${c.color === 'bg-purple-500' || c.color === 'bg-red-500' ? 'text-white' : ''}">${c.topic}</span>
+                </div>
+                <div class="p-5 flex-grow">
+                    <h3 class="font-bold text-slate-700 text-lg">${c.topic}</h3>
+                    <p class="text-xs text-slate-500 mt-1">${c.desc}</p>
+                    <a href="${c.portal}" class="mt-4 block w-full text-center py-2 border border-slate-200 rounded hover:bg-slate-50 text-xs font-bold uppercase text-slate-600">Quarter Plan</a>
+                    <div class="admin-only hidden mt-2 space-y-1">
+                        ${Array.isArray(c.slides) 
+                            ? c.slides.map((url, i) => `<a href="${url}" class="block w-full text-center py-1 bg-[#ac2e55] text-white rounded text-[10px] font-bold">${c.weekNames[i]}</a>`).join('')
+                            : `<a href="${c.slides}" class="block w-full text-center py-2 bg-[#ac2e55] text-white rounded text-xs font-bold">Slides</a>`
+                        }
+                        ${c.extra ? `<a href="${c.extra}" class="block w-full text-center py-1 border border-slate-200 text-slate-500 rounded text-[10px] font-bold">Tools</a>` : ''}
+                    </div>
+                </div>
+            </div>`;
+    }).join('');
+}
 
 // 3. TABLE RENDERER
 function renderScheduleTable() {
@@ -118,6 +177,7 @@ window.onload = function() {
     document.documentElement.classList.add('loaded');
     
     // Build the UI
+    renderCurriculum(); // <--- Add this
     renderScheduleTable();
     
     // Start the clock
