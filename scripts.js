@@ -111,5 +111,3 @@ function startTimer(duration, displayId) {
         }
     }, 1000);
 }
-
-document.addEventListener('DOMContentLoaded', checkAuth);
