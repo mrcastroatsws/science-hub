@@ -129,6 +129,40 @@
 
     <script src="scripts.js"></script>
     <script src="dashboard.js"></script>
+    <script>
+        // --- FIRE TV / SILK PRESENTATION BYPASS ---
+        window.addEventListener('load', () => {
+            // Checks if you added ?tv=true to your URL or if using Silk Browser
+            if (window.location.search.includes('tv=true') || navigator.userAgent.includes('Silk')) {
+                
+                // Give dashboard.js 1 second to finish rendering the grade cards
+                setTimeout(() => {
+                    const adminButtons = document.querySelectorAll('.admin-only');
+                    
+                    adminButtons.forEach(btn => {
+                        // 1. Force them to show up
+                        btn.classList.remove('hidden');
+                        
+                        // 2. Make them huge and easy to see on a TV
+                        btn.style.display = 'block';
+                        btn.style.backgroundColor = '#ac2e55';
+                        btn.style.color = 'white';
+                        btn.style.padding = '15px';
+                        btn.style.fontSize = '1.2rem';
+                        btn.style.textAlign = 'center';
+                        btn.style.borderRadius = '12px';
+                        btn.style.marginTop = '10px';
+                        btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                    });
+
+                    // Auto-focus the first 8th grade link so the remote is ready
+                    const firstLink = document.querySelector('a[href*="8th"]');
+                    if(firstLink) firstLink.focus();
+                    
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 </html>
 
