@@ -101,7 +101,7 @@
             h1 { font-size: 2.5rem; }
             .box-concept { font-size: 1.2rem; padding: 20px; }
             .rules-grid { grid-template-columns: 1fr; }
-            .nav-bottom-right { bottom: 80px; } /* Lift above mobile nav bar if exists */
+            .nav-bottom-right { bottom: 80px; } 
         }
     </style>
 </head>
@@ -166,17 +166,6 @@
                 </div>
             </div>
 
-            <div class="slide" data-day="OBJECTIVE" data-part="TODAY'S MISSION">
-                <h1>Today's Goal</h1>
-                <div class="box-concept">
-                    <p>1. Define <strong>Source, Receiver, and Path</strong>.</p>
-                    <p>2. Explain the difference between <strong>Open</strong> and <strong>Closed</strong> circuits.</p>
-                </div>
-                <div class="teacher-only">
-                    <strong>TEACHER NOTE:</strong> Do not just read this. Ask: "Does anyone know what the 'Source' is in a flashlight?"
-                </div>
-            </div>
-
             <div class="slide" data-day="ENGAGE" data-part="KWL CHART">
                 <h1 class="sketch">KWL: Electricity</h1>
                 <div class="box-concept" style="display:flex; justify-content:space-around;">
@@ -213,35 +202,59 @@
                 <p style="color:var(--danger); font-weight:bold;">Electricity cannot jump the gap!</p>
             </div>
 
-            <div class="slide" data-day="WORK" data-part="FOSS READING">
-                <h1 class="sketch">Independent Reading</h1>
-                <div class="box-concept">
-                    <p><strong>Resource:</strong> FOSS Electronics Stories</p>
-                    <p><strong>Task:</strong> Read silently. Summarize the 'History of Electricity' section.</p>
-                    <p><strong>MMVP:</strong> Voices: 0. Movement: 0.</p>
-                </div>
-                <div id="timer-display" style="font-family:'JetBrains Mono'; font-size:4rem; color:var(--sws-gold); margin-top:20px;">10:00</div>
-                <button class="btn-ui" onclick="startTimer(600)">Start Timer</button>
-            </div>
-
-            <div class="slide" data-day="ACTIVITY" data-part="HUMAN CIRCUIT">
-                <h1>The Human Circuit</h1>
-                <p style="font-size:2rem;">Stand up. Form a circle.</p>
-                <div class="box-concept">
-                    <p>• <strong>Holding Hands:</strong> Closed Circuit (Energy Flows).</p>
-                    <p>• <strong>Let Go:</strong> Open Circuit (Energy Stops).</p>
-                </div>
-                <div class="teacher-only">
-                    <strong>ACTION:</strong> Squeeze the hand of the person next to you to pass the 'pulse'. When you say 'Open!', they must drop hands.
-                </div>
-            </div>
-
-            <div class="slide" data-day="SAFETY" data-part="DANGER ZONE">
-                <h1 style="color:var(--danger)">The Short Circuit</h1>
+            <div class="slide" data-day="SAFETY" data-part="SHORT CIRCUIT">
+                <h1 style="color:var(--danger)">Short Circuit</h1>
                 <div class="box-concept" style="border-left-color: var(--danger);">
                     <p><strong>Definition:</strong> A path with a Source, but NO Receiver.</p>
                     <p><strong>Result:</strong> The energy has nowhere to go but heat.</p>
                     <p><strong>DANGER:</strong> Fire / Burned fingers.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="CASE STUDY" data-part="THE RED ALERT">
+                <h1 class="sketch">Simulation Case Study</h1>
+                <h2 style="color:var(--danger)">915 mA vs 20 mA</h2>
+                <div class="box-concept">
+                    <p><strong>The Scenario:</strong> We connected a 9V Battery directly to an LED in Tinkercad.</p>
+                    <p><strong>The Reading:</strong> 915 mA (0.915 Amps).</p>
+                    <p><strong>The Problem:</strong> An LED can only handle 20 mA.</p>
+                </div>
+                <p style="font-size: 1.8rem; color:var(--electric-blue)">We are pumping 45x the safety limit into that light.</p>
+                <div class="teacher-only">
+                    <strong>TEACHER SCRIPT:</strong> "If the LED is still lighting up in the simulation, it is in its 'death throes.' It would physically burn out in seconds. Why? Because we opened the floodgates."
+                </div>
+            </div>
+
+            <div class="slide" data-day="CASE STUDY" data-part="THE PHYSICS">
+                <h1>Why did this happen?</h1>
+                <div class="rules-grid">
+                    <div class="rule-item" style="display:block;">
+                        <strong>1. The Floodgate Analogy</strong><br>
+                        <span style="font-size:1rem; color:gray">The LED is a tiny garden hose valve (2V limit). The Battery is a Fire Hydrant (9V pressure). We connected them directly. The valve bursts.</span>
+                    </div>
+                    <div class="rule-item" style="display:block;">
+                        <strong>2. Why stop at 915 mA?</strong><br>
+                        <span style="font-size:1rem; color:gray">Why didn't it go to 10,000 mA? Because 9V batteries are weak. The battery itself is "choking" (Internal Resistance).</span>
+                    </div>
+                </div>
+                <div class="teacher-only">
+                    <strong>TEACHER NOTE:</strong> "Internal Resistance is why the battery gets hot. The battery is struggling to push that much energy out."
+                </div>
+            </div>
+
+            <div class="slide" data-day="CASE STUDY" data-part="THE SOLUTION">
+                <h1 class="sketch">The Fix: Resistors</h1>
+                <div class="box-concept" style="border-left-color: var(--success);">
+                    <p>To fix this, we need a <strong>Bottleneck</strong>.</p>
+                    <p>A resistor slows down the current to safe levels.</p>
+                    
+
+[Image of resistor calculation]
+
+                    <p style="font-family:'JetBrains Mono'; font-size:1.5rem; margin-top:20px;">R = (9V - 2V) / 0.02A = <span style="color:var(--sws-gold)">350 Ohms</span></p>
+                </div>
+                <div class="teacher-only">
+                    <strong>TEACHER SCRIPT:</strong> "We will learn Ohm's Law later, but for now, know this: Never connect an LED directly to a battery without a resistor."
                 </div>
             </div>
 
@@ -251,7 +264,7 @@
                     <p>On your index card:</p>
                     <p>1. Draw a circle.</p>
                     <p>2. Label: <strong>Source, Path, Receiver</strong>.</p>
-                    <p>3. Is your drawing an Open or Closed circuit?</p>
+                    <p>3. Explain why connecting a wire directly from + to - is dangerous.</p>
                 </div>
             </div>
 
@@ -285,7 +298,6 @@
                         gotcha.style.display = 'none';
                     } else {
                         gotcha.style.display = 'flex';
-                        // Optional: Auto-redirect after 3s if not on TV
                     }
                 } catch (e) { gotcha.style.display = 'flex'; }
             }
@@ -308,6 +320,8 @@
             const hasNote = activeSlide.querySelector('.teacher-only');
             if(document.body.classList.contains('teacher-mode') && hasNote) {
                 hasNote.style.display = "block";
+            } else if (hasNote) {
+                hasNote.style.display = "none";
             }
 
             const pc = (current / (slides.length - 1)) * 100;
@@ -322,15 +336,6 @@
             const btn = document.getElementById('teacher-toggle');
             if(btn) btn.classList.toggle('active');
             updateUI();
-        }
-
-        function startTimer(sec) {
-            let t = sec; const disp = document.getElementById('timer-display');
-            const clock = setInterval(() => {
-                let m = Math.floor(t / 60); let s = t % 60;
-                disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-                if (--t < 0) { clearInterval(clock); disp.textContent = "DONE"; disp.style.color = "red"; }
-            }, 1000);
         }
 
         // --- FIRE TV REMOTE CONTROL ---
