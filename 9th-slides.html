@@ -111,6 +111,16 @@
             padding: 5px 15px; border-radius: 4px; font-weight: 700;
         }
 
+        /* --- NEW: KWL & READING --- */
+        .kwl-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px;
+        }
+        .kwl-col {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            padding: 20px; border-radius: 10px; height: 350px; text-align: left;
+        }
+        .kwl-head { font-weight: 700; color: var(--sws-teal); border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 10px; }
+
         /* --- INTERACTIVE ELEMENTS --- */
         .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px; }
         .btn-mc {
@@ -155,29 +165,61 @@
                 <h1 class="sketch">Chemistry 9</h1>
                 <h2>Week 3.1: The Central Science</h2>
                 <div class="box-concept">
-                    <p><strong>Objective:</strong> Define Chemistry and Matter, master Lab Safety protocols, distinguishing Mass vs Weight, and prepare for Classwork #1.</p>
-                    <p class="mono" style="font-size: 0.9rem; color: var(--sws-teal);"> SCIENCE FAIR CHECKPOINT: TOPIC SELECTION</p>
+                    <p><strong>Focus:</strong> Matter Definitions, Lab Safety Protocol, and Causal Inference.</p>
+                    <p class="mono" style="font-size: 0.9rem; color: var(--sws-teal);"> SCIENCE FAIR: TOPIC & VARIABLES</p>
                 </div>
                 <div class="grid-menu">
-                    <div class="card-menu" onclick="goToSlide(1)">
-                        <div class="mono" style="color:var(--chem-purple)">MON 01/12</div>
-                        <div class="sketch">Intro Concepts</div>
+                    <div class="card-menu" onclick="goToSlide(3)">
+                        <div class="mono" style="color:var(--chem-purple)">MON</div>
+                        <div class="sketch">Intro</div>
                     </div>
-                    <div class="card-menu" onclick="goToSlide(5)">
-                        <div class="mono" style="color:var(--chem-purple)">TUE 01/13</div>
-                        <div class="sketch">Lab Safety</div>
+                    <div class="card-menu" onclick="goToSlide(7)">
+                        <div class="mono" style="color:var(--chem-purple)">TUE</div>
+                        <div class="sketch">Safety & Inference</div>
                     </div>
                     <div class="card-menu" style="opacity:0.5; cursor: default;">
-                        <div class="mono">WED 01/14</div>
+                        <div class="mono">WED</div>
                         <div class="sketch">NO CLASS</div>
                     </div>
-                    <div class="card-menu" onclick="goToSlide(9)">
-                        <div class="mono" style="color:var(--sws-gold)">THU 01/15</div>
-                        <div class="sketch">CW #1 Review</div>
+                    <div class="card-menu" onclick="goToSlide(14)">
+                        <div class="mono" style="color:var(--sws-gold)">THU</div>
+                        <div class="sketch">Reading & CW#1</div>
                     </div>
-                    <div class="card-menu" onclick="goToSlide(16)">
-                        <div class="mono" style="color:var(--sws-maroon)">FRI 01/16</div>
-                        <div class="sketch">Reaction Demo</div>
+                    <div class="card-menu" onclick="goToSlide(20)">
+                        <div class="mono" style="color:var(--sws-maroon)">FRI</div>
+                        <div class="sketch">Demo & SF</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">WEEKLY GOALS</div>
+                <h1 class="sketch">Objectives</h1>
+                <div class="box-concept">
+                    <ul style="line-height: 1.8; font-size: 1.2rem;">
+                        <li><strong>Knowledge:</strong> Define Chemistry, Matter, and identify Hazard Symbols.</li>
+                        <li><strong>Skill:</strong> Distinguish between Observation, Inference, and Causation.</li>
+                        <li><strong>Product:</strong> Complete Lab Safety Contract and Science Fair Topic Proposal.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">CLASS START</div>
+                <h1>K.W.L.</h1>
+                <p>Open your notebooks. What do you know about <strong>Chemistry</strong>?</p>
+                <div class="kwl-grid">
+                    <div class="kwl-col">
+                        <div class="kwl-head">KNOW</div>
+                        <p class="mono" style="font-size:0.8rem; color:rgba(255,255,255,0.5)">What do I already know?</p>
+                    </div>
+                    <div class="kwl-col">
+                        <div class="kwl-head">WANT</div>
+                        <p class="mono" style="font-size:0.8rem; color:rgba(255,255,255,0.5)">What do I want to know?</p>
+                    </div>
+                    <div class="kwl-col">
+                        <div class="kwl-head">LEARNED</div>
+                        <p class="mono" style="font-size:0.8rem; color:rgba(255,255,255,0.5)">End of week review.</p>
                     </div>
                 </div>
             </div>
@@ -190,9 +232,11 @@
                 </div>
                 <p style="font-size: 1.5rem;">"Everything you touch, taste, or smell is a chemical."</p>
                 
+                
 
 [Image of molecular structure models]
 
+                
             </div>
 
             <div class="slide">
@@ -248,6 +292,9 @@
                     <p><strong>Safety Shower:</strong> Used for large spills on body.</p>
                     <p><strong>Goggles:</strong> Must be worn at all times.</p>
                 </div>
+                
+                
+                
             </div>
 
             <div class="slide">
@@ -260,18 +307,88 @@
             </div>
 
             <div class="slide">
-                <div class="day-badge">TUE | ACTIVITY</div>
-                <h1 class="sketch">Observation vs Inference</h1>
-                <div class="grid-menu" style="grid-template-columns: 1fr 1fr;">
+                <div class="day-badge">TUE | DATA TYPES</div>
+                <h1>Observation Types</h1>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr; margin-top:20px;">
                     <div class="card-menu">
-                        <h3>Observation</h3>
-                        <p>Direct data using senses.<br><em>"The liquid is bubbling."</em></p>
+                        <h3 style="color:var(--sws-teal)">Qualitative</h3>
+                        <p>Descriptive data using senses.</p>
+                        <ul class="mono" style="font-size:0.8rem; margin-top:10px;">
+                            <li>"The flame is blue."</li>
+                            <li>"It smells like rotten eggs."</li>
+                        </ul>
                     </div>
                     <div class="card-menu">
-                        <h3>Inference</h3>
-                        <p>Conclusion based on observation.<br><em>"The liquid is boiling because it is hot."</em></p>
+                        <h3 style="color:var(--sws-maroon)">Quantitative</h3>
+                        <p>Numerical data using tools.</p>
+                        <ul class="mono" style="font-size:0.8rem; margin-top:10px;">
+                            <li>"The mass is 5.4g."</li>
+                            <li>"Temp increased by 10°C."</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | THE LEAP</div>
+                <h1 class="sketch">The Inference</h1>
+                <div class="box-concept">
+                    <p>An inference is a <strong>conclusion</strong> reached on the basis of evidence and reasoning.</p>
+                    <p>It is your brain trying to "connect the dots."</p>
+                </div>
+                <div style="margin-top:20px; font-size: 1.3rem;">
+                    Observation: <span class="mono">"The street is wet."</span><br>
+                    Inference: <span class="mono" style="color:var(--sws-gold)">"It must have rained."</span>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | CRITICAL THINKING</div>
+                <h1 style="color:var(--sws-maroon)">The Trap</h1>
+                <h2>Correlation &ne; Causation</h2>
+                <div class="box-concept" style="border-left-color: var(--sws-maroon)">
+                    <p>Just because two things happen at the same time (Association), does not mean one <strong>caused</strong> the other.</p>
+                </div>
+                <div class="grid-menu" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card-menu" style="cursor:default">
+                        <div class="mono">DATA POINT A</div>
+                        <p>Ice Cream sales go UP.</p>
+                    </div>
+                    <div class="card-menu" style="cursor:default">
+                        <div class="mono">DATA POINT B</div>
+                        <p>Drowning deaths go UP.</p>
+                    </div>
+                </div>
+                <p style="margin-top:15px"><strong>Bad Inference:</strong> "Eating ice cream causes drowning."</p>
+                
+                
+                
+            </div>
+
+            <div class="slide">
+                <div class="day-badge">TUE | THE SOLUTION</div>
+                <h1 class="sketch">The Confounder</h1>
+                <p>To find <strong>Causation</strong>, you must rule out other factors.</p>
+                <div class="sf-check">
+                    <div style="font-size: 3rem;">☀️</div>
+                    <div>
+                        <h3>The Hidden Variable: Summer Heat</h3>
+                        <p>Heat causes people to buy Ice Cream.<br>Heat causes people to go swimming.</p>
+                        <p class="mono" style="color:var(--sws-teal); margin-top:10px;">SCIENCE FAIR TIP:</p>
+                        <p>This is why you need <strong>Control Variables</strong>. To prove your variable caused the change, you must "freeze" everything else.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="day-badge">THU | LITERACY</div>
+                <h1 class="sketch">Silent Reading</h1>
+                <div class="box-concept">
+                    <p><strong>Text:</strong> "Strange Matter" / Textbook Chapter 1</p>
+                    <p><strong>Goal:</strong> Identify 3 new vocabulary words.</p>
+                </div>
+                <div class="timer-display" id="timer-read">15:00</div>
+                <button class="btn-nav" style="background:var(--sws-teal); color:black;" onclick="startTimer(900, 'timer-read')">Start Reading Timer</button>
             </div>
 
             <div class="slide">
@@ -332,7 +449,7 @@
                 <div class="day-badge">THU | WORK TIME</div>
                 <h1>Classwork #1 Execution</h1>
                 <div class="timer-display" id="timer-cw">20:00</div>
-                <button class="btn-nav" style="background:var(--sws-gold); color:black;" onclick="startTimer(1200, 'timer-cw')">Start Timer</button>
+                <button class="btn-nav" style="background:var(--sws-gold); color:black;" onclick="startTimer(1200, 'timer-cw')">Start CW Timer</button>
             </div>
 
             <div class="slide">
@@ -344,9 +461,11 @@
                     <p class="mono">A + B → AB</p>
                 </div>
                 
+                
 
 [Image of chemical reaction diagram]
 
+                
             </div>
 
             <div class="slide">
@@ -363,16 +482,33 @@
             </div>
 
             <div class="slide">
-                <div class="day-badge">WEEK 3.1</div>
-                <h1 class="sketch">Module Complete</h1>
-                <p>Next Week: Scientific Method & Variables</p>
-                <button class="btn-nav" onclick="goToSlide(0)">Return to Menu</button>
+                <div class="day-badge">FRI | EXIT</div>
+                <h1 class="sketch">3 - 2 - 1</h1>
+                <div class="kwl-grid" style="height: auto;">
+                    <div class="kwl-col" style="height: auto;">
+                        <h3 style="color:var(--sws-gold)">3</h3>
+                        <p>Things you learned.</p>
+                    </div>
+                    <div class="kwl-col" style="height: auto;">
+                        <h3 style="color:var(--sws-teal)">2</h3>
+                        <p>Questions you still have.</p>
+                    </div>
+                    <div class="kwl-col" style="height: auto;">
+                        <h3 style="color:var(--sws-maroon)">1</h3>
+                        <p>Thing you found interesting.</p>
+                    </div>
+                </div>
+                <button class="btn-nav" style="margin-top:20px" onclick="goToSlide(0)">Finish Module</button>
             </div>
 
-        </div> <div class="progress-bar">
+        </div> 
+        
+        <div class="progress-bar">
             <div class="progress-fill" id="p-bar"></div>
         </div>
-    </div> <script>
+    </div> 
+    
+    <script>
         // --- SECURITY (v2 Salted) ---
         (function() {
             const STORAGE_KEY = "sws_layout_config_v2";
