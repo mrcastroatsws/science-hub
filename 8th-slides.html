@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science | Electronics</title>
+    <title>SWS | Electronics 8 - Day 3.1.2</title>
     <link rel="icon" type="image/png" href="https://southwestschoolhn.com/wp-content/uploads/2021/08/cropped-ICON_Mesa-de-trabajo-1-32x32.png" sizes="32x32">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=Cabin+Sketch:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
@@ -13,11 +13,12 @@
             --electric-dark: #00979d;
             --sws-maroon: #ac2e55;
             --sws-gold: #f9db66;
-            --sws-teal: #29c4a9;
             --bg-color: #0f172a; 
             --text-color: #f1f5f9;
             --glass: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.1);
+            --success: #2ecc71;
+            --danger: #e74c3c;
         }
 
         * { box-sizing: border-box; outline: none; }
@@ -33,104 +34,90 @@
                 url('https://www.transparenttextures.com/patterns/circuit-board.png');
         }
 
-        /* --- UI HEADER --- */
-        .ui-header { position: absolute; top: 25px; left: 30px; z-index: 1000; text-align: left; }
+        /* --- UI ELEMENTS --- */
+        .ui-header { position: absolute; top: 30px; left: 40px; z-index: 1000; text-align: left; }
         #master-day-badge {
-            font-family: 'JetBrains Mono'; font-size: 1.1rem; font-weight: 700;
+            font-family: 'JetBrains Mono'; font-size: 1.2rem; font-weight: 700;
             color: var(--bg-color); background: var(--sws-gold);
-            padding: 5px 15px; border-radius: 4px; display: inline-block;
+            padding: 8px 20px; border-radius: 6px; display: inline-block;
         }
         #master-part-badge {
-            font-family: 'Cabin Sketch'; font-size: 1.8rem; color: var(--electric-blue);
-            margin-top: 8px; display: block;
+            font-family: 'Cabin Sketch'; font-size: 2.2rem; color: var(--electric-blue);
+            margin-top: 5px; display: block; letter-spacing: 2px;
         }
 
-        /* --- ACCESS CONTROL --- */
-        #gotcha-screen {
-            display: none; position: fixed; inset: 0; background: #000; color: #f00;
-            z-index: 99999; flex-direction: column; justify-content: center;
-            align-items: center; font-family: 'JetBrains Mono', monospace; text-align: center;
-        }
-        #slide-vault { visibility: hidden; display: flex; flex-direction: column; height: 100vh; width: 100%; }
-
-        /* --- NAVIGATION --- */
-        .nav-top-right { position: fixed; top: 25px; right: 30px; display: flex; gap: 10px; z-index: 9000; }
-        .nav-bottom-left { position: fixed; bottom: 30px; left: 30px; z-index: 9000; }
-        .nav-bottom-right { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 9000; }
+        .nav-bottom-right { position: fixed; bottom: 30px; right: 40px; display: flex; gap: 15px; z-index: 9000; }
+        .nav-bottom-left { position: fixed; bottom: 30px; left: 40px; z-index: 9000; }
 
         .btn-ui {
-            background: var(--glass); border: 1px solid var(--border);
-            color: white; padding: 12px 20px; font-size: 0.8rem; cursor: pointer;
-            border-radius: 8px; font-weight: 700; text-transform: uppercase; transition: 0.2s;
+            background: var(--glass); border: 2px solid var(--border);
+            color: white; padding: 15px 30px; font-size: 1rem; cursor: pointer;
+            border-radius: 12px; font-weight: 700; text-transform: uppercase; transition: 0.3s;
         }
-        .btn-ui:hover { background: var(--electric-blue); border-color: var(--electric-blue); color: #000; }
-        .btn-teacher { border-color: var(--sws-teal); color: var(--sws-teal); }
-        .btn-teacher.active { background: var(--sws-teal); color: black; }
+        .btn-ui:hover { background: var(--electric-blue); border-color: var(--electric-blue); color: black; transform: scale(1.05); }
+        .btn-teacher { border-color: var(--sws-maroon); color: var(--sws-maroon); }
+        .btn-teacher.active { background: var(--sws-maroon); color: white; }
 
-        /* --- STAGE --- */
+        /* --- SLIDES --- */
         .stage { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px; position: relative; }
-        .slide { display: none; width: 100%; max-width: 1100px; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: circuitIn 0.4s ease-out; }
+        .slide { display: none; width: 100%; max-width: 1300px; flex-direction: column; justify-content: center; align-items: center; text-align: center; animation: fadeUp 0.5s ease-out; }
         .slide.active { display: flex; }
-        @keyframes circuitIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- DASHBOARD GRID --- */
-        .menu-grid { display: flex; gap: 10px; justify-content: center; width: 100%; margin-top: 20px; flex-wrap: wrap; }
-        .menu-card { background: var(--glass); border: 1px solid var(--border); padding: 15px; border-radius: 10px; width: 18%; cursor: pointer; transition: 0.2s; text-align: left; }
-        .menu-card:hover { border-color: var(--sws-gold); transform: translateY(-3px); background: rgba(255,255,255,0.08); }
-        .card-date { font-size: 0.7rem; color: var(--electric-blue); font-weight: bold; font-family: 'JetBrains Mono'; }
-        .card-topic { font-size: 0.9rem; font-weight: bold; margin-top: 5px; line-height: 1.2; }
-
-        /* --- CONTENT STYLES --- */
-        h1 { font-size: 4rem; margin: 0; color: var(--sws-gold); line-height: 1.1; text-shadow: 0 0 20px rgba(249, 219, 102, 0.1); }
-        h2 { font-size: 2rem; color: var(--electric-blue); margin-top: 10px; }
-        .box-concept { background: var(--glass); border-left: 6px solid var(--electric-blue); padding: 30px; text-align: left; border-radius: 0 20px 20px 0; margin: 25px 0; width: 100%; font-size: 1.4rem; line-height: 1.5; }
+        /* --- TYPOGRAPHY --- */
+        h1 { font-size: 4.5rem; margin: 0; color: var(--sws-gold); line-height: 1.1; text-shadow: 0 0 20px rgba(249, 219, 102, 0.2); }
+        h2 { font-size: 2.5rem; margin: 10px 0; color: var(--electric-blue); }
         
-        /* --- INTERACTIVE ELEMENTS --- */
-        .mc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; margin-top: 20px; }
-        .btn-mc { background: rgba(255,255,255,0.05); border: 2px solid var(--border); color: white; padding: 20px; font-size: 1.2rem; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
-        .btn-mc:hover { border-color: var(--electric-blue); }
-        .correct { background: rgba(46, 204, 113, 0.2) !important; border-color: var(--sws-teal) !important; }
-        .wrong { background: rgba(172, 46, 85, 0.2) !important; border-color: var(--sws-maroon) !important; opacity: 0.6; }
+        .box-concept { 
+            background: var(--glass); border-left: 8px solid var(--electric-blue); 
+            padding: 40px; border-radius: 0 20px 20px 0; margin: 30px 0; 
+            width: 100%; font-size: 2rem; line-height: 1.5; text-align: left;
+        }
 
-        .schematic-box { border: 2px dashed var(--electric-blue); padding: 40px; border-radius: 20px; margin: 20px 0; width: 80%; display: flex; justify-content: center; align-items: center; font-family: 'JetBrains Mono'; color: var(--electric-blue); font-size: 1.5rem; }
+        .header-lines {
+            font-family: 'JetBrains Mono'; text-align: left; width: 100%; 
+            font-size: 1.8rem; line-height: 2; color: white;
+            border-bottom: 2px dashed var(--border); padding-bottom: 20px; margin-bottom: 20px;
+        }
 
-        /* --- TEACHER MODE --- */
-        .teacher-only {
-            display: none; width: 100%; margin-top: 20px;
-            border: 2px dashed var(--sws-teal); background: rgba(41, 196, 169, 0.05);
-            padding: 25px; border-radius: 15px; text-align: left; font-size: 1rem; line-height: 1.6;
+        /* --- GRIDS --- */
+        .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; text-align: left; }
+        .rule-item { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; font-size: 1.4rem; display: flex; align-items: center; gap: 15px; }
+        
+        /* --- TEACHER NOTES --- */
+        .teacher-only { 
+            display: none; width: 100%; margin-top: 20px; 
+            border: 2px dashed var(--sws-maroon); background: rgba(172, 46, 85, 0.1); 
+            padding: 20px; border-radius: 10px; font-size: 1.2rem; color: #ff99aa; text-align: left;
         }
         body.teacher-mode .teacher-only { display: block; }
-        .tag { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--sws-gold); background: rgba(249, 219, 102, 0.1); padding: 2px 6px; border-radius: 4px; margin-right: 8px; }
 
-        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.1); }
+        /* --- PROGRESS BAR --- */
+        .progress-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.1); }
         .progress-fill { height: 100%; background: var(--electric-blue); width: 0%; transition: width 0.3s ease; }
 
+        /* --- MEDIA QUERIES --- */
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            .menu-card { width: 45%; }
-            .box-concept { font-size: 1.1rem; padding: 20px; }
-            .nav-top-right { top: 20px; right: 20px; gap: 8px; }
+            h1 { font-size: 2.5rem; }
+            .box-concept { font-size: 1.2rem; padding: 20px; }
+            .rules-grid { grid-template-columns: 1fr; }
+            .nav-bottom-right { bottom: 80px; } /* Lift above mobile nav bar if exists */
         }
     </style>
 </head>
 <body>
 
-    <div id="gotcha-screen">
-        <h1 class="mono">SYSTEM LOCKDOWN</h1>
-        <p>REDIRECTING TO HUB...</p>
+    <div id="gotcha-screen" style="display:flex; position:fixed; inset:0; background:#000; color:red; z-index:9999; flex-direction:column; justify-content:center; align-items:center; font-family:'JetBrains Mono';">
+        <h1>LOCKED</h1>
+        <p>Use ?tv=true to bypass.</p>
     </div>
 
-    <div id="slide-vault">
+    <div id="slide-vault" style="visibility:hidden; display:none; flex-direction:column; height:100vh;">
+        
         <div class="ui-header">
             <div id="master-day-badge">WEEK 3.1</div>
-            <div id="master-part-badge">CIRCUIT FUNDAMENTALS</div>
+            <div id="master-part-badge">TUESDAY 01/13</div>
         </div>
-
-        <nav class="nav-top-right">
-            <button class="btn-ui" onclick="goToSlide(0)">Restart</button>
-            <button class="btn-ui" style="color:var(--sws-gold)" onclick="location.href='index.html'">Home</button>
-        </nav>
 
         <nav class="nav-bottom-left">
             <button class="btn-ui btn-teacher" id="teacher-toggle" onclick="toggleTeacherMode()">Teacher Mode</button>
@@ -142,213 +129,152 @@
         </nav>
 
         <div class="stage">
-            
-            <div class="slide active" data-day="WEEK 3.1" data-part="OVERVIEW">
-                <h1 class="sketch">Electronics 8</h1>
-                <h2 style="color:var(--electric-blue)">Week 3.1: The Circuit</h2>
-                <div class="box-concept">
-                    <p><strong>Goal:</strong> Identify Source, Receiver, Path. Build a closed circuit. Master schematic symbols.</p>
+
+            <div class="slide active" data-day="ROUTINE" data-part="NOTEBOOK SETUP">
+                <div class="header-lines">
+                    <p>Name: __________________________</p>
+                    <p>Date: <span style="color:var(--sws-gold)">January 13, 2026</span></p>
+                    <p>Topic: <span style="color:var(--electric-blue)">Circuit Components</span></p>
                 </div>
-                <div class="menu-grid">
-                    <div class="menu-card" onclick="goToSlide(1)">
-                        <div class="card-date">MON 01/12</div>
-                        <div class="card-topic">Intro: The Blackout</div>
+                <div class="box-concept" style="text-align:center; border:none; background:transparent;">
+                    <h2>Open your Science Logs.</h2>
+                    <p>Pencils out. Voices off.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="PROTOCOL" data-part="EXPECTATIONS">
+                <h1>The Standard</h1>
+                <div class="rules-grid">
+                    <div class="rule-item" style="border-left: 5px solid var(--success);">
+                        ✅ <strong>Good:</strong> Participation, 100% English, On-Task.
                     </div>
-                    <div class="menu-card" onclick="goToSlide(4)">
-                        <div class="card-date">TUE 01/13</div>
-                        <div class="card-topic">Concepts: Open vs Closed</div>
+                    <div class="rule-item" style="border-left: 5px solid var(--danger);">
+                        ❌ <strong>Penalty:</strong> Spanish, Chair Hopping, Door Hovering.
                     </div>
-                    <div class="menu-card" style="opacity:0.5; cursor:default;">
-                        <div class="card-date">WED 01/14</div>
-                        <div class="card-topic">NO CLASS</div>
-                    </div>
-                    <div class="menu-card" onclick="goToSlide(7)">
-                        <div class="card-date" style="color:var(--sws-gold)">THU 01/15</div>
-                        <div class="card-topic">Review & CW #1</div>
-                    </div>
-                    <div class="menu-card" onclick="goToSlide(13)">
-                        <div class="card-date" style="color:var(--sws-maroon)">FRI 01/16</div>
-                        <div class="card-topic">Lab: Light It Up</div>
-                    </div>
+                </div>
+                <div class="box-concept" style="margin-top:20px; font-size: 1.5rem;">
+                    "If you are aiming for a 70, conduct is your safety net. Don't cut it."
+                </div>
+            </div>
+
+            <div class="slide" data-day="CONTEXT" data-part="QUARTER OVERVIEW">
+                <h1 class="sketch">The Big Picture</h1>
+                <div class="box-concept">
+                    <p>• <strong>Quarter III:</strong> 10 Weeks Total.</p>
+                    <p>• <strong>Week 3.1:</strong> Intro to Circuits.</p>
+                    <p>• <strong>Structure:</strong> We are not together every day. On off-days, you must review your notes.</p>
+                </div>
+            </div>
+
+            <div class="slide" data-day="OBJECTIVE" data-part="TODAY'S MISSION">
+                <h1>Today's Goal</h1>
+                <div class="box-concept">
+                    <p>1. Define <strong>Source, Receiver, and Path</strong>.</p>
+                    <p>2. Explain the difference between <strong>Open</strong> and <strong>Closed</strong> circuits.</p>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">RESOURCE</span> FOSS Electronics Kit.</p>
-                    <p><span class="tag">MMVP</span> Voice: 0. Materials: Notebooks only. Participation: Tracking the speaker.</p>
+                    <strong>TEACHER NOTE:</strong> Do not just read this. Ask: "Does anyone know what the 'Source' is in a flashlight?"
                 </div>
             </div>
 
-            <div class="slide" data-day="MON | 01/12" data-part="INITIAL PHASE">
-                <h1 class="sketch">The Blackout</h1>
-                <p style="font-size: 2rem; margin: 30px;">"Imagine a world completely without electricity."</p>
-                <div class="box-concept">
-                    <p>No internet. No refrigeration. No hospitals. <br>Electricity isn't magic; it is the flow of electrons through a closed loop.</p>
+            <div class="slide" data-day="ENGAGE" data-part="KWL CHART">
+                <h1 class="sketch">KWL: Electricity</h1>
+                <div class="box-concept" style="display:flex; justify-content:space-around;">
+                    <div><strong>K</strong><br><span style="font-size:1rem">What I Know</span></div>
+                    <div><strong>W</strong><br><span style="font-size:1rem">What I Want</span></div>
+                    <div><strong>L</strong><br><span style="font-size:1rem">Learned</span></div>
+                </div>
+                <p style="font-size:1.5rem; margin-top:20px;">Take 3 minutes. Fill out K and W.</p>
+                <div class="teacher-only">
+                    <strong>PROMPT:</strong> "Write one thing you know about batteries. Write one question about how lights work."
+                </div>
+            </div>
+
+            <div class="slide" data-day="CONCEPT" data-part="THE BIG 3">
+                <h1>The 3 Components</h1>
+                <div class="rules-grid" style="grid-template-columns: 1fr;">
+                    <div class="rule-item">🔋 <strong>Source:</strong> Provides the energy (The Push). <em style="color:gray">Ex: Battery</em></div>
+                    <div class="rule-item">💡 <strong>Receiver:</strong> Uses the energy. <em style="color:gray">Ex: Light bulb, Motor</em></div>
+                    <div class="rule-item">🛣️ <strong>Path:</strong> The road for electrons. <em style="color:gray">Ex: Copper Wire</em></div>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">HOOK</span> Turn off the classroom lights for 5 seconds. Ask: "What just happened to the electrons?"</p>
+                    <strong>CHECK FOR UNDERSTANDING:</strong> "Hold up your battery. Is this the Path or the Source?"
                 </div>
             </div>
 
-            <div class="slide" data-day="MON | 01/12" data-part="DURING PHASE">
-                <h1>The Parts of a Circuit</h1>
-                <div class="menu-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-                    <div class="menu-card" style="width: 100%;">
-                        <h3 style="color:var(--sws-gold)">1. Source</h3>
-                        <p>Provides the push.<br>(Battery, Generator)</p>
-                    </div>
-                    <div class="menu-card" style="width: 100%;">
-                        <h3 style="color:var(--sws-gold)">2. Receiver</h3>
-                        <p>Uses the energy.<br>(Bulb, Motor, Phone)</p>
-                    </div>
-                    <div class="menu-card" style="width: 100%;">
-                        <h3 style="color:var(--sws-gold)">3. Path</h3>
-                        <p>The road for electrons.<br>(Copper Wire)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide" data-day="MON | 01/12" data-part="FINAL PHASE">
-                <h1 class="sketch">Exit Ticket</h1>
-                <p>On your index card, draw a simple circle.</p>
-                <p>Label the <strong>Source</strong>, <strong>Receiver</strong>, and <strong>Path</strong>.</p>
-                <div class="teacher-only">
-                    <p><span class="tag">ACMO</span> Check that the path is a complete loop. If there is a gap, mark it incorrect.</p>
-                </div>
-            </div>
-
-            <div class="slide" data-day="TUE | 01/13" data-part="INITIAL PHASE">
-                <h1>Open vs. Closed</h1>
+            <div class="slide" data-day="CONCEPT" data-part="OPEN VS CLOSED">
+                <h1>The Water Analogy</h1>
                 <div class="box-concept">
-                    <p><strong>Analogy: The Water Pipe</strong></p>
-                    <p>If the pipe is cut, water spills and flow stops.</p>
-                    <p>If the wire is cut (Open), electrons stop.</p>
+                    <p>Think of a wire like a <strong>Water Pipe</strong>.</p>
+                    <hr style="border-color:var(--border); margin:15px 0;">
+                    <p>• <strong>Closed Circuit:</strong> Pipe is whole. Water flows.</p>
+                    <p>• <strong>Open Circuit:</strong> Pipe is cut. Water stops.</p>
+                </div>
+                <p style="color:var(--danger); font-weight:bold;">Electricity cannot jump the gap!</p>
+            </div>
+
+            <div class="slide" data-day="WORK" data-part="FOSS READING">
+                <h1 class="sketch">Independent Reading</h1>
+                <div class="box-concept">
+                    <p><strong>Resource:</strong> FOSS Electronics Stories</p>
+                    <p><strong>Task:</strong> Read silently. Summarize the 'History of Electricity' section.</p>
+                    <p><strong>MMVP:</strong> Voices: 0. Movement: 0.</p>
+                </div>
+                <div id="timer-display" style="font-family:'JetBrains Mono'; font-size:4rem; color:var(--sws-gold); margin-top:20px;">10:00</div>
+                <button class="btn-ui" onclick="startTimer(600)">Start Timer</button>
+            </div>
+
+            <div class="slide" data-day="ACTIVITY" data-part="HUMAN CIRCUIT">
+                <h1>The Human Circuit</h1>
+                <p style="font-size:2rem;">Stand up. Form a circle.</p>
+                <div class="box-concept">
+                    <p>• <strong>Holding Hands:</strong> Closed Circuit (Energy Flows).</p>
+                    <p>• <strong>Let Go:</strong> Open Circuit (Energy Stops).</p>
                 </div>
                 <div class="teacher-only">
-                    <p><span class="tag">MISCONCEPTION</span> Students think electricity 'leaks' out of an open wire. Correct them: It simply stops moving.</p>
+                    <strong>ACTION:</strong> Squeeze the hand of the person next to you to pass the 'pulse'. When you say 'Open!', they must drop hands.
                 </div>
             </div>
 
-            <div class="slide" data-day="TUE | 01/13" data-part="DURING PHASE">
-                <h1 style="color:var(--sws-maroon)">DANGER ZONE</h1>
-                <h2>The Short Circuit</h2>
-                <div class="schematic-box">
-                    PATH WITH NO RECEIVER = FIRE
-                </div>
-                <p>Electricity loves the path of least resistance. Without a bulb to slow it down, the wire gets HOT.</p>
-            </div>
-
-            <div class="slide" data-day="TUE | 01/13" data-part="FINAL PHASE">
-                <h1 class="sketch">True or False?</h1>
-                <p>"A short circuit is safe because it uses less wire."</p>
-                <div class="menu-grid" style="justify-content: center;">
-                    <div class="menu-card" style="width:auto; padding: 20px 40px; background:var(--sws-maroon); color:white;" onclick="alert('CORRECT. It is dangerous!')">FALSE</div>
+            <div class="slide" data-day="SAFETY" data-part="DANGER ZONE">
+                <h1 style="color:var(--danger)">The Short Circuit</h1>
+                <div class="box-concept" style="border-left-color: var(--danger);">
+                    <p><strong>Definition:</strong> A path with a Source, but NO Receiver.</p>
+                    <p><strong>Result:</strong> The energy has nowhere to go but heat.</p>
+                    <p><strong>DANGER:</strong> Fire / Burned fingers.</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="THU | 01/15" data-part="INITIAL PHASE">
-                <h1>Schematic Language</h1>
-                <p>Engineers don't draw "art". We draw logic.</p>
-                <div class="menu-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="menu-card" style="width:100%">Battery: <strong>Long line (+) Short line (-)</strong></div>
-                    <div class="menu-card" style="width:100%">Wire: <strong>Straight Line</strong></div>
-                    <div class="menu-card" style="width:100%">Bulb: <strong>Circle with X</strong></div>
-                    <div class="menu-card" style="width:100%">Switch: <strong>Gate</strong></div>
-                </div>
-            </div>
-
-            <div class="slide" data-day="THU | 01/15" data-part="CW #1 REVIEW">
-                <h2>The component that provides energy is:</h2>
-                <div class="mc-grid">
-                    <button class="btn-mc" onclick="check(this, false)">A) Receiver</button>
-                    <button class="btn-mc" onclick="check(this, true)">B) Source</button>
-                    <button class="btn-mc" onclick="check(this, false)">C) Path</button>
-                    <button class="btn-mc" onclick="check(this, false)">D) Switch</button>
-                </div>
-            </div>
-
-            <div class="slide" data-day="THU | 01/15" data-part="CW #1 REVIEW">
-                <h2>If you cut the wire, creating a gap:</h2>
-                <div class="mc-grid">
-                    <button class="btn-mc" onclick="check(this, true)">A) Open Circuit</button>
-                    <button class="btn-mc" onclick="check(this, false)">B) Closed Circuit</button>
-                    <button class="btn-mc" onclick="check(this, false)">C) Short Circuit</button>
-                </div>
-            </div>
-
-            <div class="slide" data-day="THU | 01/15" data-part="CW #1 DIAGRAM">
-                <h1 class="sketch">Draw It</h1>
-                <div class="schematic-box">
-                    1 Battery + 2 Bulbs + 1 OPEN Switch
-                </div>
-                <div class="teacher-only">
-                    <p><span class="tag">ACMO</span> Ensure the switch is drawn as an open gate. Ask: "Are these lights on or off?" (Answer: OFF).</p>
-                </div>
-            </div>
-
-            <div class="slide" data-day="THU | 01/15" data-part="WORK TIME">
-                <h1 class="sketch">Classwork #1 Execution</h1>
+            <div class="slide" data-day="CLOSING" data-part="EXIT TICKET">
+                <h1>Summary</h1>
                 <div class="box-concept">
-                    <p>Complete the worksheet. 20 Minutes.</p>
-                    <p><strong>Value:</strong> 5 Points.</p>
-                </div>
-                <div class="timer-display" id="timer-cw" style="font-size: 4rem; font-family:'JetBrains Mono'; color:var(--sws-gold)">20:00</div>
-                <button class="btn-ui" onclick="startTimer(1200, 'timer-cw')">Start Timer</button>
-            </div>
-
-            <div class="slide" data-day="FRI | 01/16" data-part="INITIAL PHASE">
-                <h1 class="sketch">Investigation 1</h1>
-                <h2 style="color:var(--electric-blue)">"Lighting the Bulb"</h2>
-                <div class="box-concept">
-                    <p><strong>Materials:</strong> 1 D-Cell Battery, 1 Wire, 1 Bulb.</p>
-                    <p><strong>Challenge:</strong> Make the bulb light up. There are 4 ways to hold it. Find them.</p>
+                    <p>On your index card:</p>
+                    <p>1. Draw a circle.</p>
+                    <p>2. Label: <strong>Source, Path, Receiver</strong>.</p>
+                    <p>3. Is your drawing an Open or Closed circuit?</p>
                 </div>
             </div>
 
-            <div class="slide" data-day="FRI | 01/16" data-part="DURING PHASE">
-                <h1>Documentation</h1>
-                <p>In your Lab Notebook, sketch:</p>
-                <div class="menu-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="menu-card" style="width:100%; border-color:var(--sws-maroon)">
-                        <h3>FAILED Attempts</h3>
-                        <p>Draw how you held it when it did NOT light up.</p>
-                    </div>
-                    <div class="menu-card" style="width:100%; border-color:var(--sws-teal)">
-                        <h3>SUCCESS</h3>
-                        <p>Draw the exact contact points that worked.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide" data-day="BONUS" data-part="EXTENSION">
-                <h1 class="sketch">Redesign the Flashlight</h1>
-                <div class="box-concept">
-                    <p><strong>Problem:</strong> Mechanics need hands-free light.</p>
-                    <p><strong>Task:</strong> Sketch a circuit that fits on a glove using the components we learned today.</p>
-                </div>
-            </div>
-
-            <div class="slide" data-day="END" data-part="MODULE COMPLETE">
-                <h1 class="sketch">Week 3.1 Complete</h1>
-                <p>Next Week: Conductors vs. Insulators</p>
-                <button class="btn-ui" onclick="goToSlide(0)">Return to Menu</button>
-            </div>
-
-        </div> <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
+        </div> 
+        <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
     </div>
 
     <script>
-        // --- SECURITY BYPASS & LOCK ---
+        // --- FIRE TV & SILK BYPASS ---
         (function() {
             const vault = document.getElementById('slide-vault');
             const gotcha = document.getElementById('gotcha-screen');
             
-            // BYPASS for Silk Browser (Fire TV) or specific URL flag
+            // Check if Silk Browser (Fire TV) OR if URL has ?tv=true
             const isSilk = navigator.userAgent.includes("Silk");
-            const isBypass = window.location.search.includes("tv=true");
+            const isTVUrl = window.location.search.includes("tv=true");
 
-            if (isSilk || isBypass) {
+            if (isSilk || isTVUrl) {
                 vault.style.visibility = 'visible'; 
                 vault.style.display = 'flex';
+                gotcha.style.display = 'none';
             } else {
+                // Standard Password Logic for Desktop/Phone
                 const STORAGE_KEY = "sws_layout_config_v2";
                 const LOCK_VALUE = "U1dTMjAyNl9TV1NfU0VDVVJF"; 
                 const candidate = localStorage.getItem(STORAGE_KEY);
@@ -356,18 +282,16 @@
                     if (candidate && btoa(atob(candidate) + "_SWS_SECURE") === LOCK_VALUE) {
                         vault.style.visibility = 'visible'; 
                         vault.style.display = 'flex';
+                        gotcha.style.display = 'none';
                     } else {
                         gotcha.style.display = 'flex';
-                        setTimeout(() => { window.location.href = "index.html"; }, 3000);
+                        // Optional: Auto-redirect after 3s if not on TV
                     }
-                } catch (e) {
-                    gotcha.style.display = 'flex';
-                    setTimeout(() => { window.location.href = "index.html"; }, 3000);
-                }
+                } catch (e) { gotcha.style.display = 'flex'; }
             }
         })();
 
-        // --- NAVIGATION LOGIC ---
+        // --- NAVIGATION ---
         let current = 0;
         const slides = document.querySelectorAll('.slide');
         const pBar = document.getElementById('p-bar');
@@ -379,6 +303,13 @@
             const activeSlide = slides[current];
             if (activeSlide.dataset.day) { dayBadge.textContent = activeSlide.dataset.day; }
             if (activeSlide.dataset.part) { partBadge.textContent = activeSlide.dataset.part; }
+            
+            // Teacher Note Visibility
+            const hasNote = activeSlide.querySelector('.teacher-only');
+            if(document.body.classList.contains('teacher-mode') && hasNote) {
+                hasNote.style.display = "block";
+            }
+
             const pc = (current / (slides.length - 1)) * 100;
             pBar.style.width = pc + "%";
         }
@@ -388,37 +319,33 @@
         
         function toggleTeacherMode() {
             document.body.classList.toggle('teacher-mode');
-            document.getElementById('teacher-toggle')?.classList.toggle('active');
+            const btn = document.getElementById('teacher-toggle');
+            if(btn) btn.classList.toggle('active');
+            updateUI();
         }
 
-        function check(btn, isCorrect) {
-            const siblings = btn.parentElement.children;
-            for (let s of siblings) s.classList.remove('correct', 'wrong');
-            btn.classList.add(isCorrect ? 'correct' : 'wrong');
-        }
-
-        function startTimer(sec, id) {
-            let t = sec; const disp = document.getElementById(id);
+        function startTimer(sec) {
+            let t = sec; const disp = document.getElementById('timer-display');
             const clock = setInterval(() => {
                 let m = Math.floor(t / 60); let s = t % 60;
                 disp.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-                if (--t < 0) { clearInterval(clock); disp.textContent = "DONE"; }
+                if (--t < 0) { clearInterval(clock); disp.textContent = "DONE"; disp.style.color = "red"; }
             }, 1000);
         }
 
-        // --- FIRE TV REMOTE & KEYBOARD ---
+        // --- FIRE TV REMOTE CONTROL ---
         document.addEventListener('keydown', e => {
-            // keyCode 13 = Fire TV Center/Select Button
+            // Arrow Right, Space, or Enter (Select Button on Remote)
             if(e.keyCode === 13 || e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
             if(e.key === 'ArrowLeft') changeSlide(-1);
-            if(e.key === 'Escape') goToSlide(0);
         });
 
-        // Tap stage to move forward (useful for TV mouse/Silk pointer)
-        document.querySelector('.stage').addEventListener('click', () => changeSlide(1));
+        // Tap screen/click to advance (good for Silk pointer)
+        document.querySelector('.stage').addEventListener('click', (e) => {
+            if(e.target.tagName !== 'BUTTON') changeSlide(1);
+        });
 
         updateUI();
     </script>
-
 </body>
 </html>
